@@ -857,30 +857,24 @@ add_action( 'widgets_init', 'override_woocommerce_widgets', 15 );
 function override_woocommerce_widgets() {
   // Ensure our parent class exists to avoid fatal error (thanks Wilgert!)
  
-  if ( class_exists( 'WC_Widget_Recent_Reviews' ) ) {
-    unregister_widget( 'WC_Widget_Recent_Reviews' );
- 
-    include_once( 'widgets/recent-reviews.php' );
- 
-    register_widget( 'Kidberries_WC_Widget_Recent_Reviews' );
-  }
- 
-  if ( class_exists( 'WC_Widget_Recently_Viewed' ) ) {
-    unregister_widget( 'WC_Widget_Recently_Viewed' );
- 
-    include_once( 'widgets/recently-viewed.php' );
- 
-    register_widget( 'Kidberries_WC_Widget_Recently_Viewed' );
-	
-  }
-  
-    include_once( 'widgets/upsell-products.php' );
- 
-    register_widget( 'Kidberries_Widget_Upsale_Products' );
-  
+//  if ( class_exists( 'WC_Widget_Recent_Reviews' ) ) {
+//    unregister_widget( 'WC_Widget_Recent_Reviews' );
+//  }
 
- 
- 
+//  if ( class_exists( 'WC_Widget_Recently_Viewed' ) ) {
+//    unregister_widget( 'WC_Widget_Recently_Viewed' );
+//  }
+
+
+  include_once( 'widgets/recent-reviews.php' );
+  register_widget( 'Kidberries_WC_Widget_Recent_Reviews' );
+
+  include_once( 'widgets/recently-viewed.php' );
+  register_widget( 'Kidberries_WC_Widget_Recently_Viewed' );
+
+  include_once( 'widgets/upsell-products.php' );
+  register_widget( 'Kidberries_Widget_Upsell_Products' );
+
 }
 
 

@@ -27,10 +27,10 @@ class Kidberries_WC_Widget_Recently_Viewed extends WP_Widget {
 	function Kidberries_WC_Widget_Recently_Viewed() {
 
 		/* Widget variable settings. */
-		$this->woo_widget_cssclass = 'woocommerce widget_recently_viewed_products';
+		$this->woo_widget_cssclass = 'kidberries widget_recently_viewed_products';
 		$this->woo_widget_description = __( 'Display a list of recently viewed products.', 'woocommerce' );
-		$this->woo_widget_idbase = 'woocommerce_recently_viewed_products';
-		$this->woo_widget_name = __( 'WooCommerce Recently Viewed Products', 'woocommerce' );
+		$this->woo_widget_idbase = 'kidberries_recently_viewed_products';
+		$this->woo_widget_name = __( 'Kidberries Recently Viewed Products', 'woocommerce' );
 
 		/* Widget settings. */
 		$widget_ops = array( 'classname' => $this->woo_widget_cssclass, 'description' => $this->woo_widget_description );

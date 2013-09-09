@@ -9,9 +9,12 @@
  * @extends 	WP_Widget
  */
 
+ 
+/////////////////////////////////////////////////////////////////
+ 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-class Kidberries_Widget_Upsale_Products extends WP_Widget {
+class Kidberries_Widget_Upsell_Products extends WP_Widget {
 
 	/**
 	 * constructor
@@ -20,11 +23,11 @@ class Kidberries_Widget_Upsale_Products extends WP_Widget {
 	 * @return void
 	 */
 	function __construct() {
-		$this->id_base = 'woocommerce_upsale_products';
-		$this->name    = __( 'WooCommerce Upsell Products', 'woocommerce' );
+		$this->id_base = 'kidberries_upsell_products';
+		$this->name    = __( 'Kidberries Upsell Products', 'woocommerce' );
 		$this->widget_options = array(
-			'classname'   => 'woocommerce widget_upsale_products',
-			'description' => __( 'Display a list of upsale products on your site.', 'woocommerce' ),
+			'classname'   => 'kidberries widget_upsell_products',
+			'description' => __( 'Display a list of upsell products on your site.', 'woocommerce' ),
 		);
 
 		parent::__construct( $this->id_base, $this->name, $this->widget_options );
@@ -43,7 +46,7 @@ class Kidberries_Widget_Upsale_Products extends WP_Widget {
 		global $woocommerce, $product;
 
 		// Use default title as fallback
-		$title = ( '' === $instance['title'] ) ? __('Upsale Products', 'woocommerce' ) : $instance['title'];
+		$title = ( '' === $instance['title'] ) ? __('Upsell Products', 'woocommerce' ) : $instance['title'];
 		$title = apply_filters('widget_title', $title, $instance, $this->id_base);
 
 		// Setup product query
@@ -66,7 +69,6 @@ class Kidberries_Widget_Upsale_Products extends WP_Widget {
 
 	    $query_args['meta_query'][] = $woocommerce->query->stock_status_meta_query();
 
-		
 		$query = new WP_Query( $query_args );
 
 		if ( $query->have_posts() ) {

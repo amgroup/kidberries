@@ -27,10 +27,10 @@ class Kidberries_WC_Widget_Recent_Reviews extends WP_Widget {
 	function Kidberries_WC_Widget_Recent_Reviews() {
 
 		/* Widget variable settings. */
-		$this->woo_widget_cssclass = 'woocommerce widget_recent_reviews';
+		$this->woo_widget_cssclass = 'kidberries widget_recent_reviews';
 		$this->woo_widget_description = __( 'Display a list of your most recent reviews on your site.', 'woocommerce' );
-		$this->woo_widget_idbase = 'woocommerce_recent_reviews';
-		$this->woo_widget_name = __( 'WooCommerce Recent Reviews', 'woocommerce' );
+		$this->woo_widget_idbase = 'kidberries_recent_reviews';
+		$this->woo_widget_name = __( 'Kidberries Recent Reviews', 'woocommerce' );
 
 		/* Widget settings. */
 		$widget_ops = array( 'classname' => $this->woo_widget_cssclass, 'description' => $this->woo_widget_description );
