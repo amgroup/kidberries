@@ -1,0 +1,7 @@
+@font-face {
+    font-family: 'MyriadPro';
+    src: url('fonts/MyriadPro/MyriadPro-Semibold.eot');
+    src: local('☺'), url('fonts/MyriadPro/MyriadPro-Semibold.woff') format('woff'), url('fonts/MyriadPro/MyriadPro-Semibold.ttf') format('truetype'), url('fonts/MyriadPro/MyriadPro-Semibold.svg') format('svg');
+    font-weight: bold;
+    font-style: normal;
+}
