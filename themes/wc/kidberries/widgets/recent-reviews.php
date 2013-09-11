@@ -76,7 +76,7 @@ class Kidberries_WC_Widget_Recent_Reviews extends WP_Widget {
 		if ( $comments ) {
 			echo $before_widget;
 			if ( $title ) echo $before_title . $title . $after_title;
-			echo '<ul class="product_list_widget">';
+			echo '<ul class="customers_reviews_widget">';
 
 			foreach ( (array) $comments as $comment) {
 
@@ -85,15 +85,32 @@ class Kidberries_WC_Widget_Recent_Reviews extends WP_Widget {
 				$rating = intval( get_comment_meta( $comment->comment_ID, 'rating', true ) );
 
 				$rating_html = $_product->get_rating_html();
-
-		/*		<div class="product review details-wrapper">
+/*
+			<div class="product review details-wrapper">
                           <a href="http://kidberries.com/shkol-nyj-rjukzak-hummingbird-sweet-dreams-35942.html  http://kidberries.com/shkol-nyj-rjukzak-hummingbird-sweet-dreams-35942.html%27" tppabs="http://kidberries.com/shkol-nyj-rjukzak-hummingbird-sweet-dreams-35942.html">
-                            <img class="product review image" src="media/catalog/product/cache/1/thumbnail/150x/9df78eab33525d08d6e5fb8d27136e95/2/0/2037.jpg" tppabs="http://kidberries.com/media/catalog/product/cache/1/thumbnail/150x/9df78eab33525d08d6e5fb8d27136e95/2/0/2037.jpg" alt="Школьный рюкзак HummingBird &quot;Sweet dreams&quot; 35942" />
+                            <img class="product review image" src="media/catalog/product/cache/1/thumbnail/150x/9df78eab33525d08d6e5fb8d27136e95/2/0/2037.jpg" tppabs="http://kidberries.com/media/catalog/product/cache/1/thumbnail/150x/9df78eab33525d08d6e5fb8d27136e95/2/0/2037.jpg" alt="РЁРєРѕР»СЊРЅС‹Р№ СЂСЋРєР·Р°Рє HummingBird &quot;Sweet dreams&quot; 35942" />
                             <span class="product review details">
-                              Добрый день! Ранец отличный, два отделения, в большом еще есть разделители для учебников и тетрадей, в узком куча карманов, очень удобно. Смотрится очень аккуратно, отсутствие карманчиков по бокам для меня                            </span>
+                              Р”РѕР±СЂС‹Р№ РґРµРЅСЊ! Р Р°РЅРµС† РѕС‚Р»РёС‡РЅС‹Р№, РґРІР° РѕС‚РґРµР»РµРЅРёСЏ, РІ Р±РѕР»СЊС€РѕРј РµС‰Рµ РµСЃС‚СЊ СЂР°Р·РґРµР»РёС‚РµР»Рё РґР»СЏ СѓС‡РµР±РЅРёРєРѕРІ Рё С‚РµС‚СЂР°РґРµР№, РІ СѓР·РєРѕРј РєСѓС‡Р° РєР°СЂРјР°РЅРѕРІ, РѕС‡РµРЅСЊ СѓРґРѕР±РЅРѕ. РЎРјРѕС‚СЂРёС‚СЃСЏ РѕС‡РµРЅСЊ Р°РєРєСѓСЂР°С‚РЅРѕ, РѕС‚СЃСѓС‚СЃС‚РІРёРµ РєР°СЂРјР°РЅС‡РёРєРѕРІ РїРѕ Р±РѕРєР°Рј РґР»СЏ РјРµРЅСЏ                            </span>
                           </a>
                         </div>
-                <div class="product review owner-wrapper"><span class="product review owner" >Оля</span></div>*/
+                <div class="product review owner-wrapper"><span class="product review owner" >РћР»СЏ</span></div>
+*/
+?>
+                <li class="item review">
+                    <div class="comment-details">
+                        <a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>" class="product-image">
+                            <div class="product_in_cart">
+                                <?php the_post_thumbnail( array(60,60) ); ?>
+                            </div>
+                        </a>
+                        <p class="comment-autor"><?php echo get_comment_author(); ?> (<span class="comment-date"><?php echo get_comment_date(); ?></span>)</p>
+                        <p class="comment-content">
+                            <a href="<?php echo esc_url( get_comment_link( $comment->comment_ID ) ); ?>"><?php echo get_comment_text(); ?></a>
+                        </p>
+                    </div>
+                </li>
+<?php
+/*
 				
 				
 				echo '<div class="product review details-wrapper"><a href="' . esc_url( get_comment_link( $comment->comment_ID ) ) . '">';
@@ -110,7 +127,7 @@ class Kidberries_WC_Widget_Recent_Reviews extends WP_Widget {
 				echo '</span></a></div>';
 				$author =  get_comment_author();
 				echo '<div class="product review owner-wrapper"><span class="product review owner" >'.$author.'</span></div>';
-
+*/
 			}
 
 			echo '</ul>';

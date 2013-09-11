@@ -109,7 +109,7 @@ class Kidberries_WC_Widget_Recently_Viewed extends WP_Widget {
 				</li>';
 			}
 
-			echo '</ol></div><script type="text/javascript">decorateList('."'recently-viewed-items'".');</script>'."";
+			echo '</ol></div>';
 
 			echo $after_widget;
 		}

@@ -31,6 +31,9 @@ msgstr[3] "%d вещей"
 msgid "View your shopping cart"
 msgstr "Перейти в корзину"
 
+#@ woocommerce
+msgid "An Order Placing"
+msgstr "Размещение заказа"
 
 #@ woocommerce
 msgid "Showing all %d result"
@@ -47,3 +50,7 @@ msgstr[0] "На этой страничке пусто"
 msgstr[1] "Показаны %1$d – %2$d из %3$d вещи"
 msgstr[2] "Показаны %1$d – %2$d из %3$d вещей"
 msgstr[3] "Показаны %1$d – %2$d из %3$d вещей"
+
+#@ woocommerce
+msgid "Recent Comments"
+msgstr "Комментарии"

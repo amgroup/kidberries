@@ -83,7 +83,6 @@ global $woocommerce;
 
 		<?php endforeach; ?>
 </ol>
-<script type="text/javascript">decorateList('cart-sidebar', 'none-recursive')</script>
 	<?php else : ?>
 <br>
 		<li class="empty"><?php _e( 'No products in the cart.', 'woocommerce' ); ?></li>

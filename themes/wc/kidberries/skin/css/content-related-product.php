@@ -34,8 +34,7 @@ if ( 0 == ( $woocommerce_loop['loop'] - 1 ) % $woocommerce_loop['columns'] || 1 
 	$classes[] = 'first';
 if ( 0 == $woocommerce_loop['loop'] % $woocommerce_loop['columns'] )
 	$classes[] = 'last';
-	
-	$classes[] .= ' item';
+	$classes[] = 'item';
 ?>
 
 <td>
@@ -45,7 +44,7 @@ if ( 0 == $woocommerce_loop['loop'] % $woocommerce_loop['columns'] )
 		</a>
                     
 		<div class="price-box">
-			<span class="regular-price price" id="product-price-841-upsell">
+			<span class="regular-price price" id="product-price-<?php echo $product->id; ?>-upsell">
 				<span class="price digit"><?echo $product->price;?></span>
 				<span class="price currency"> руб.</span>
 			</span>

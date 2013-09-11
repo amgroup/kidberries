@@ -97,9 +97,9 @@ wp_nav_menu( $args );   ?>
 <br class="clear" />
                 <div class="main-container col1-layout">
                     <div class="main">
-                                                <div class="col-main">
-												<div class="page-title title-buttons">
-        <h1><?php the_title(); ?></h1>
+                        <div class="col-main">
+				<div class="page-title title-buttons">
+        <h1><?php _e( get_the_title(), 'woocommerce'); ?></h1>
         <br class="clear">
     </div>
                                                         <div class="std">&nbsp;</div>

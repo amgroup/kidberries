@@ -1822,6 +1822,11 @@ padding-top:10px;
 display:block;
 }
 
+.mini-products-list .product-details .btn-remove {
+margin-left: 3px;
+margin-right: 3px;
+}
+
 .mini-products-list img {
 background-color:#fff!important;
 }
@@ -4271,4 +4276,20 @@ border: 1px solid #396D39;
 .form-horizontal .control-field input.input-text:focus, .form-horizontal .control-field textarea:focus {
 border-color: #396D39;
 box-shadow: rgba(0, 0, 0, 0.075) 0px 1px 1px 0px inset, rgba(122, 185, 122, 0.8) 0px 0px 5px 0px;
+}
+
+.customers_reviews_widget .item.review .product-image .product_in_cart {
+float: left;
+margin-right: 5px;
+}
+
+.customers_reviews_widget .item.review .comment-autor {
+font-size: 10px;
+}
+
+.customers_reviews_widget .item.review .comment-content a {
+font-style: italic;
+font-size: 12px;
+text-decoration: none;
+text-shadow: 0 1px 0 #AAA;
 }
