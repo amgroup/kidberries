@@ -20,6 +20,19 @@ msgstr ""
 "X-Textdomain-Support: yes"
 
 #@ woocommerce
+msgid "%d item"
+msgid_plural "%d items"
+msgstr[0] "пусто"
+msgstr[1] "%d вещь"
+msgstr[2] "%d вещи"
+msgstr[3] "%d вещей"
+
+#@ woocommerce
+msgid "View your shopping cart"
+msgstr "Перейти в корзину"
+
+
+#@ woocommerce
 msgid "Showing all %d result"
 msgid_plural "Showing all %d results"
 msgstr[0] "Ничего не найдено"

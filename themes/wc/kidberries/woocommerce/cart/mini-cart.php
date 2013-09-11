@@ -26,8 +26,7 @@ global $woocommerce;
 	
 	<p class="amount">
 		В корзине 
-<a href="<?php echo $woocommerce->cart->get_cart_url(); ?>" title="<?php _e('View your shopping cart', 'woothemes'); ?>"><strong><?php echo sprintf(_n('%d item', '%d items', $woocommerce->cart->cart_contents_count, 'woothemes'), $woocommerce->cart->cart_contents_count);?></strong>
-</a>.
+<a href="<?php echo $woocommerce->cart->get_cart_url(); ?>" alt="<?php _e('View your shopping cart', 'woocommerce'); ?>" title="<?php _e('View your shopping cart', 'woocommerce'); ?>"><strong><?php echo sprintf(_n('%d item', '%d items', $woocommerce->cart->cart_contents_count, 'woocommerce'), $woocommerce->cart->cart_contents_count);?></strong></a>.
 	</p>
 	
 	<p class="subtotal">
