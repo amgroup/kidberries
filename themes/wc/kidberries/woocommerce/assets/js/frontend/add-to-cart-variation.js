@@ -291,6 +291,10 @@
 
 						if ( ! exclude ) {
 							$variation_form.find('.single_variation_wrap').slideUp('200');
+/*
+							$('td.price-cont .price-box').show();
+							$('td.price-cont .single_variation').hide();
+*/
 						}
 
 			        }
@@ -312,11 +316,11 @@
 				.on( 'reset_image', function( event ) {
 
 					var $product 		= $(this).closest( '.product-esqsential' );
-					var $product_img 	= $product.find( 'div.images img:eq(0)' );
-					var $product_link 	= $product.find( 'div.images a.zoom:eq(0)' );
+					var $product_img 	= $( '#image-zoom img' );
+					var $product_link 	= $( '#image-zoom' );
 					var o_src 		= $product_img.attr('data-o_src');
 					var o_title 		= $product_img.attr('data-o_title');
-			        var o_href 			= $product_link.attr('data-o_href');
+					var o_href 		= $product_link.attr('href');
 
 			        if ( o_src ) {
 				        $product_img
@@ -411,11 +415,11 @@
 			      	var $variation_form = $(this);
 
 			        var $product 		= $( '.product-esqsential' );
-				var $product_img 	= $product.find( 'div.images img:eq(0)' );
-				var $product_link 	= $product.find( 'div.images a.zoom:eq(0)' );
+				var $product_img 	= $( '#image-zoom img' );
+				var $product_link 	= $( '#image-zoom' );
 				var o_src 		= $product_img.attr('data-o_src');
 				var o_title 		= $product_img.attr('data-o_title');
-			        var o_href 		= $product_link.attr('data-o_href');
+			        var o_href 		= $product_link.attr('href');
 
 			        var variation_image = variation.image_src;
 			        var variation_link = variation.image_link;
@@ -448,16 +452,17 @@
 			            	.attr( 'title', variation_title );
 			            $product_link
 			            	.attr( 'href', variation_link )
-							.attr( 'title', variation_title );
-			        } else {
+					.attr( 'title', variation_title );
+			        } /*else {
 			            $product_img
 			            	.attr( 'src', o_src )
 			            	.attr( 'alt', o_title )
 			            	.attr( 'title', o_title );
 			            $product_link
 			            	.attr( 'href', o_href )
-							.attr( 'title', o_title );
-			        }
+					.attr( 'title', o_title );
+			        }*/
+				$('#image-zoom').CloudZoom();
 
 			        var $single_variation_wrap = $variation_form.find('.single_variation_wrap');
 
@@ -512,7 +517,13 @@
 			        	$single_variation_wrap.find('input[name=quantity]').val('1');
 			        	$single_variation_wrap.find('.quantity').hide();
 			        }
-
+/*
+				$('td.price-cont .price-box').hide();
+				$('td.price-cont')
+					.remove('.single_variation')
+					.append( $single_variation_wrap.find(".single_variation") )
+					.find(".single_variation .price .price-box").show();
+*/
 			        $single_variation_wrap.slideDown('200').trigger( 'show_variation', [ variation ] );
 
 					

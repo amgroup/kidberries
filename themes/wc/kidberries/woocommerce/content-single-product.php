@@ -47,14 +47,15 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
         </td>
 
 		<td class="product-shop">
+		<form action="<?php echo esc_url( $product->add_to_cart_url() ); ?>" class="variations_form cart" method="post" enctype='multipart/form-data' data-product_id="<?php echo $post->ID; ?>" data-product_variations="<?php echo esc_attr( json_encode( $available_variations ) ) ?>">
             <div>
 				<table border="0">
+					<?php if( $product->is_in_stock()) :?>
 					<tr>
 						<td colspan="3" class="product delivery methods">
 							<div class="delivery-box">
 								<span class="title"><span class="big">Доставка:</span></span>
-									<ul id="shipping_method">
-									</ul>
+								<ul id="shipping_method"></ul>
 								<small>* <em>стоимость доставки вашей корзины <strong>вместе с этим товаром</strong></em></small>
 							</div>
 							<script type="text/javascript">
@@ -70,9 +71,10 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 								});
 							</script>
 							<hr clear="all"/>
+
 						</td>
 					</tr>
-
+					<?php endif; ?>
 					<tr>
 
 					
@@ -168,6 +170,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 					</tr>
 				</table>
 			</div>
+		</form>
 		</td>
     </tr>
 

@@ -14,6 +14,228 @@ function selfURL(){
     return $pr."://".$_SERVER['SERVER_NAME'].$pt.$suri;
 }
 
+if ( ! function_exists( 'kidberries_form_field' ) ) {
+	/**
+	 * Outputs a checkout/address form field.
+	 *
+	 * @access public
+	 * @subpackage	Forms
+	 * @param mixed $key
+	 * @param mixed $args
+	 * @param string $value (default: null)
+	 * @return void
+	 */
+	function kidberries_form_field( $key, $args, $value = null ) {
+		global $woocommerce;
+
+		$defaults = array(
+			'type'              => 'text',
+			'label'             => '',
+			'placeholder'       => '',
+			'maxlength'         => false,
+			'required'          => false,
+			'class'             => array(),
+			'label_class'       => array(),
+            'control_class'     => array(),
+			'return'            => false,
+			'options'           => array(),
+			'custom_attributes' => array(),
+			'validate'          => array(),
+			'default'		    => '',
+		);
+        
+        $args['class'][]         = 'control-group';
+        $args['label_class'][]   = 'control-label';
+        $args['control_class'][] = 'control-field';
+
+		$args = wp_parse_args( $args, $defaults  );
+
+		if ( ( ! empty( $args['clear'] ) ) ) $after = '<div class="clear"></div>'; else $after = '';
+
+		if ( $args['required'] ) {
+			$args['class'][] = 'validate-required';
+			//$required = ' <abbr class="required" title="' . esc_attr__( 'required', 'woocommerce'  ) . '">*</abbr>';
+		} else {
+			$required = '';
+		}
+
+		$args['maxlength'] = ( $args['maxlength'] ) ? 'maxlength="' . absint( $args['maxlength'] ) . '"' : '';
+
+		if ( is_null( $value ) )
+			$value = $args['default'];
+
+		// Custom attribute handling
+		$custom_attributes = array();
+
+		if ( ! empty( $args['custom_attributes'] ) && is_array( $args['custom_attributes'] ) )
+			foreach ( $args['custom_attributes'] as $attribute => $attribute_value )
+				$custom_attributes[] = esc_attr( $attribute ) . '="' . esc_attr( $attribute_value ) . '"';
+
+		if ( ! empty( $args['validate'] ) )
+			foreach( $args['validate'] as $validate )
+				$args['class'][] = 'validate-' . $validate;
+
+		switch ( $args['type'] ) {
+		case "country" :
+
+			if ( sizeof( $woocommerce->countries->get_allowed_countries() ) == 1 ) {
+
+				$field = '<div class="form-row ' . esc_attr( implode( ' ', $args['class'] ) ) .'" id="' . esc_attr( $key ) . '_field">';
+
+				if ( $args['label'] )
+					$field .= '<label class="' . implode( ' ', $args['label_class'] ) .'">' . $args['label']  . '</label>';
+
+				$field .= '<strong>' . current( array_values( $woocommerce->countries->get_allowed_countries() ) ) . '</strong>';
+
+				$field .= '<div class="' . implode( ' ', $args['control_class'] ) .'"><input type="hidden" name="' . esc_attr( $key ) . '" id="' . esc_attr( $key ) . '" value="' . current( array_keys( $woocommerce->countries->get_allowed_countries() ) ) . '" ' . implode( ' ', $custom_attributes ) . ' /></div>';
+
+				$field .= '</div>' . $after;
+
+			} else {
+
+				$field = '<div class="form-row ' . esc_attr( implode( ' ', $args['class'] ) ) .'" id="' . esc_attr( $key ) . '_field">
+						<label for="' . esc_attr( $key ) . '" class="' . implode( ' ', $args['label_class'] ) .'">' . $args['label']. $required  . '</label>
+						<div class="' . implode( ' ', $args['control_class'] ) .'"><select name="' . esc_attr( $key ) . '" id="' . esc_attr( $key ) . '" class="chzn-select country_to_state country_select" ' . implode( ' ', $custom_attributes ) . '>
+							<option value="">'.__( 'Select a country&hellip;', 'woocommerce' ) .'</option>';
+
+				foreach ( $woocommerce->countries->get_allowed_countries() as $ckey => $cvalue )
+					$field .= '<option value="' . $ckey . '" '.selected( $value, $ckey, false ) .'>'.__( $cvalue, 'woocommerce' ) .'</option>';
+
+				$field .= '</select></div>';
+
+				$field .= '<noscript><input type="submit" name="woocommerce_checkout_update_totals" value="' . __( 'Update country', 'woocommerce' ) . '" /></noscript>';
+
+				$field .= '</div>' . $after;
+
+			}
+
+			break;
+		case "state" :
+
+			/* Get Country */
+			$country_key = $key == 'billing_state'? 'billing_country' : 'shipping_country';
+
+			if ( isset( $_POST[ $country_key ] ) ) {
+				$current_cc = woocommerce_clean( $_POST[ $country_key ] );
+			} elseif ( is_user_logged_in() ) {
+				$current_cc = get_user_meta( get_current_user_id() , $country_key, true );
+				if ( ! $current_cc) {
+					$current_cc = apply_filters('default_checkout_country', ($woocommerce->customer->get_country()) ? $woocommerce->customer->get_country() : $woocommerce->countries->get_base_country());
+				}
+			} elseif ( $country_key == 'billing_country' ) {
+				$current_cc = apply_filters('default_checkout_country', ($woocommerce->customer->get_country()) ? $woocommerce->customer->get_country() : $woocommerce->countries->get_base_country());
+			} else {
+				$current_cc = apply_filters('default_checkout_country', ($woocommerce->customer->get_shipping_country()) ? $woocommerce->customer->get_shipping_country() : $woocommerce->countries->get_base_country());
+			}
+
+			$states = $woocommerce->countries->get_states( $current_cc );
+
+			if ( is_array( $states ) && empty( $states ) ) {
+
+				$field  = '<div class="form-row ' . esc_attr( implode( ' ', $args['class'] ) ) .'" id="' . esc_attr( $key ) . '_field" style="display: none">';
+
+				if ( $args['label'] )
+					$field .= '<label for="' . esc_attr( $key ) . '" class="' . implode( ' ', $args['label_class'] ) .'">' . $args['label'] . $required . '</label>';
+				$field .= '<div class="' . implode( ' ', $args['control_class'] ) .'"><input type="hidden" class="hidden" name="' . esc_attr( $key )  . '" id="' . esc_attr( $key ) . '" value="" ' . implode( ' ', $custom_attributes ) . ' placeholder="' . $args['placeholder'] . '" /></div>';
+				$field .= '</div>' . $after;
+
+			} elseif ( is_array( $states ) ) {
+
+				$field  = '<div class="form-row ' . esc_attr( implode( ' ', $args['class'] ) ) .'" id="' . esc_attr( $key ) . '_field">';
+
+				if ( $args['label'] )
+					$field .= '<label for="' . esc_attr( $key ) . '" class="' . implode( ' ', $args['label_class'] ) .'">' . $args['label']. $required . '</label>';
+				$field .= '<div class="' . implode( ' ', $args['control_class'] ) .'"><select name="' . esc_attr( $key ) . '" id="' . esc_attr( $key ) . '" class="state_select" ' . implode( ' ', $custom_attributes ) . ' placeholder="' . $args['placeholder'] . '">
+					<option value="">'.__( 'Select a state&hellip;', 'woocommerce' ) .'</option>';
+
+				foreach ( $states as $ckey => $cvalue )
+					$field .= '<option value="' . $ckey . '" '.selected( $value, $ckey, false ) .'>'.__( $cvalue, 'woocommerce' ) .'</option>';
+
+				$field .= '</select></div>';
+				$field .= '</div>' . $after;
+
+			} else {
+
+				$field  = '<div class="form-row ' . esc_attr( implode( ' ', $args['class'] ) ) .'" id="' . esc_attr( $key ) . '_field">';
+
+				if ( $args['label'] )
+					$field .= '<label for="' . esc_attr( $key ) . '" class="' . implode( ' ', $args['label_class'] ) .'">' . $args['label']. $required . '</label>';
+				$field .= '<div class="' . implode( ' ', $args['control_class'] ) .'"><input type="text" class="input-text" value="' . $value . '"  placeholder="' . $args['placeholder'] . '" name="' . esc_attr( $key ) . '" id="' . esc_attr( $key ) . '" ' . implode( ' ', $custom_attributes ) . ' /></div>';
+				$field .= '</div>' . $after;
+
+			}
+
+			break;
+		case "textarea" :
+
+			$field = '<div class="form-row ' . esc_attr( implode( ' ', $args['class'] ) ) .'" id="' . esc_attr( $key ) . '_field">';
+
+			if ( $args['label'] )
+				$field .= '<label for="' . esc_attr( $key ) . '" class="' . implode( ' ', $args['label_class'] ) .'">' . $args['label']. $required  . '</label>';
+
+			$field .= '<div class="' . implode( ' ', $args['control_class'] ) .'"><textarea name="' . esc_attr( $key ) . '" class="input-text" id="' . esc_attr( $key ) . '" placeholder="' . $args['placeholder'] . '" cols="5" rows="2" ' . implode( ' ', $custom_attributes ) . '>'. esc_textarea( $value  ) .'</textarea></div>
+				</div>' . $after;
+
+			break;
+		case "checkbox" :
+
+			$field = '<div class="form-row ' . esc_attr( implode( ' ', $args['class'] ) ) .'" id="' . esc_attr( $key ) . '_field">
+					<div class="' . implode( ' ', $args['control_class'] ) .'"><input type="' . $args['type'] . '" class="input-checkbox" name="' . esc_attr( $key ) . '" id="' . esc_attr( $key ) . '" value="1" '.checked( $value, 1, false ) .' /></div>
+					<label for="' . esc_attr( $key ) . '" class="checkbox ' . implode( ' ', $args['label_class'] ) .'" ' . implode( ' ', $custom_attributes ) . '>' . $args['label'] . $required . '</label>
+				</div>' . $after;
+
+			break;
+		case "password" :
+
+			$field = '<div class="form-row ' . esc_attr( implode( ' ', $args['class'] ) ) .'" id="' . esc_attr( $key ) . '_field">';
+
+			if ( $args['label'] )
+				$field .= '<label for="' . esc_attr( $key ) . '" class="' . implode( ' ', $args['label_class'] ) .'">' . $args['label']. $required . '</label>';
+
+			$field .= '<div class="' . implode( ' ', $args['control_class'] ) .'"><input type="password" class="input-text" name="' . esc_attr( $key ) . '" id="' . esc_attr( $key ) . '" placeholder="' . $args['placeholder'] . '" value="' . esc_attr( $value ) . '" ' . implode( ' ', $custom_attributes ) . ' /></div>
+				</div>' . $after;
+
+			break;
+		case "text" :
+
+			$field = '<div class="form-row ' . esc_attr( implode( ' ', $args['class'] ) ) .'" id="' . esc_attr( $key ) . '_field">';
+
+			if ( $args['label'] )
+				$field .= '<label for="' . esc_attr( $key ) . '" class="' . implode( ' ', $args['label_class'] ) .'">' . $args['label'] . $required . '</label>';
+
+			$field .= '<div class="' . implode( ' ', $args['control_class'] ) .'"><input type="text" class="input-text" name="' . esc_attr( $key ) . '" id="' . esc_attr( $key ) . '" placeholder="' . $args['placeholder'] . '" '.$args['maxlength'].' value="' . esc_attr( $value ) . '" ' . implode( ' ', $custom_attributes ) . ' /></div>
+				</div>' . $after;
+
+			break;
+		case "select" :
+
+			$options = '';
+
+			if ( ! empty( $args['options'] ) )
+				foreach ( $args['options'] as $option_key => $option_text )
+					$options .= '<option value="' . esc_attr( $option_key ) . '" '. selected( $value, $option_key, false ) . '>' . esc_attr( $option_text ) .'</option>';
+
+				$field = '<div class="form-row ' . esc_attr( implode( ' ', $args['class'] ) ) .'" id="' . esc_attr( $key ) . '_field">';
+
+				if ( $args['label'] )
+					$field .= '<label for="' . esc_attr( $key ) . '" class="' . implode( ' ', $args['label_class'] ) .'">' . $args['label']. $required . '</label>';
+
+				$field .= '<div class="' . implode( ' ', $args['control_class'] ) .'"><select name="' . esc_attr( $key ) . '" id="' . esc_attr( $key ) . '" class="select" ' . implode( ' ', $custom_attributes ) . '>
+						' . $options . '
+					</select></div>
+				</div>' . $after;
+
+			break;
+		default :
+
+			$field = apply_filters( 'woocommerce_form_field_' . $args['type'], '', $key, $args, $value );
+
+			break;
+		}
+
+		if ( $args['return'] ) return $field; else echo $field;
+	}
+}
 
 if ( ! function_exists( 'woocommerce_content' ) ) {
 
@@ -901,7 +1123,6 @@ function kidberries_variation() {
   wp_register_script( 'wc-add-to-cart-variation', get_template_directory_uri() . '/woocommerce/assets/js/frontend/add-to-cart-variation.js', array('jquery') ); // назначть новый скрипт
 }
 add_action( 'wp_enqueue_scripts', 'kidberries_variation' );
-
 
 
 /* Именяем форматирование цены в get_price_html() для обычной цены.

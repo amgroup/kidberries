@@ -72,15 +72,10 @@ if ( $mode != 'list' ) {
 		?></a>
 
 		<h3 class="product-name"></h3>
-<div class="actions">
-
-<?woocommerce_template_loop_add_to_cart();?>
-                                                                    
-                                                                <br class="clear" />
-																
-                            </div>
-		
-	
+    <div class="actions">
+        <?woocommerce_template_loop_add_to_cart();?>
+	<br class="clear" />
+    </div>
 </div>
 
 
@@ -133,15 +128,14 @@ if ( $mode != 'list' ) {
 		<a href="<?the_permalink();?>" class="product-image">
 
 		</a>
-
+		<?php if ( ! $product->is_in_stock() ) : ?>
+		    <p class="not_in_stock">Нет в наличии</p>
+		<?php endif;?>
 		<h3 class="product-name"><a href="<?the_permalink();?>" title='<?the_title();?>'><?php the_title(); ?></a></h3>
-<div class="actions">
-
-<?woocommerce_template_loop_add_to_cart();?>
-                                                                    
-                                                                <br class="clear" />
-																
-                            </div>
+    <div class="actions">
+	<?php woocommerce_template_loop_add_to_cart();?>
+	<br class="clear" />
+    </div>
 		
 </div></div>
                     </div>
@@ -170,11 +164,14 @@ if ( $mode != 'list' ) {
 									<div class="corner-right-bot">
 										<div class="full-width">
 											<div class="left">
+		<?php if ( ! $product->is_in_stock() ) : ?>
+		    <p class="not_in_stock">Нет в наличии</p>
+		<?php endif;?>
 
 												<a href="<?the_permalink();?>" class="product-image">
 													<?do_action( 'woocommerce_before_shop_loop_item_title' );?>
 												</a>
-                                                
+
                                                     <p><?woocommerce_template_loop_add_to_cart();?></p>
 													
                                             </div>

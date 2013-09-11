@@ -2749,6 +2749,26 @@ padding-left:30px;
 padding-right:30px;
 }
 
+.corner-right-bot p.not_in_stock {
+text-align: center;
+color: red;
+text-shadow: 0 1px 1px rgba(0, 0, 0, 0.08);
+}
+
+
+.product.item.outofstock img {
+-moz-transition: opacity 0.3s ease;
+-o-transition: opacity 0.3s ease;
+-webkit-transition: opacity 0.3s ease;
+transition: opacity 0.3s ease;
+
+opacity: 0.6;
+}
+
+.product.item.outofstock:hover img {
+opacity: 1;
+}
+
 .cart .checkout-types {
 float:right;
 text-align:right;
@@ -4166,4 +4186,89 @@ padding:2px 3px;
 
 .wp-caption,table.variations .value select {
 width:100%!important;
+}
+
+
+/* Checkout fields */
+
+.form-horizontal .control-group {
+box-sizing: border-box;
+color: #333;
+display: block;
+font-size: 14px;
+height: 34px;
+line-height: 20px;
+margin-bottom: 15px;
+margin-left: -15px;
+margin-right: -15px;
+}
+
+
+/* Labels */
+.form-horizontal .control-label {
+box-sizing: border-box;
+color: #aaa;
+cursor: default;
+display: block;
+float: left;
+font-size: 14px;
+font-weight: bold;
+height: 27px;
+line-height: 20px;
+margin-bottom: 0px;
+margin-top: 0px;
+min-height: 1px;
+padding-left: 0px;
+padding-right: 15px;
+padding-top: 7px;
+position: relative;
+text-align: right;
+min-width: 170px;
+width: 30%;
+}
+
+.form-horizontal .control-group.validate-required .control-label {
+color: #333;
+}
+
+/* Inputs */
+.form-horizontal .control-field {
+box-sizing: border-box;
+color: #333;
+display: block;
+float: left;
+font-size: 14px;
+height: 34px;
+line-height: 20px;
+min-height: 1px;
+padding-left: 15px;
+padding-right: 15px;
+width: 68%;
+min-width: 200px;
+position: relative;
+}
+
+.form-horizontal .control-field input.input-text, .form-horizontal .control-field textarea {
+font-size: 14px;
+line-height: 20px;
+margin: 0px;
+padding: 6px 12px 6px 12px;
+text-align: start;
+transition-delay: 0s, 0s;
+transition-duration: 0.15s, 0.15s;
+transition-property: border-color, box-shadow;
+transition-timing-function: ease-in-out, ease-in-out;
+vertical-align: middle;
+color: #555;
+border: 1px solid #aaa;
+width: 100%;
+border-radius: 4px;
+}
+.form-horizontal .control-group.validate-required  .control-field input.input-text, .form-horizontal .control-field textarea {
+border: 1px solid #396D39;
+}
+
+.form-horizontal .control-field input.input-text:focus, .form-horizontal .control-field textarea:focus {
+border-color: #396D39;
+box-shadow: rgba(0, 0, 0, 0.075) 0px 1px 1px 0px inset, rgba(122, 185, 122, 0.8) 0px 0px 5px 0px;
 }

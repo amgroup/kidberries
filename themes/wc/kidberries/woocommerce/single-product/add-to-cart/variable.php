@@ -12,11 +12,9 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 global $woocommerce, $product, $post;
 
 ?>
-	<td colspan='3'>
+<!-- variable product form content -->
+<td colspan='3'>
 <?php do_action('woocommerce_before_add_to_cart_form');?>
-
-<form action="<?php echo esc_url( $product->add_to_cart_url() ); ?>" class="variations_form cart" method="post" enctype='multipart/form-data' data-product_id="<?php echo $post->ID; ?>" data-product_variations="<?php echo esc_attr( json_encode( $available_variations ) ) ?>">
-
 	
 	<table class="variations" cellspacing="0" border='0' width='50%'>
 		<tbody><tr>
@@ -96,7 +94,6 @@ global $woocommerce, $product, $post;
 	</table>
 
 	<?php do_action('woocommerce_after_add_to_cart_button'); ?>
-</form>
 </td>
 							
 	
@@ -112,3 +109,5 @@ global $woocommerce, $product, $post;
 </script>
 
 <?php do_action('woocommerce_after_add_to_cart_form'); ?>
+<!-- / variable product form content -->
+

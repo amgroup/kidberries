@@ -27,10 +27,9 @@ foreach ( $product->get_children() as $child_id ) {
 	);
 }
 ?>
-
+<!-- /grouped product form content -->
 <?php do_action('woocommerce_before_add_to_cart_form'); ?>
 
-<form action="<?php echo esc_url( $product->add_to_cart_url() ); ?>" class="cart" method="post" enctype='multipart/form-data'>
 	<table cellspacing="0" class="group_table">
 		<tbody>
 			<?php foreach ( $grouped_products as $child_product ) : ?>
@@ -80,6 +79,5 @@ foreach ( $product->get_children() as $child_id ) {
 
 	<?php endif; ?>
 
-</form>
-
 <?php do_action('woocommerce_after_add_to_cart_form'); ?>
+<!-- /grouped product form content -->
