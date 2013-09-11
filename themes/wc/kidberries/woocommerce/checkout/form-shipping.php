@@ -16,15 +16,14 @@ global $woocommerce;
 
 	<div class="shipping_address" id="checkout_shipping_address">
 		<h3><?php _e( 'Shipping Address', 'woocommerce' ); ?></h3>
-		<br clear="all" />
 
 		<?php do_action('woocommerce_before_checkout_shipping_form', $checkout); ?>
 
+		<div class="form-horizontal">
 		<?php foreach ($checkout->checkout_fields['shipping'] as $key => $field) : ?>
-
-			<?php woocommerce_form_field( $key, $field, $checkout->get_value( $key ) ); ?>
-
+			<?php kidberries_form_field( $key, $field, $checkout->get_value( $key ) ); ?>
 		<?php endforeach; ?>
+        </div>
 
 		<?php do_action('woocommerce_after_checkout_shipping_form', $checkout); ?>
 
