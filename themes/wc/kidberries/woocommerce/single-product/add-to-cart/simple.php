@@ -9,47 +9,63 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-global $woocommerce, $product;
+global $woocommerce, $product, $currency_symbol;
 
 if ( ! $product->is_purchasable() ) return;
 ?>
+
 <!-- simple product form content -->
-<?if ($product->is_in_stock() ) { ?>
+<input type="hidden" name="product_id" value="<?php echo esc_attr( $post->ID ); ?>" />
 
-<td>
-	<div class="quantity">
-		<?php
-		if ( ! $product->is_sold_individually() )
-		woocommerce_quantity_input( array(
-		'min_value' => apply_filters( 'woocommerce_quantity_input_min', 1, $product ),
-		'max_value' => apply_filters( 'woocommerce_quantity_input_max', $product->backorders_allowed() ? '' : $product->get_stock_quantity(), $product )
-		) );
-		?>
-	</div>
-</td>
-
-<td class="buttons">
-	<button type="submit" title="В корзину" class="button" onclick="productAddToCartForm.submit(this)"><span><span>В корзину</span></span></button>
-</td>
-<?} else {?>
-		
-<td></td>
-<td class="buttons"></td>
-
-<?}?>
-
-<td rowspan="2" class="status">
-	<div class="availability">
-	
-	<?if ($product->is_in_stock() ) {?>
-	
-		<span class="in-stock">Есть в наличии</span>
-		
-	<?} else {?>
-	
-		<span class="out-of-stock">Нет в наличии</span>
-	
-	<?}?>
-	</div>
-</td>
+<?php do_action('woocommerce_before_add_to_cart_form');?>
+<table>
+	<tr class="variations">
+		<td class="variation-price-cont">
+			<div class="price-box">
+				<p class="single_price_wrap">
+                    <?php if ( $product->is_on_sale() ) : ?>
+                        <div class="price-box onsale">
+                            <span class="old-price price" id="old-price-<?php echo $product->id; ?>-new">
+                                <span class="price digit"><?echo $product->regular_price;?></span>
+                            </span>
+                            
+                            <span class="special-price price">
+                                <span class="price digit"><?echo $product->price;?></span>
+                                <span class="price currency"> <?php echo $currency_symbol; ?></span>
+                            </span>
+                        </div>
+                    <?php else: ?>
+                        <div class="price-box regular">
+                            <span class="regular-price price" id="product-price-<?php echo $product->id; ?>-new">
+                                <span class="price digit"><?php do_action( 'woocommerce_after_shop_loop_item_title' ); ?></span>
+                                <span class="price currency"> <?php echo $currency_symbol; ?></span>
+                            </span>
+                        </div>
+                    <?php endif; ?>
+				</p>
+			</div>
+            <div class="availability">
+                <?php if ($product->is_in_stock()) : ?>
+                    <span class="stock in-stock">Есть в наличии</span>
+                <?php else : ?>
+                    <span class="stock out-of-stock">Нет в наличии</span>
+                <?php endif; ?>
+            </div>
+		</td>
+		<td class="variation-variants-cont">
+		</td>
+        <td class="variation-buttons-cont simple" >
+            <div class="single_variation_wrap">
+                <div class="variations_button">
+                    <?php woocommerce_quantity_input(); ?>
+                    <button type="submit" title="В корзину" class="button green"><span><span>В корзину</span></span></button>
+                    <div class="buttons_or">или</div>
+                    <button type="submit" title="Купить в один клик" class="button" onclick="buyitnow()"><span><span>Купить</span></span></button>
+                    <?php do_action('woocommerce_after_add_to_cart_button'); ?>
+                </div>
+            </div>
+		</td>
+	<tr>
+</table>
+<?php do_action('woocommerce_after_add_to_cart_form'); ?>	
 <!-- /simple product form content -->

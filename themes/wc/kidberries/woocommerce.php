@@ -1,4 +1,9 @@
-<?get_header()?>
+<?php
+    global $currency_symbol;
+    $currency_symbol = get_woocommerce_currency_symbol();
+
+    get_header();
+?>
 <body class=" cms-index-index cms-home">
 <div class="wrapper-top">
 	<div class="wrapper-bot">
@@ -45,9 +50,9 @@
           <p class="welcome-msg"></p>
 <!--------------------------------------ВЕРХНИЕ ССЫЛКИ-->
 
-          <?php if ( is_active_sidebar( 'top-widget-area' ) ) : ?>
-				<?php dynamic_sidebar( 'top-widget-area' ); ?>
-			<?php endif; ?>
+	<?php if ( is_active_sidebar( 'top-widget-area' ) ) : ?>
+		<?php dynamic_sidebar( 'top-widget-area' ); ?>
+	<?php endif; ?>
           <br class="clear" />
 
 		  

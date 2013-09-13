@@ -78,7 +78,7 @@ class Kidberries_Widget_Upsell_Products extends WP_Widget {
 				echo $args['before_title'], $title, $args['after_title'];
 			} ?>
 
-			<ol id="cart-sidebar" class="mini-products-list">
+			<ol id="upsell_products_widget" class="mini-products-list">
 				<?php while ($query->have_posts()) : $query->the_post(); global $product; ?>
 					<li class="item marginbot">
 				

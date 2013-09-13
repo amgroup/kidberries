@@ -76,7 +76,7 @@ class Kidberries_WC_Widget_Recent_Reviews extends WP_Widget {
 		if ( $comments ) {
 			echo $before_widget;
 			if ( $title ) echo $before_title . $title . $after_title;
-			echo '<ul class="customers_reviews_widget">';
+			echo '<ul id="customers_reviews_widget" class="customers_reviews_widget">';
 
 			foreach ( (array) $comments as $comment) {
 
@@ -85,16 +85,6 @@ class Kidberries_WC_Widget_Recent_Reviews extends WP_Widget {
 				$rating = intval( get_comment_meta( $comment->comment_ID, 'rating', true ) );
 
 				$rating_html = $_product->get_rating_html();
-/*
-			<div class="product review details-wrapper">
-                          <a href="http://kidberries.com/shkol-nyj-rjukzak-hummingbird-sweet-dreams-35942.html  http://kidberries.com/shkol-nyj-rjukzak-hummingbird-sweet-dreams-35942.html%27" tppabs="http://kidberries.com/shkol-nyj-rjukzak-hummingbird-sweet-dreams-35942.html">
-                            <img class="product review image" src="media/catalog/product/cache/1/thumbnail/150x/9df78eab33525d08d6e5fb8d27136e95/2/0/2037.jpg" tppabs="http://kidberries.com/media/catalog/product/cache/1/thumbnail/150x/9df78eab33525d08d6e5fb8d27136e95/2/0/2037.jpg" alt="Школьный рюкзак HummingBird &quot;Sweet dreams&quot; 35942" />
-                            <span class="product review details">
-                              Добрый день! Ранец отличный, два отделения, в большом еще есть разделители для учебников и тетрадей, в узком куча карманов, очень удобно. Смотрится очень аккуратно, отсутствие карманчиков по бокам для меня                            </span>
-                          </a>
-                        </div>
-                <div class="product review owner-wrapper"><span class="product review owner" >Оля</span></div>
-*/
 ?>
                 <li class="item review">
                     <div class="comment-details">
@@ -110,24 +100,6 @@ class Kidberries_WC_Widget_Recent_Reviews extends WP_Widget {
                     </div>
                 </li>
 <?php
-/*
-				
-				
-				echo '<div class="product review details-wrapper"><a href="' . esc_url( get_comment_link( $comment->comment_ID ) ) . '">';
-
-				$default_attr = array(
-					'class'	=> "product review image",
-				);
-				
-				echo $_product->get_image('shop_thumbnail', $default_attr );
-
-				echo '<span class="product review details">';
-				
-				comment_text();
-				echo '</span></a></div>';
-				$author =  get_comment_author();
-				echo '<div class="product review owner-wrapper"><span class="product review owner" >'.$author.'</span></div>';
-*/
 			}
 
 			echo '</ul>';

@@ -55,86 +55,12 @@
 	        }
 	        return match;
         }
-
-	// Pretty Chooser
-	var selects = $(this).find('.variations select');
-	/*if( selects.length === 2 && !($(this).find('.variations.pretty'))[0] ) {
-		$(this).find('.variations').hide();
-		$(this).find('.single_variation_wrap').show();
-		$(this).find('.single_variation_wrap button, .single_variation_wrap input.qty').addClass('disabled').attr({'disabled':1});
-
-		longest  = $(selects[0]).find('option').length >  $(selects[1]).find('option').length ? $(selects[0]) : $(selects[1]);
-		shortest = $(selects[0]).find('option').length <= $(selects[1]).find('option').length ? $(selects[0]) : $(selects[1]);
-
-		$(this).find('.variations').after('<table style="margin-bottom: 30px;" class="variations pretty" cellspacing="0" ><tbody id="pretty_chooser"/></table>');
-		var table = $('#pretty_chooser');
-		table.append( '<tr><td class="h longest" rowspan="' + (longest.find('option[value!=""]').length + 1) + '"><div>' + $(this).find('.variations label[for="' + longest.attr('id') + '"]').html() + '</div></td><td class="h shortest" colspan="' + shortest.find('option[value!=""]').length + '">' + $(this).find('.variations label[for="' + shortest.attr('id') + '"]').html() + '</td></tr>' );
-		table.find(".h.longest").css({width:table.find(".h.longest").css('line-height'),height:'0px'});
-		table.find(".h.longest div").css({MozTransform:"rotate(-90deg)",WebkitTransform:"rotate(-90deg)",OTransform:"rotate(-90deg)",writingMode:"tb-rl",width: table.find(".h.longest").css('line-height')});
-
-		longest.find('option[value!=""]').each(function(){
-			table.append("<tr/>");
-			row = table.find("tr:last");
-			var row_class = $(this).val();
-
-			shortest.find('option[value!=""]').each(function(){
-				var element = $('<button class="' + ['variant', row_class, $(this).val()].join(" ") + '" data-attribute_' + longest.attr('id') + '="' + row_class + '" data-attribute_' + shortest.attr('id') + '="' + $(this).val() + '">' + $(this).html() + '</button>');
-				element.css({borderColor:row_class});
-				element.css({borderColor: $(this).val() });
-				row.append('<td class="variant"></td>');
-				row.find('td:last').append(element);
-			});
-		});
-
-		table.find("td").css({textAlign: 'center'});
-		table.find("td.variant").css({padding:0,margin:0});
-		table.find("td.variant button.variant").css( {fontSize: '12px',fontWeigth:'bold',padding:'2px 5px',margin:'2px',borderStyle:'solid',borderRadius:'5px', borderWidth:'4px',textShadow:'none'});
-		table.find("td.variant button.variant").click(function(event){
-			event.preventDefault();
-
-			if( !$(this).attr('ref') ) {
-				var data = $(this).data();
-				var variations = $('form[data-product_variations]').data('product_variations');
-
-				for( var i in variations) {
-					var variant = variations[i]['attributes'];
-					var found = 0;
-					for( var j in data ) {
-						if( data[j] == variant[j] ) found += 1;
-					}
-					if( found === 2 ) {
-						$(this).attr({'ref':variations[i]['variation_id']});
-						break;
-					}
-				}
-			}
-
-			if( $(this).attr('ref') ) {
-				$('input[name="variation_id"]').val( $(this).attr('ref') );
-				$("td.variant button.variant").removeClass("checked").css({backgroundColor:'inherit'});
-				$('form.variations_form.cart').find('.single_variation_wrap button, .single_variation_wrap input.qty').removeClass('disabled').attr({'disabled':null});
-				var data = $(this).data();
-				for( var i in data ) {
-					var id = ( i ).replace(/(attribute_)/,'#');
-					$(id).val( data[i] );
-				}
-				$('form.variations_form.cart').trigger('check_variations');
-				$(this).addClass("checked").css({backgroundColor:'rgb(253, 181, 51)'});
-			}
-			else {
-				$(this).addClass('disabled');
-			}
-		});
-
-		
-	}*/
-	// End Pretty Chooser
 	
         // Unbind any existing events
         this.unbind( 'check_variations update_variation_values found_variation' );
         this.find('.reset_variations').unbind( 'click' );
         this.find('.variations select').unbind( 'change focusin' );
-	// this.find('input[name="variation_id"]').unbind( 'change' );
+	 // this.find('input[name="variation_id"]').unbind( 'change' );
 
         // Bind events
         return this
@@ -291,10 +217,8 @@
 
 						if ( ! exclude ) {
 							$variation_form.find('.single_variation_wrap').slideUp('200');
-/*
-							$('td.price-cont .price-box').show();
-							$('td.price-cont .single_variation').hide();
-*/
+							$variation_form.find('.single_price_wrap').slideDown('200');
+
 						}
 
 			        }
@@ -468,7 +392,7 @@
 
 			        var $sku 	= $("#sku");
 			        var $weight 	= $product.find('.product_weight');
-				var $dimensions = $product.find('.product_dimensions');
+					var $dimensions = $product.find('.product_dimensions');
 
 			        if ( ! $sku.attr( 'data-o_sku' ) )
 			        	$sku.attr( 'data-o_sku', $sku.text() );
@@ -517,18 +441,8 @@
 			        	$single_variation_wrap.find('input[name=quantity]').val('1');
 			        	$single_variation_wrap.find('.quantity').hide();
 			        }
-/*
-				$('td.price-cont .price-box').hide();
-				$('td.price-cont')
-					.remove('.single_variation')
-					.append( $single_variation_wrap.find(".single_variation") )
-					.find(".single_variation .price .price-box").show();
-*/
+				    $variation_form.find('.single_price_wrap').slideUp(200);
 			        $single_variation_wrap.slideDown('200').trigger( 'show_variation', [ variation ] );
-
-					
-					Cufon.replace(".digit, .currency", { fontFamily: 'MyriadPro' });
-					Cufon.replace(".stock", { fontFamily: 'Calibri' });
 				});
     };
 

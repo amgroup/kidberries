@@ -1,7 +1,34 @@
+/* Myriad Pro */
 @font-face {
     font-family: 'MyriadPro';
     src: url('fonts/MyriadPro/MyriadPro-Semibold.eot');
     src: local('☺'), url('fonts/MyriadPro/MyriadPro-Semibold.woff') format('woff'), url('fonts/MyriadPro/MyriadPro-Semibold.ttf') format('truetype'), url('fonts/MyriadPro/MyriadPro-Semibold.svg') format('svg');
     font-weight: bold;
     font-style: normal;
+}
+
+/* PT Sans */
+@font-face {
+  font-family: 'PT Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('PT Sans'), local('PTSans-Regular'), url(fonts/PTSans/PTSans-Regular.woff) format('woff');
+}
+@font-face {
+  font-family: 'PT Sans';
+  font-style: normal;
+  font-weight: 700;
+  src: local('PT Sans Bold'), local('PTSans-Bold'), url(fonts/PTSans/PTSans-Bold.woff) format('woff');
+}
+@font-face {
+  font-family: 'PT Sans';
+  font-style: italic;
+  font-weight: 400;
+  src: local('PT Sans Italic'), local('PTSans-Italic'), url(fonts/PTSans/PTSans-Italic.woff) format('woff');
+}
+@font-face {
+  font-family: 'PT Sans';
+  font-style: italic;
+  font-weight: 700;
+  src: local('PT Sans Bold Italic'), local('PTSans-BoldItalic'), url(fonts/PTSans/PTSans-BoldItalic.woff) format('woff');
 }

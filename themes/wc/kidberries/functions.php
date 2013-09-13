@@ -4,6 +4,18 @@ define( 'THEME_DIR', get_template_directory() );
 load_textdomain( 'woocommerce', THEME_DIR . "/languages/woocommerce-ru_RU.mo" );
 load_plugin_textdomain( 'woocommerce', false, THEME_DIR . "/languages/" );
 
+
+function redirect_to_checkout() {
+	global $woocommerce;
+
+	if ( $_POST['redirect'] == 'checkout' && sizeof( $woocommerce->cart->get_cart() ) > 0 ) {
+		$checkout_url = $woocommerce->cart->get_checkout_url();
+		return $checkout_url;
+	}
+}
+add_filter ('add_to_cart_redirect', 'redirect_to_checkout');
+
+
 function selfURL(){
     if(!isset($_SERVER['REQUEST_URI']))    $suri = $_SERVER['PHP_SELF'];
     else $suri = $_SERVER['REQUEST_URI'];
