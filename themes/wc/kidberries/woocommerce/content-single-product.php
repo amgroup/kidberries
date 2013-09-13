@@ -104,6 +104,7 @@ color: #BBB;
             </td>
             
             <td class="product-details product-shop">
+		<?php if ( $product->is_in_stock() ) : ?>
                 <div class="product delivery methods">
                     <div class="delivery-box">
                         <span class="title"><span class="big">Доставка:</span></span>
@@ -111,6 +112,7 @@ color: #BBB;
                         <small>* <em>стоимость доставки вашей корзины <strong>вместе с этим товаром</strong></em></small>
                     </div>
                 </div>
+		<?php endif; ?>
                 
                 <div class="add-to-cart">
                     <?php woocommerce_template_single_add_to_cart();?>

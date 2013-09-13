@@ -55,6 +55,7 @@ if ( ! $product->is_purchasable() ) return;
 		<td class="variation-variants-cont">
 		</td>
         <td class="variation-buttons-cont simple" >
+	    <?php if ( $product->is_in_stock() ) : ?>
             <div class="single_variation_wrap">
                 <div class="variations_button">
                     <?php woocommerce_quantity_input(); ?>
@@ -64,6 +65,7 @@ if ( ! $product->is_purchasable() ) return;
                     <?php do_action('woocommerce_after_add_to_cart_button'); ?>
                 </div>
             </div>
+	    <?php endif; ?>
 		</td>
 	<tr>
 </table>
