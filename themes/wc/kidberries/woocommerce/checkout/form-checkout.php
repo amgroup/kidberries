@@ -9,27 +9,12 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-global $woocommerce;
+global $woocommerce, $checkout_step;
 
 $woocommerce->show_messages();
 ?>
 
-<!--div class="main-block skew-block">
 
-	<div class="corners-top">
-		<div>
-			<div>&nbsp;</div>
-		</div>
-	</div>       
-
-	<div class="content-box">
-		<div class="border-bot">
-			<div class="border-left">
-				<div class="border-right">
-					<div class="corner-left-top">
-						<div class="corner-right-top">
-							<div class="corner-left-bot">
-								<div class="corner-right-bot"-->
 <div class="onepage_checkout">
 <?php
 do_action( 'woocommerce_before_checkout_form', $checkout );
@@ -52,52 +37,37 @@ $get_checkout_url = apply_filters( 'woocommerce_get_checkout_url', $woocommerce-
 
 	<?php if ( sizeof( $checkout->checkout_fields ) > 0 ) : ?>
 
-		<div class="col1-set">
-			<?php do_action( 'woocommerce_checkout_order_notes' ); ?>
-		</div>
-
 		<?php do_action( 'woocommerce_checkout_before_customer_details' ); ?>
-
-		<div class="col2-set" id="customer_details">
-
-			<div class="col-1">
-
-				<?php do_action( 'woocommerce_checkout_billing' ); ?>
-
-			</div>
-
-			<div class="col-2">
-
-				<?php do_action( 'woocommerce_checkout_shipping' ); ?>
-
-			</div>
-
-		</div>
+		
+            <table class="checkout-fields-cont">
+                <tr>
+                    <td class="empty border"></td>
+                    <td colspan="2"><?php do_action( 'woocommerce_checkout_order_notes' ); ?></td>
+                <tr id="customer_details">
+                    <td class="empty border step"><span><?php echo $checkout_step++; ?></span></td>
+		            <td class="billing-fields"><?php do_action( 'woocommerce_checkout_billing' ); ?></td>
+		            <td class="shipping-fields"><?php do_action( 'woocommerce_checkout_shipping' ); ?></td>
+        		</tr>
+		    </table>
 
 		<?php do_action( 'woocommerce_checkout_after_customer_details' ); ?>
 
 	<?php endif; ?>
 
-<div style="height: 70px;"><br>
-<button type="submit" title="Закончить оформление" name="woocommerce_checkout_place_order" id="place_order"  class="button btn-proceed-checkout btn-checkout btn-red right" value="<?php echo apply_filters('woocommerce_order_button_text', __( 'Place order', 'woocommerce' )); ?>" >
-<span>
-<span>Завершить</span>
-</span>
-</button>
-</div>
-
+    <table class="checkout-submit-cont">
+        <tr>
+            <td class="empty border step last"><span><?php echo $checkout_step++; ?></span></td>
+            <td class="submit-order">
+                <button type="submit" title="Закончить оформление" name="woocommerce_checkout_place_order" id="place_order"  class="button green" value="<?php echo apply_filters('woocommerce_order_button_text', __( 'Place order', 'woocommerce' )); ?>" >
+                    <span>
+                        <span>Завершить</span>
+                    </span>
+                </button>
+            </td>
+        </tr>
+    </table>
 </form>
 
 <?php do_action( 'woocommerce_after_checkout_form', $checkout ); ?>
 </div>
 
- <!--/div>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>                
-									</div>
-									<div class="corners-bot"><div><div>&nbsp;</div></div></div>
-								</div-->

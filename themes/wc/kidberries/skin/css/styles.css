@@ -3631,6 +3631,8 @@ color:green;
 .onepage_checkout {
 color:#000;
 padding:20px;
+font-family: 'PT Sans', sans-serif;
+font-size: 16px;
 }
 
 .onepage_checkout h3 {
@@ -3639,6 +3641,11 @@ padding-top:40px;
 padding-left:10px;
 padding-bottom:10px;
 text-shadow:0 1px 0 white, 0 -1px 0 white, 0 0 4px #bbb;
+}
+
+.onepage_checkout p {
+margin: 14px;
+line-height: 25px;
 }
 
 .onepage_checkout .shop_table {
@@ -3661,16 +3668,89 @@ background:#fcfcfc;
 }
 
 #payment {
-background:#f8f8f8;
-border:1px solid #FFF;
-border-radius:7px;
-box-shadow:0 0 10px -3px #000;
-margin:20px 0;
-padding:10px;
+width: 100%;
+border:1px solid #D6D6D6;
+margin:0;
+padding:10px 20px;
+}
+
+#payment .payment_box{
+border-left: 1px solid #FAA;
+padding-left: 10px;
+margin: 7px;
+}
+
+#payment li, #shipping_method li {
+padding:10px 0px;
 }
 
 #shipping_method label label,#shipping_method label hr {
 margin-left:25px;
+}
+
+.payment-methods-cont {
+margin-top: 30px;
+}
+
+.payment-methods-cont th {
+font-weight: bold;
+padding: 10px 20px;
+}
+
+.checkout-fields-cont td {
+padding: 10px 20px;
+}
+
+.checkout-fields-cont .billing-fields, .checkout-fields-cont .shipping-fields {
+width: 50%;
+}
+
+.checkout-submit-cont {
+margin-top: 5px;
+}
+
+.checkout-submit-cont .submit-order {
+width: 100%;
+text-align: center;
+}
+
+.empty.border {
+width: 20px!important;
+border-top: 0px!important;
+border-bottom: 0px!important;
+border-left: 0px!important;
+padding: 0 10px!important;
+margin: 0!important;
+}
+
+.empty.border.step {
+background-color: #FEA;
+text-align: center;
+vertical-align: middle;
+}
+
+.empty.border.step.last {
+box-shadow: inset 0 0 15px #6A2;
+background-color: #8C2;
+}
+
+.empty.border.step span {
+background-color: white;
+display: block;
+color: orange;
+text-align: center;
+border: 1px solid orange;
+width: 25px;
+height: 25px;
+line-height: 26px;
+border-radius: 25px;
+font-size: 16px;
+font-weight: bold;
+}
+
+.empty.border.step.last span {
+color: #6A2;
+border-color: #6A2;
 }
 
 .checkout_table_item td {
@@ -4113,12 +4193,13 @@ margin-bottom:20px;
 background:transparent url(../images/button_2.jpg) 0 0 no-repeat;
 }
 
-.product-view .product-shop button.green,.cart .checkout-types li button.green {
+.button.green,.cart .checkout-types li button.green {
 box-shadow: inset 0 0 15px #6A2;
 text-shadow: 0 0 3px #6A2;
 background: #8C2;
 }
-.product-view .product-shop button.green span,.cart .checkout-types li button.green span {
+.button.green span,.cart .checkout-types li button.green span {
+color: white;
 background: transparent;
 }
 
@@ -4206,7 +4287,7 @@ color: #aaa;
 cursor: default;
 display: block;
 float: left;
-font-size: 14px;
+font-size: 16px;
 font-weight: bold;
 height: 27px;
 line-height: 20px;
@@ -4218,8 +4299,7 @@ padding-right: 15px;
 padding-top: 7px;
 position: relative;
 text-align: right;
-min-width: 170px;
-width: 30%;
+width: 35%;
 }
 
 .form-horizontal .control-group.validate-required .control-label {
@@ -4238,9 +4318,22 @@ line-height: 20px;
 min-height: 1px;
 padding-left: 15px;
 padding-right: 15px;
-width: 68%;
+width: 60%;
 min-width: 200px;
 position: relative;
+}
+
+.checkout-fields-cont {
+margin-top: 30px;
+}
+
+#checkout_order_notes label {
+display: block;
+float: none;
+text-align: start;
+padding: 10px 20px;
+color: #333;
+margin-bottom: 10px;
 }
 
 .form-horizontal .control-field input.input-text, .form-horizontal .control-field textarea {
@@ -4255,12 +4348,18 @@ transition-property: border-color, box-shadow;
 transition-timing-function: ease-in-out, ease-in-out;
 vertical-align: middle;
 color: #555;
-border: 1px solid #aaa;
+border: 4px solid #aaa;
 width: 100%;
 border-radius: 4px;
 }
 .form-horizontal .control-group.validate-required  .control-field input.input-text, .form-horizontal .control-field textarea {
-border: 1px solid #396D39;
+border: 4px solid #396D39;
+}
+
+#checkout_order_notes .control-field {
+border-color: #EC2376;
+padding: 0 20px;
+width: 100%;
 }
 
 .form-horizontal .control-field input.input-text:focus, .form-horizontal .control-field textarea:focus {
@@ -4320,3 +4419,4 @@ border: 3px solid #bd1f60;
 
 .variation-buttons-cont.simple  { min-width: 160px; width: inherit; }
 .variation-buttons-cont.simple .buttons_or {display: inline;}
+

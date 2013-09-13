@@ -18,11 +18,11 @@ $checkout = $woocommerce->checkout;
 <?php if (get_option('woocommerce_enable_order_comments')!='no') : ?>
 	<div id="checkout_order_notes">
 
-	<?php if ($woocommerce->cart->ship_to_billing_address_only()) : ?>
+	    <?php if ($woocommerce->cart->ship_to_billing_address_only()) : ?>
+		    <h3><?php _e( 'Additional Information', 'woocommerce' ); ?></h3>
+	    <?php endif; ?>
 
-		<h3><?php _e( 'Additional Information', 'woocommerce' ); ?></h3>
 
-	<?php endif; ?>
 	    <div class="form-horizontal">
 		<?php foreach ($checkout->checkout_fields['order'] as $key => $field) : ?>
 			<?php kidberries_form_field( $key, $field, $checkout->get_value( $key ) ); ?>
