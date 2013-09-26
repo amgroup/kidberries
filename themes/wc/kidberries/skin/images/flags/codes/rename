@@ -1,0 +1,23 @@
+#!/usr/bin/perl
+
+if( !($ARGV[0] && $ARGV[1]) ) {
+  print qq(Using: "./rename China- cn"\n\n);
+  exit;
+}
+
+my $ext  = '.png';
+my $patt = $ARGV[0];
+my $code = $ARGV[1];
+
+my @col = `ls $patt\*$ext`;
+
+foreach my $file ( @col ) {
+  $file =~ s/\n//;
+  my $size = ($file =~ m/(\d+)/)[0];
+  my $exec = qq(mv "$file" "$code-$size$ext");
+  print $exec . "\n";
+  `$exec`;
+}
+
+
+
