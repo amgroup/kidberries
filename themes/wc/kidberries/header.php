@@ -1,11 +1,11 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru" lang="ru">
 <head>
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title><?php wp_title('&laquo;', true, 'right'); ?> <?php bloginfo('name'); ?></title>
-<meta name="description" content="Магазин для мам, пап и их деток" />
-<meta name="keywords" content="Детки Ягодки качественные импортные дешевые и дорогие спортивные товары одежда игрушки  развивающие красный зеленый желтый фиолетовый велосипед самокат скутер ролики коляска санки производства и сборки  Европы Германии Англии Великобритании Новой Зеландии Дании для детей и для ребенка." />
+<title><?php if( is_cart() || is_checkout() || is_account_page() ) _e( get_the_title(), 'woocommerce'); else wp_title('-', true, 'right'); ?><?php bloginfo('name'); ?></title>
+<meta name="description" content="<?php bloginfo('description'); ?>" />
+<meta name="keywords" content="Детки Ягодки,качественные,импортные,дешевые,дорогие,детские товары,деткая одежда,игрушки,развивающие,велосипед,самокат,скутер,ролики,коляска,санки,Европы,Германии,Англии,Великобритании,Новой Зеландии,Дании,для детей,для ребенка" />
 
 <meta name="robots" content="INDEX,FOLLOW" />
 <meta name='yandex-verification' content='4da51ca4bca2da17' />
@@ -18,6 +18,7 @@
 <script type="text/javascript" src="<?php bloginfo('template_url'); ?>/skin/js/cufon-yui.js"></script>
 <script type="text/javascript" src="<?php bloginfo('template_url'); ?>/skin/js/cufon-fonts.js"></script>
 <script type="text/javascript" src="<?php bloginfo('template_url'); ?>/skin/js/cufon-replace.js"></script>
+<script type="text/javascript" src="<?php bloginfo('template_url'); ?>/skin/js/imagepreloader.js"></script>
 
 <script type="text/javascript">
 	jQuery(document).ready(function(){
@@ -28,9 +29,7 @@
 			jQuery(this).addClass('link-'+(index+1));
 		});
 	});	
-</script>
-<script type="text/javascript" src="<?php bloginfo('template_url'); ?>/skin/js/imagepreloader.js"></script>
-<script type="text/javascript">
+
 	preloadImages([
 		'<?php bloginfo('template_url'); ?>/skin/images/menu_button_bg.png',
 		'<?php bloginfo('template_url'); ?>/skin/images/menu_button_bg_active.png',

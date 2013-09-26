@@ -14,31 +14,12 @@ global $woocommerce;
 $woocommerce->show_messages();
 ?>
 
-<!--div class="main-block skew-block">
-
-	<div class="corners-top">
-		<div>
-			<div>&nbsp;</div>
-		</div>
-	</div>       
-
-	<div class="content-box">
-		<div class="border-bot">
-			<div class="border-left">
-				<div class="border-right">
-					<div class="corner-left-top">
-						<div class="corner-right-top">
-							<div class="corner-left-bot">
-								<div class="corner-right-bot"-->
-
 <!-------------------------------------------------------------------------------------->
 								
 <ul class="checkout-types">
 	<li>
-		<button type="button" title="Оформить заказ" class="button btn-proceed-checkout btn-checkout btn-red right" onclick="javascript:jQuery('form input.checkout-button.button.alt').click();">
-			<span>
-				<span>Оформить заказ</span>
-			</span>
+		<button type="button" title="Оформить заказ" class="button green right" onclick="javascript:jQuery('form .button.checkout-button').click();">
+			Оформить заказ
 		</button>
 	</li>
 </ul>
@@ -90,7 +71,7 @@ $woocommerce->show_messages();
 				
 
 				<button type="submit" class="button btn-update" name="update_cart" value="<?php _e( 'Update Cart', 'woocommerce' ); ?>" /><?php _e( 'Update Cart', 'woocommerce' ); ?></button> 
-				<input type="submit" class="checkout-button button alt" name="proceed" value="<?php _e( 'Buy it', 'woocommerce' ); ?>" style='display: none;'" />
+				<input type="submit" class="checkout-button button" name="proceed" value="<?php _e( 'Buy it', 'woocommerce' ); ?>" style='display: none;'" />
 
 				<?php do_action('woocommerce_proceed_to_checkout'); ?>
 
@@ -132,7 +113,7 @@ $woocommerce->show_messages();
 									printf('<a class="product_name_cart" href="%s">%s</a>', esc_url( get_permalink( apply_filters('woocommerce_in_cart_product_id', $values['product_id'] ) ) ), apply_filters('woocommerce_in_cart_product_title', $_product->get_title(), $values, $cart_item_key ) );
 
 								// Meta data
-								echo $woocommerce->cart->get_item_data( $values, true );
+								echo '<div class="item data"> ' . $woocommerce->cart->get_item_data( $values, true ) . '</div>';
 
                    				// Backorder notification
                    				if ( $_product->backorders_require_notification() && $_product->is_on_backorder( $values['quantity'] ) )
@@ -185,7 +166,7 @@ $woocommerce->show_messages();
 									$product_quantity = sprintf( '<input type="hidden" id="%s" name="cart[%s][qty] input-text qty" value="1" class="input-text qty text"/>', $cart_item_key, $cart_item_key );
 									echo apply_filters( 'woocommerce_cart_item_quantity', $product_quantity, $cart_item_key );
 									?>
-										<td><button onclick="document.getElementById('<?echo $cart_item_key;?>').value='2'" type="submit" class="button btn-update plusone" name="update_cart" value="+1"/>+1</button> </td>
+										<td><button onclick="document.getElementById('<?echo $cart_item_key;?>').value='2'" type="submit" class="btn-update plusone" name="plusone" value="+1"/>+1</button> </td>
 									<?
 								}
 
@@ -209,8 +190,6 @@ $woocommerce->show_messages();
 	</tbody>
 </table>
 
-<script type="text/javascript">decorateTable('shopping-cart-table')</script>
-
 	</fieldset>
 </form>
 
@@ -225,30 +204,9 @@ $woocommerce->show_messages();
 </div><p>&nbsp;<br>&nbsp;</p>
 <ul class="checkout-types">
 	<li>
-		<button type="button" title="Оформить заказ" class="button btn-proceed-checkout btn-checkout btn-red right" onclick="javascript:jQuery('form input.checkout-button.button.alt').click();">
-			<span>
-				<span>Оформить заказ</span>
-			</span>
+		<button type="button" title="Оформить заказ" class="button green right" onclick="javascript:jQuery('form .button.checkout-button').click();">
+			Оформить заказ
 		</button>
 	</li>
 </ul>
 <p>&nbsp;<br>&nbsp;</p>
-
-    <!--/div>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>                
-									</div>
-									<div class="corners-bot"><div><div>&nbsp;</div></div></div>
-								</div-->
-
-
-
-
-
-
-
-

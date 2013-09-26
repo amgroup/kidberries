@@ -25,7 +25,7 @@ global $woocommerce, $product;
 <div class="summary">
 	<a href="<?php echo $woocommerce->cart->get_cart_url(); ?>"  alt="<?php _e('View your shopping cart', 'woocommerce'); ?>" title="<?php _e('View your shopping cart', 'woocommerce'); ?>">
 		<p class="amount">В корзине <strong><?php echo sprintf(_n('%d item', '%d items', $woocommerce->cart->cart_contents_count, 'woocommerce'), $woocommerce->cart->cart_contents_count);?></strong>.</p>
-		<p>Прейти в корзину</p>
+		<p>Перейти в корзину</p>
 	</a>
 	<br/>
 
@@ -40,7 +40,7 @@ global $woocommerce, $product;
 	
 <div class="actions">
 	<form action="<?php echo $woocommerce->cart->get_checkout_url(); ?>">
-		<button type="submit" title="Заказать" class="button"><span><span><strong>Заказать</strong></span></span></button>
+		<button type="submit" title="Заказать" class="button white">Заказать</button>
 	</form>
 </div>
 	
@@ -65,8 +65,8 @@ global $woocommerce, $product;
 			<li class="item">
 				
 				<a href="<?php echo get_permalink( $cart_item['product_id'] ); ?>" title="<?php echo apply_filters('woocommerce_widget_cart_product_title', $_product->get_title(), $_product ); ?>" class="product-image">
-					<span class="price"><span class="price digit"><?php echo $product_price; ?></span></span>
 					<div class='product_in_cart'><?php echo $_product->get_image(array(60,60)); ?></div>
+					<span class="price"><span class="price digit"><?php echo $product_price; ?></span></span>
 				</a>
 				
 				<div class="product-details">

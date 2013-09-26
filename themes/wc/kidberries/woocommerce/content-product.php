@@ -11,7 +11,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
-global $product, $woocommerce_loop, $currency_symbol;
+global $woocommerce, $product, $woocommerce_loop, $currency_symbol;
 
 // Store loop count we're currently on
 if ( empty( $woocommerce_loop['loop'] ) )
@@ -55,10 +55,6 @@ if ( $mode != 'list' ) {
             <div class="content-box">
                 <div class="corner-right-bot">
                     <div class="product-box">
-                        <div class="price-block">
-                            <div class="price-box">
-                            </div>
-                        </div>
     
                         <a href="<?the_permalink();?>" class="product-image"><?php do_action( 'woocommerce_before_shop_loop_item_title' ); ?></a>
                         <h3 class="product-name"></h3>
@@ -94,7 +90,21 @@ if ( $mode != 'list' ) {
                                 </div>
                             </a>
 
-                            <a href="<?the_permalink();?>" class="product-image"></a>
+                            <a href="<?the_permalink();?>" class="product-image">
+                                <?php
+                                    if( ($term = get_the_terms( $product->id, 'pa_made-in')) !== false ) {
+                                        $designed = each($term)['value'];
+                                        $path     = '/skin/images/flags/codes/' . $designed->slug . '-32.png';
+                                        if( is_file( THEME_DIR . $path ) ) {
+                                            $alt = htmlspecialchars( $woocommerce->attribute_label( $designed->taxonomy ) . ' - ' . $designed->name );
+                                            $src = get_template_directory_uri() . $path;
+                                            ?>
+                                            <img class="country flag <?php echo htmlspecialchars( $designed->taxonomy ); ?>" src="<?php echo $src; ?>" alt="<?php echo $alt; ?>" title="<?php echo $alt; ?>" style="position: relative; border: 0px solid white; width: 32px; height: 32px;"/>
+                                            <?php
+                                        }
+                                    }
+                                ?>
+                            </a>
                             <?php if ( ! $product->is_in_stock() ) : ?>
                                 <p class="not_in_stock">Нет в наличии</p>
                             <?php endif;?>

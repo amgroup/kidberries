@@ -519,7 +519,7 @@ padding:0;
 button.button span {
 float:left;
 height:46px;
-background:transparent url(../images/bkg_button_873F9E.jpg) 0 0 no-repeat;
+/*background:transparent url(../images/bkg_button_873F9E.jpg) 0 0 no-repeat;*/
 font:20px Arial, Helvetica, sans-serif;
 text-align:center;
 white-space:nowrap;
@@ -1795,20 +1795,15 @@ overflow:hidden;
 background:url(../images/sideblock_3_bot_corner.png) left top no-repeat;
 }
 
+.mini-products-list.mini-cart .item {
+    padding: 15px 0;
+}
+
 .mini-products-list .product-image {
 float:left;
 width:61px;
 height:58px;
 padding:0;
-}
-
-.mini-products-list.mini-cart .item .price {
-color: #006;
-display: block;
-margin-top: 21px;
-position: absolute;
-z-index: 1;
-text-shadow: 0 0 2px #FFF, 0 0 4px #FFF;
 }
 
 .mini-products-list .product-details {
@@ -3667,6 +3662,12 @@ font-size:120%;
 background:#fcfcfc;
 }
 
+.onepage_checkout .shop_table .item.data, #shopping-cart-table .item.data {
+font-size: 14px;
+font-weight: normal;
+}
+
+
 #payment {
 width: 100%;
 border:1px solid #D6D6D6;
@@ -3680,7 +3681,7 @@ padding-left: 10px;
 margin: 7px;
 }
 
-#payment li, #shipping_method li {
+#order_review #payment li,#order_review #shipping_method li {
 padding:10px 0px;
 }
 
@@ -3742,7 +3743,7 @@ text-align: center;
 border: 1px solid orange;
 width: 25px;
 height: 25px;
-line-height: 26px;
+line-height: 25px;
 border-radius: 25px;
 font-size: 16px;
 font-weight: bold;
@@ -3788,7 +3789,10 @@ margin:0 auto!important;
 }
 
 #pagecontent {
-color:#000;
+font-family: 'PT Sans', sans-serif;
+font-size: 16px;
+line-height: 26px;
+color:#333;
 margin:15px!important;
 }
 
@@ -3857,8 +3861,8 @@ address,cite {
 font-style:normal;
 }
 
-.a-right,.cart-subtotal td,.cart-discount-total td,.total td {
-text-align:right!important;
+.a-right,.cart-subtotal td,.cart-discount-total td,.total td, .checkout_table_item td.product-total {
+text-align:right;
 }
 
 .v-middle,.product-options dt .qty-holder label,.sp-methods .centinel-logos img,.please-wait img {
@@ -4188,17 +4192,48 @@ margin-right:20px;
 .product-view .product-shop .ratings,.cms-index-index .col-main .products-grid .product-image {
 margin-bottom:20px;
 }
-
-.product-view .product-shop button span,.cart .checkout-types li button span {
-background:transparent url(../images/button_2.jpg) 0 0 no-repeat;
+button.button {
+vertical-align: middle;
+text-align: center;
+color: white;
+font-family: Arial, Helvetica, sans-serif;
+font-size: 20px;
+padding: 11px 26px;
 }
 
-.button.green,.cart .checkout-types li button.green {
+.button.red {
+/*background:transparent url(../images/button_2.jpg) 0 0 no-repeat;*/
+box-shadow: inset 0 0 15px #C07;
+text-shadow: 0 0 3px #C07;
+background: #E27;
+border-top: 1px solid #E27;
+
+}
+
+.button.green {
 box-shadow: inset 0 0 15px #6A2;
 text-shadow: 0 0 3px #6A2;
 background: #8C2;
+border-top: 1px solid #8C2;
+
 }
-.button.green span,.cart .checkout-types li button.green span {
+
+.button.blue {
+box-shadow: inset 0 0 15px #38C;
+text-shadow: 0 0 3px #38C;
+background: #3AD;
+border-top: 1px solid #3AD;
+}
+
+.button.white {
+box-shadow: inset 0 0 15px #CCC;
+text-shadow: 0 0 3px #CCC;
+background: #EEE;
+color: #333;
+border-top: 1px solid #EEE;
+}
+
+.button.green span,.button.red span,.button.blue span {
 color: white;
 background: transparent;
 }
@@ -4420,3 +4455,14 @@ border: 3px solid #bd1f60;
 .variation-buttons-cont.simple  { min-width: 160px; width: inherit; }
 .variation-buttons-cont.simple .buttons_or {display: inline;}
 
+/* */
+div.pp_overlay {
+background: #333;
+}
+
+.product-description .std {
+-moz-column-count: 2;
+-webkit-column-count: 2;
+-o-column-count: 2;
+column-count: 2
+}

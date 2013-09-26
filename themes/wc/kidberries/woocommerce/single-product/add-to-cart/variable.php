@@ -89,9 +89,9 @@ global $woocommerce, $product, $post, $currency_symbol;
             <div class="single_variation_wrap" style="display:none;">
                 <div class="variations_button">
                     <?php woocommerce_quantity_input(); ?>
-                    <button type="submit" title="В корзину" class="button green"><span><span>В корзину</span></span></button>
+                    <button type="submit" title="В корзину" class="button green">В корзину</button>
                     <div class="buttons_or">или</div>
-                    <button type="submit" title="Купить в один клик" class="button" onclick="buyitnow()"><span><span>Купить</span></span></button>
+                    <button type="submit" title="Купить в один клик" class="button red" onclick="buyitnow()">Купить</button>
                     <?php do_action('woocommerce_after_add_to_cart_button'); ?>
                 </div>
             </div>

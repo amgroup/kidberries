@@ -58,10 +58,8 @@ $get_checkout_url = apply_filters( 'woocommerce_get_checkout_url', $woocommerce-
         <tr>
             <td class="empty border step last"><span><?php echo $checkout_step++; ?></span></td>
             <td class="submit-order">
-                <button type="submit" title="Закончить оформление" name="woocommerce_checkout_place_order" id="place_order"  class="button green" value="<?php echo apply_filters('woocommerce_order_button_text', __( 'Place order', 'woocommerce' )); ?>" >
-                    <span>
-                        <span>Завершить</span>
-                    </span>
+                <button type="submit" title="Закончить оформление" name="woocommerce_checkout_place_order" id="place_order"  class="button red" value="<?php echo apply_filters('woocommerce_order_button_text', __( 'Place order', 'woocommerce' )); ?>" >
+                        Завершить
                 </button>
             </td>
         </tr>

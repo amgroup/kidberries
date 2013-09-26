@@ -193,7 +193,7 @@ $checkout_step = 1;
 										echo apply_filters( 'woocommerce_checkout_product_title', $_product->get_title(), $_product );
 										echo ' ';
 // êîëè÷åñòâî òîâàðîâ					echo apply_filters( 'woocommerce_checkout_item_quantity', '<strong class="product-quantity">&times; ' . $values['quantity'] . '</strong>', $values, $cart_item_key );
-										echo $woocommerce->cart->get_item_data( $values );
+										echo '<div class="item data">' . $woocommerce->cart->get_item_data( $values, true ) . '</div>';
 									echo '</td>';
 									echo '<td class="product-total">';
 									if( isset($values['line_total_discounted']) && ( $_product->get_price() * $values['quantity'] ) != $values['line_total_discounted'] * $values['quantity'] ) {
