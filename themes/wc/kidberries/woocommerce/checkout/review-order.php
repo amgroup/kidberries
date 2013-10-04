@@ -190,6 +190,7 @@ $checkout_step = 1;
 								<tr class="' . esc_attr( apply_filters('woocommerce_checkout_table_item_class', 'checkout_table_item', $values, $cart_item_key ) ) . '">
                     			    <td class="empty border"></td>
 									<td class="product-name">';
+										echo apply_filters( 'woocommerce_in_cart_product_thumbnail', $_product->get_image(), $values, $cart_item_key );
 										echo apply_filters( 'woocommerce_checkout_product_title', $_product->get_title(), $_product );
 										echo ' ';
 // êîëè÷åñòâî òîâàðîâ					echo apply_filters( 'woocommerce_checkout_item_quantity', '<strong class="product-quantity">&times; ' . $values['quantity'] . '</strong>', $values, $cart_item_key );

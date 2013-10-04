@@ -27,10 +27,11 @@ $checkout->checkout_fields['shipping']['shipping_phone'] = $checkout->checkout_f
 
 ?>
 <div class="billing_address" id="checkout_billing_address">
-<?php if ( $woocommerce->cart->ship_to_billing_address_only() && $woocommerce->cart->needs_shipping() ) : ?>
-
+<?php if ( $woocommerce->session->shipping_type == 'pickup' ) : $shiptobilling = 1; ?>
+	<h3>Ваши контактные данные</h3>
+	<input id="shiptobilling-checkbox" value="on" checked="checked" type="hidden" name="shiptobilling" />
+<?php elseif ( $woocommerce->cart->ship_to_billing_address_only() && $woocommerce->cart->needs_shipping() ) : ?>
 	<h3><?php _e( 'Shipping', 'woocommerce' ); ?></h3>
-
 <?php else : ?>
 	<h3>
 		<span><?php _e( 'My Address', 'woocommerce' ); ?></span>
@@ -40,9 +41,6 @@ $checkout->checkout_fields['shipping']['shipping_phone'] = $checkout->checkout_f
 			<label for="shiptobilling-checkbox" class="checkbox"><?php _e( 'Ship to my address?', 'woocommerce' ); ?></label>
 		</span>
 	</h3>
-
-
-
 <?php endif; ?>
 
 <?php do_action('woocommerce_before_checkout_billing_form', $checkout ); ?>

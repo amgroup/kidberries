@@ -30,6 +30,7 @@ $get_checkout_url = apply_filters( 'woocommerce_get_checkout_url', $woocommerce-
 
 
 
+<p class="to_cart"><a href="<?php echo esc_url( $woocommerce->cart->get_cart_url() ); ?>">Перейти в корзину (изменить заказ)</a></p>
 <form name="checkout" method="post" class="checkout" action="<?php echo esc_url( $get_checkout_url ); ?>">
 
     <h3 id="order_review_heading"><?php _e( 'Your order', 'woocommerce' ); ?></h3>

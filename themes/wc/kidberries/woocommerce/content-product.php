@@ -35,7 +35,7 @@ if ( 0 == ( $woocommerce_loop['loop'] - 1 ) % $woocommerce_loop['columns'] || 1 
 if ( 0 == $woocommerce_loop['loop'] % $woocommerce_loop['columns'] )
 	$classes[] = 'last';
 	
-	$classes[] .= ' item';
+	$classes[] = 'item';
 ?>
 
 <?
@@ -92,15 +92,33 @@ if ( $mode != 'list' ) {
 
                             <a href="<?the_permalink();?>" class="product-image">
                                 <?php
-                                    if( ($term = get_the_terms( $product->id, 'pa_made-in')) !== false ) {
+                                    if( ($term = get_the_terms( $product->id, 'pa_designed')) !== false ) {
                                         $designed = each($term)['value'];
                                         $path     = '/skin/images/flags/codes/' . $designed->slug . '-32.png';
                                         if( is_file( THEME_DIR . $path ) ) {
                                             $alt = htmlspecialchars( $woocommerce->attribute_label( $designed->taxonomy ) . ' - ' . $designed->name );
                                             $src = get_template_directory_uri() . $path;
-                                            ?>
-                                            <img class="country flag <?php echo htmlspecialchars( $designed->taxonomy ); ?>" src="<?php echo $src; ?>" alt="<?php echo $alt; ?>" title="<?php echo $alt; ?>" style="position: relative; border: 0px solid white; width: 32px; height: 32px;"/>
-                                            <?php
+
+                                            echo '<img class="designed country flag" src="' . $src . '" alt="' . $alt . '" title="' . $alt . '" />';
+
+                                            foreach( preg_split("/[\s,]+/", $designed->name) as $name_part ) {
+                                                echo '<p class="designed country name">' . htmlspecialchars($name_part) . '</p>';
+                                            }
+                                        }
+                                    }
+
+                                    if( ($term = get_the_terms( $product->id, 'pa_produced')) !== false ) {
+                                        $produced = each($term)['value'];
+                                        $path     = '/skin/images/flags/codes/' . $produced->slug . '-32.png';
+                                        if( is_file( THEME_DIR . $path ) ) {
+                                            $alt = htmlspecialchars( $woocommerce->attribute_label( $produced->taxonomy ) . ' - ' . $produced->name );
+                                            $src = get_template_directory_uri() . $path;
+
+                                            echo '<img class="produced country flag" src="' . $src . '" alt="' . $alt . '" title="' . $alt . '" />';
+
+                                            foreach( preg_split("/[\s,]+/", $produced->name) as $name_part ) {
+                                                echo '<p class="produced country name">' . htmlspecialchars($name_part) . '</p>';
+                                            }
                                         }
                                     }
                                 ?>

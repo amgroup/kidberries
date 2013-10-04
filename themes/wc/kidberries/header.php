@@ -12,8 +12,8 @@
 <?wp_head();?>
 <link href="http://fonts.googleapis.com/css?family=Neucha|Open+Sans+Condensed:300,300italic,700&subset=cyrillic,latin,cyrillic-ext" rel="stylesheet" type="text/css"/>
 <link rel="search" type="application/opensearchdescription+xml" title="<?php bloginfo('template_url'); ?>" href="//<?php bloginfo('template_url'); ?>/open_search_ru.xml" />
-<link rel="icon" href="http://<?php bloginfo('template_url'); ?>/media/favicon/default/fav16x16.ico" type="image/x-icon" />
-<link rel="shortcut icon" href="http://<?php bloginfo('template_url'); ?>/media/favicon/default/fav16x16.ico" type="image/x-icon" />
+<link rel="icon" href="<?php bloginfo('template_url'); ?>/skin/images/fav16x16.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="<?php bloginfo('template_url'); ?>/skin/images/fav16x16.ico" type="image/x-icon" />
 
 <script type="text/javascript" src="<?php bloginfo('template_url'); ?>/skin/js/cufon-yui.js"></script>
 <script type="text/javascript" src="<?php bloginfo('template_url'); ?>/skin/js/cufon-fonts.js"></script>
