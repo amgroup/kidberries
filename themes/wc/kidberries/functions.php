@@ -4,6 +4,14 @@ define( 'THEME_DIR', get_template_directory() );
 load_textdomain( 'woocommerce', THEME_DIR . "/languages/woocommerce-ru_RU.mo" );
 load_plugin_textdomain( 'woocommerce', false, THEME_DIR . "/languages/" );
 
+function kidberries_get_price() {
+    global $post;
+
+    if ( is_product() ) {
+      return get_product($post)->get_price() . " " . get_woocommerce_currency_symbol(get_woocommerce_currency());
+    }
+    return;
+}
 
 function redirect_to_checkout() {
 	global $woocommerce;

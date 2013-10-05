@@ -3,7 +3,18 @@
 <head>
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title><?php if( is_cart() || is_checkout() || is_account_page() ) _e( get_the_title(), 'woocommerce'); else wp_title('-', true, 'right'); ?><?php bloginfo('name'); ?></title>
+<title><?php
+    if( is_product() ) {
+        echo "Купить за " . kidberries_get_price() . " - ";
+    }
+    if( is_cart() || is_checkout() || is_account_page() ) {
+        _e( get_the_title(), 'woocommerce');
+    } else {
+        wp_title('-', true, 'right'); ?><?php bloginfo('name');
+    }
+
+
+?></title>
 <meta name="description" content="<?php bloginfo('description'); ?>" />
 <meta name="keywords" content="Детки Ягодки,качественные,импортные,дешевые,дорогие,детские товары,деткая одежда,игрушки,развивающие,велосипед,самокат,скутер,ролики,коляска,санки,Европы,Германии,Англии,Великобритании,Новой Зеландии,Дании,для детей,для ребенка" />
 
