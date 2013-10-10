@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+``<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru" lang="ru">
 <head>
 
@@ -125,6 +125,5 @@
 <script type="text/javascript" src="js/lib/ds-sleight.js" tppabs="http://<?php bloginfo('template_url'); ?>/js/lib/ds-sleight.js"></script>
 <script type="text/javascript" src="skin/frontend/base/default/js/ie6.js" tppabs="http://<?php bloginfo('template_url'); ?>/skin/frontend/base/default/js/ie6.js"></script>
 <![endif]-->
-<script type="text/javascript" src="<?php bloginfo('template_url'); ?>/js/prototype/prototype.js"></script>
-<script type="text/javascript" src="<?php bloginfo('template_url'); ?>/js/varien/menu.js"></script>
+
 </head>

@@ -45,6 +45,8 @@ class Kidberries_Widget_Upsell_Products extends WP_Widget {
 	function widget( $args, $instance ) {
 		global $woocommerce, $product;
 
+		if( ! is_product() ) return;
+
 		// Use default title as fallback
 		$title = ( '' === $instance['title'] ) ? __('Upsell Products', 'woocommerce' ) : $instance['title'];
 		$title = apply_filters('widget_title', $title, $instance, $this->id_base);

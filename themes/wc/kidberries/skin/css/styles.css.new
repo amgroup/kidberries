@@ -1223,7 +1223,7 @@ display:block;
 color:#FFF;
 font-family:MyriadPro,'Open Sans Condensed', sans-serif;
 font-weight:400;
-font-size:26px;
+font-size:30px;
 position:relative;
 padding:56px 1px 53px;
 }
@@ -4459,22 +4459,4 @@ color: #333;
 text-shadow: 0 1px 0 #fff;
 font-size: 8px;
 line-height: 8px;
-}
-
-.category.advertisement {
-font-size: 14px;
-line-height: 24px;
-color: black;
-padding: 20px;
-background-color: #eee;
-box-shadow: inset 0 0 30px grey;
-}
-
-.category.advertisement p {
-text-indent: 3em;
-text-shadow: 0 1px 0 white;
-}
-
-.page-title.category-title {
-padding: 5px 0px;
 }

@@ -89,9 +89,11 @@ class Kidberries_WC_Widget_Recent_Reviews extends WP_Widget {
                 <li class="item review">
                     <div class="comment-details">
                         <a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>" class="product-image">
+                            <?php /*/ ?>
                             <div class="product_in_cart">
-                                <?php the_post_thumbnail( array(60,60) ); ?>
+                                <?php the_post_thumbnail( 'shop_thumbnail' ); ?>
                             </div>
+                            <?php /*/ ?>
                         </a>
                         <p class="comment-autor"><?php echo get_comment_author(); ?> (<span class="comment-date"><?php echo get_comment_date(); ?></span>)</p>
                         <p class="comment-content">

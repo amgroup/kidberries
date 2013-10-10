@@ -317,8 +317,16 @@ if ( ! function_exists( 'woocommerce_content' ) ) {
 <!--	--------------------------	--------------СПИСОК ТОВАРОВ --->
 														
 														
-														<div class="page-title category-title">
-        <h1><?php woocommerce_page_title(); ?></h1>
+<div class="page-title category-title">
+	<h1 class="page-title"><?php woocommerce_page_title(); ?></h1>
+	<?php
+		if ( is_tax( 'product_cat' ) ) {
+			$term = get_term_by('slug', esc_attr( get_query_var('product_cat') ), 'product_cat');
+			$advertisement = html_entity_decode( get_woocommerce_term_meta( $term->term_id, 'advertisement', true ) );
+			if( $advertisement )
+				echo '<div class="category advertisement">' . $advertisement . '</div>';
+		}
+	?>
 </div>
 														<div class="new-product">
  
@@ -1117,6 +1125,8 @@ function override_woocommerce_widgets() {
   include_once( 'widgets/upsell-products.php' );
   register_widget( 'Kidberries_Widget_Upsell_Products' );
 
+  include_once( 'widgets/subcategories.php' );
+  register_widget( 'Kidberries_Widget_Subcategories' );
 }
 
 
