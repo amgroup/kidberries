@@ -19,21 +19,12 @@ global $post, $woocommerce;
 
 			$image       		= get_the_post_thumbnail( $post->ID, apply_filters( 'single_product_large_thumbnail_size', 'shop_single' ) );
 			$image_title 		= esc_attr( get_the_title( get_post_thumbnail_id() ) );
-			$image_link  		= wp_get_attachment_url( get_post_thumbnail_id() );
 			$attachment_count   = count( get_children( array( 'post_parent' => $post->ID, 'post_mime_type' => 'image', 'post_type' => 'attachment' ) ) );
-
-			if ( $attachment_count != 1 ) {
-				$gallery = '[product-gallery]';
-			} else {
-				$gallery = '';
-			}
-
-			echo apply_filters( 'woocommerce_single_product_image_html', sprintf( '<a href="%s" itemprop="image" id="image-zoom" class="cloud-zoom" title="%s" rel="zoomWidth:500,zoomHeight:500,position:' . "'right'" . ',adjustX:30,adjustY:-3,tintenable:0,zoomeffect:1,tintOpacity:0.4,lensOpacity:1,showTitle:1,tint:' . "'#000000'" . '">%s</a>', $image_link, $image_title, $image ), $post->ID );
-																				   
+            $zoomed             = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), apply_filters( 'single_product_large_thumbnail_size', 'shop_zoomed' ) );
+        
+			echo apply_filters( 'woocommerce_single_product_image_html', sprintf( '<a href="%s" itemprop="image" id="image-zoom" class="cloud-zoom" title="%s" rel="zoomWidth:600,zoomHeight:600,position:' . "'right'" . ',adjustX:30,adjustY:-3,tintenable:0,zoomeffect:1,tintOpacity:0.4,lensOpacity:1,showTitle:1,tint:' . "'#000000'" . '">%s</a>', esc_url( $zoomed[0] ), $image_title, $image ), $post->ID );
 		} else {
-
 			echo apply_filters( 'woocommerce_single_product_image_html', sprintf( '<img src="%s" alt="Placeholder" />', woocommerce_placeholder_img_src() ), $post->ID );
-
 		}
 	?>
 

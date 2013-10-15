@@ -357,6 +357,7 @@
                 opts = $.extend({}, relOpts, options);
                 $(this).data('relOpts', opts);
                 $(this).bind('click', $(this), function (event) {
+console.log( event.data.data('relOpts').smallImage );
                     var data = event.data.data('relOpts');
                     // Destroy the previous zoom
                     $('#' + data.useZoom).data('zoom').destroy();

@@ -2811,7 +2811,7 @@ padding-right:20px;
 margin:12px 0;
 }
 
-.cart .discount,.cart .shipping {
+table .cart .discount, table .cart .shipping {
 border:1px solid #D6D6D6;
 padding:14px 10px 20px 17px;
 }
@@ -4459,6 +4459,15 @@ color: #333;
 text-shadow: 0 1px 0 #fff;
 font-size: 8px;
 line-height: 8px;
+}
+
+.products-grid .product .variants.images {
+border: 1px dotted #eee;
+margin-top: -40px;
+margin-bottom: 8px;
+text-align: center;
+height: 30px;
+padding: 0;
 }
 
 .category.advertisement {
