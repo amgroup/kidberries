@@ -30,7 +30,7 @@ global $woocommerce, $product, $post, $currency_symbol;
 					</span>
 				</p>
 			</div>
-			<div class="single_variation_wrap" style="display:none;">
+			<div class="single_variation_wrap">
 				<div class="single_variation"></div>
 			</div>
 		</td>
@@ -86,7 +86,7 @@ global $woocommerce, $product, $post, $currency_symbol;
 			<?php endforeach; ?>
 		</td>
         <td class="variation-buttons-cont" >
-            <div class="single_variation_wrap" style="display:none;">
+            <div class="single_variation_wrap">
                 <div class="variations_button">
                     <?php woocommerce_quantity_input(); ?>
                     <button type="submit" title="В корзину" class="button green">В корзину</button>

@@ -18,7 +18,7 @@ global $post, $woocommerce;
 		if ( has_post_thumbnail() ) {
 
 			$image       		= get_the_post_thumbnail( $post->ID, apply_filters( 'single_product_large_thumbnail_size', 'shop_single' ) );
-			$image_title 		= esc_attr( get_the_title( get_post_thumbnail_id() ) );
+			$image_title 		= esc_attr( $post->post_title );
 			$attachment_count   = count( get_children( array( 'post_parent' => $post->ID, 'post_mime_type' => 'image', 'post_type' => 'attachment' ) ) );
             $zoomed             = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), apply_filters( 'single_product_large_thumbnail_size', 'shop_zoomed' ) );
         

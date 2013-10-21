@@ -1150,8 +1150,13 @@ function kidberries_search_form( ) {
 
 function kidberries_variation() {
   wp_deregister_script( 'add-to-cart-variation' );
+
+  wp_register_script( 'wc-jquery-animate-shadow', get_template_directory_uri() . '/woocommerce/assets/js/frontend/jquery.animate-shadow.js', array('jquery') );
   wp_register_script( 'wc-add-to-cart-variation', get_template_directory_uri() . '/woocommerce/assets/js/frontend/add-to-cart-variation.js', array('jquery') ); // назначть новый скрипт
+
+  wp_enqueue_script( 'wc-jquery-animate-shadow' );
 }
+
 add_action( 'wp_enqueue_scripts', 'kidberries_variation' );
 
 

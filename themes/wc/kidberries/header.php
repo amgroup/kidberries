@@ -1,3 +1,4 @@
+<?php ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru" lang="ru">
 <head>
@@ -30,7 +31,7 @@
 
 <meta name='yandex-verification' content='4da51ca4bca2da17' />
 <?php wp_head();?>
-<!--link href="http://fonts.googleapis.com/css?family=Neucha|Open+Sans+Condensed:300,300italic,700&subset=cyrillic,latin,cyrillic-ext" rel="stylesheet" type="text/css"/-->
+
 <link rel="search" type="application/opensearchdescription+xml" title="<?php bloginfo('template_url'); ?>" href="//<?php bloginfo('template_url'); ?>/open_search_ru.xml" />
 <link rel="icon" href="<?php bloginfo('template_url'); ?>/skin/images/kidberries-round16x16.png" type="image/png" />
 <link rel="shortcut icon" href="<?php bloginfo('template_url'); ?>/skin/images/kidberries-round16x16.png" type="image/png" />
@@ -115,15 +116,15 @@
 	<a href="http://www.microsoft.com/windows/internet-explorer/default.aspx?ocid=ie6_countdown_bannercode  \n\nThis file was not retrieved by Teleport Pro, because it is addressed on a domain or path outside the boundaries set for its Starting Address.  \n\nDo you want to open it from the server?%27))window.location=%27http://www.microsoft.com/windows/internet-explorer/default.aspx?ocid=ie6_countdown_bannercode%27" tppabs="http://www.microsoft.com/windows/internet-explorer/default.aspx?ocid=ie6_countdown_bannercode"><img src="../www.ie6countdown.com/index.htm" tppabs="http://www.theie6countdown.com/images/upgrade.jpg" border="0" height="42" width="820" alt="" /></a>
 </div> 
 <![endif]-->
-<link rel="stylesheet" type="text/css" href="<?php bloginfo('template_url'); ?>/skin/css/styles.css" tppabs="http://<?php bloginfo('template_url'); ?>/skin/css/styles.css" media="all" />
-<link rel="stylesheet" type="text/css" href="<?php bloginfo('template_url'); ?>/skin/css/fonts.css" tppabs="http://<?php bloginfo('template_url'); ?>/skin/css/application.css" media="all" />
-<link rel="stylesheet" type="text/css" href="<?php bloginfo('template_url'); ?>/skin/css/print.css" tppabs="http://<?php bloginfo('template_url'); ?>/skin/css/print.css" media="print" />
+<link rel="stylesheet" type="text/css" href="<?php bloginfo('template_url'); ?>/skin/css/styles.css" media="all" />
+<link rel="stylesheet" type="text/css" href="<?php bloginfo('template_url'); ?>/skin/css/fonts.css" media="all" />
+<link rel="stylesheet" type="text/css" href="<?php bloginfo('template_url'); ?>/skin/css/print.css" media="print" />
 <!--[if lt IE 8]>
-<link rel="stylesheet" type="text/css" href="skin/css/styles-ie.css" tppabs="http://<?php bloginfo('template_url'); ?>/skin/css/styles-ie.css" media="all" />
+<link rel="stylesheet" type="text/css" href="skin/css/styles-ie.css" media="all" />
 <![endif]-->
 <!--[if lt IE 7]>
-<script type="text/javascript" src="js/lib/ds-sleight.js" tppabs="http://<?php bloginfo('template_url'); ?>/js/lib/ds-sleight.js"></script>
-<script type="text/javascript" src="skin/frontend/base/default/js/ie6.js" tppabs="http://<?php bloginfo('template_url'); ?>/skin/frontend/base/default/js/ie6.js"></script>
+<script type="text/javascript" src="js/lib/ds-sleight.js"></script>
+<script type="text/javascript" src="skin/frontend/base/default/js/ie6.js"></script>
 <![endif]-->
 <script type="text/javascript" src="<?php bloginfo('template_url'); ?>/js/prototype/prototype.js"></script>
 <script type="text/javascript" src="<?php bloginfo('template_url'); ?>/js/varien/menu.js"></script>

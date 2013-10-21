@@ -36,6 +36,10 @@ msgid "An Order Placing"
 msgstr "Размещение заказа"
 
 #@ woocommerce
+msgid "You have received an order from %s. Their order is as follows:"
+msgstr ""
+
+#@ woocommerce
 msgid "Showing all %d result"
 msgid_plural "Showing all %d results"
 msgstr[0] "Ничего не найдено"

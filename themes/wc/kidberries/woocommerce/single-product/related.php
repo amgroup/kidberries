@@ -51,25 +51,6 @@ if ( $products->have_posts() ) : ?>
 
 			</tr>
 		</table>
-<script type="text/javascript">decorateTable('upsell-product-table')</script>
-    <script type="text/javascript">    
-		var grids = $$('.products-grid');
-		grids.each(function(n){					
-				var columns = n.select('td');					
-				var max_height = columns[0].getHeight();
-				var col_top_indent = parseFloat(columns[0].getStyle('padding-top'));
-				var col_bot_indent = parseFloat(columns[0].getStyle('padding-bottom'));
-				max_height = max_height - col_top_indent - col_bot_indent;					
-				var boxes = n.select('td .product-box');										
-				var box_top_indent = parseFloat(boxes[0].getStyle('padding-top'));
-				var box_bot_indent = parseFloat(boxes[0].getStyle('padding-bottom'));
-				boxes.each(function(b){														
-					b.setStyle({
-						height: max_height - box_top_indent - box_bot_indent + 'px'
-					});					
-				 });
-			});	
-	</script>
 	</div>
 
 <?php endif;

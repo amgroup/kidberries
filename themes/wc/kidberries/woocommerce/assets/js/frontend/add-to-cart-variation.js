@@ -66,7 +66,11 @@
 	this.find('button[type=submit].button').click( function(e){
 		if( $('.variation-variants-cont select').length != $('.variation-variants-cont select.complete').length ) {
 			e.preventDefault();
+
 			$('.variation-variants-cont select').each(function(){
+				if( $(this).hasClass("complete") )
+					return;
+
 				$(this).stop();
 				var boxShadowColor = $(this).css("borderBottomColor");
 				var boxShadow      = $(this).css("boxShadow");
@@ -233,8 +237,7 @@
 
 						if ( ! exclude ) {
 //							$variation_form.find('.single_variation_wrap').slideUp('200');
-//							$variation_form.find('.single_price_wrap').slideDown('200');
-//							$(this).trigger('wrong_choise');
+							$variation_form.find('.single_price_wrap').slideDown('200');
 						}
 
 			        }
@@ -458,9 +461,9 @@
 			        	$single_variation_wrap.find('.quantity').hide();
 			        }
 
-//				$variation_form.find('.single_price_wrap').slideUp(200);
-//				$single_variation_wrap.slideDown('200').trigger( 'show_variation', [ variation ] );
-				$(this).trigger('wrong_choise');
+				$variation_form.find('.single_price_wrap').slideUp(200);
+//				$single_variation_wrap.slideDown('200')
+				$single_variation_wrap.trigger( 'show_variation', [ variation ] );
 				});
     };
 

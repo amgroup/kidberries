@@ -90,7 +90,8 @@ if ( $mode != 'list' ) {
                                 </div>
                             </a>
 
-                            <a href="<?the_permalink();?>" class="product-image">
+                            <!-- Product Designed Country Flag -->
+                            <a href="<?php the_permalink();?>" class="product-image">
                                 <?php
                                     if( ($term = get_the_terms( $product->id, 'pa_designed')) !== false ) {
                                         $designed = each($term)['value'];
@@ -123,85 +124,70 @@ if ( $mode != 'list' ) {
                                     }
                                 ?>
                             </a>
-
-<?php 
-if( 'variable' === $product->product_type ) {
-echo '<p class="variants images"><!--';
-
-                $taxonomy             = array();
-                $attribute_taxonomies = array(); 
-                $_attributes          = maybe_unserialize( get_post_meta( $product->id, '_product_attributes', true ) );
-                $available_variations = $product->get_available_variations();
+                            <!-- /Product Designed Country Flag -->
 
 
-                foreach( $woocommerce->get_attribute_taxonomies() as $attribute_taxonomy ) {
-                    $attribute_taxonomies[  'attribute_pa_' . sanitize_title($attribute_taxonomy->attribute_name) ] = $attribute_taxonomy;
-                }
+                            <!-- Variants thumbnails -->
+                            <?php 
+                            if( 'variable' === $product->product_type ) {
+                                echo '<p class="variants images">';
 
-                foreach ( $_attributes as $attribute ) {
-                    if( $attribute['is_variation'] || $attribute['is_changeable'] ) {
-                        $variants = wp_get_post_terms( $product->id, $attribute['name'] );
-                        $attribute_name = 'attribute_' . $attribute['name'];
-
-                        $taxonomy[ $attribute_name ] = array();
-                        foreach( $variants as $variant ) {
-                            $taxonomy[ $attribute_name ][ $variant->slug ] = array(
-                                'attribute_name'  => $attribute_taxonomies[ $attribute_name ]->attribute_name,
-                                'attribute_label' => $attribute_taxonomies[ $attribute_name ]->attribute_label,
-                                'attribute_description' => $attribute_taxonomies[ $attribute_name ]->attribute_description,
-                                'description' => $variant->description,
-                                'name' => $variant->name,
-                                'slug' => $variant->slug
-                            );
-                        }
-                    }
-                }
-
-				$images = array();
-                foreach ( $available_variations as $variation_id => $variation ) {
-                    $available_variations[$variation_id]['taxonomy'] = array();
-
-                    foreach( $available_variations[$variation_id]['attributes'] as $attribute_name => $slug ) {
-                        $available_variations[$variation_id]['taxonomy'][ $attribute_name ] = $taxonomy[ $attribute_name ][ $slug ];
-                    }
-					
-                }
-				
-				
-				
-				
-                var_dump( $available_variations );
-
-echo '--></p>';
-
-/*
-    $available_variations = $product->get_available_variations();
-    $attr_color = 'pa_cvet';
-
-    $variants = wp_get_post_terms( $product->id, $attr_color );
-
-    $attribute_taxonomies = array();
-    foreach( $woocommerce->get_attribute_taxonomies() as $attribute_taxonomy )
-        $attribute_taxonomies[ 'attribute_pa_' . sanitize_title( $attribute_taxonomy->attribute_name ) ] = $attribute_taxonomy;
+                                $taxonomy             = array();
+                                $attribute_taxonomies = array(); 
+                                $_attributes          = maybe_unserialize( get_post_meta( $product->id, '_product_attributes', true ) );
+                                $available_variations = $product->get_available_variations();
 
 
-    $images = array();
-    foreach ( $available_variations as $variation_id => $variation )
-        $images[ $available_variations[$variation_id]['image_src'] ] = $attribute_taxonomies[ 'attribute_' . $attr_color ]->attribute_description . ': ' .;
+                                foreach( $woocommerce->get_attribute_taxonomies() as $attribute_taxonomy ) {
+                                    $attribute_taxonomies[  'attribute_pa_' . sanitize_title($attribute_taxonomy->attribute_name) ] = $attribute_taxonomy;
+                                }
 
+                                foreach ( $_attributes as $attribute ) {
+                                    if( $attribute['is_variation'] || $attribute['is_changeable'] ) {
+                                        $variants = wp_get_post_terms( $product->id, $attribute['name'] );
+                                        $attribute_name = 'attribute_' . $attribute['name'];
 
+                                        $taxonomy[ $attribute_name ] = array();
+                                        foreach( $variants as $variant ) {
+                                            $taxonomy[ $attribute_name ][ $variant->slug ] = array(
+                                                'attribute_label' => $attribute_taxonomies[ $attribute_name ]->attribute_label,
+                                                'attribute_description' => $attribute_taxonomies[ $attribute_name ]->attribute_description,
+                                                'name' => $variant->name
+                                            );
+                                        }
+                                    }
+                                }
 
-    if( sizeof($images) > 1 ) {
-        echo '<p class="variants images"><!--';
+	                            $images = array();
+	                            $variant_thumbnail_count  = 0;
+                                foreach ( $available_variations as $variation_id => $variation ) {
+                                    foreach( $available_variations[$variation_id]['attributes'] as $attribute_name => $slug ) {
+                                        if('attribute_pa_cvet' === $attribute_name ) {
+                                            $attachment = wp_get_attachment_image_src( get_post_thumbnail_id( $available_variations[ $variation_id ]['variation_id'] ), 'shop_thumbnail' );
+                                            $src = esc_url( current( $attachment ) );
+                                            $key = $taxonomy[ $attribute_name ][ $slug ]['name'];
+                                            
+                                            if( ! isset( $images[ $key ] ) ) {
+                                                if( $src && $variant_thumbnail_count++ < 6 ) {
+                                                    $images[ $key ] = true;
 
-        foreach ( $images as $image => $color ) {
-            echo $color;
-        }
-        var_dump($variants);
-        echo '--></p>';
-    }*/
-}
-?>
+                                                    echo '<a href="'; the_permalink(); echo '" ' . sprintf( 'title="%s"><img src="%s" alt="%s" class="%s" /></a>',
+                                                        esc_attr( $taxonomy[ $attribute_name ][ $slug ]['attribute_description'] . ' - ' . $taxonomy[ $attribute_name ][ $slug ]['name'] . ' - ' . $post->post_title ),
+                                                        $src,
+                                                        esc_attr( $taxonomy[ $attribute_name ][ $slug ]['attribute_label'] . ' - ' . $taxonomy[ $attribute_name ][ $slug ]['name'] . ' - ' . $post->post_title ),
+                                                        'variant thumbnail'
+                                                    );
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+                                echo '</p>';
+                            }
+                            ?>
+                            <!-- /Variants thumbnails -->
+
 
                             <?php if ( ! $product->is_in_stock() ) : ?>
                                 <p class="not_in_stock">Нет в наличии</p>
