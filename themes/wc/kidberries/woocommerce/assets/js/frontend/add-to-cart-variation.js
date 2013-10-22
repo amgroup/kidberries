@@ -237,6 +237,7 @@
 
 						if ( ! exclude ) {
 //							$variation_form.find('.single_variation_wrap').slideUp('200');
+							$variation_form.find('.single_variation_wrap .single_variation').slideUp('200');
 							$variation_form.find('.single_price_wrap').slideDown('200');
 						}
 
@@ -462,7 +463,8 @@
 			        }
 
 				$variation_form.find('.single_price_wrap').slideUp(200);
-//				$single_variation_wrap.slideDown('200')
+				$single_variation_wrap.find('.single_variation').slideDown('200');
+//				$single_variation_wrap.slideDown('200');
 				$single_variation_wrap.trigger( 'show_variation', [ variation ] );
 				});
     };

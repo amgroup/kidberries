@@ -3622,6 +3622,10 @@ font-size: 14px;
 font-weight: normal;
 }
 
+.onepage_checkout button#place_order:hover {
+box-shadow: inset 0 0 15px #C07, 0 0 30px -10px orange;
+}
+
 .checkout_table_item .product-name img {
 margin-right: 10px;
 float: left;
