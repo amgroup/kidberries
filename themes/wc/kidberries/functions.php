@@ -1127,6 +1127,9 @@ function override_woocommerce_widgets() {
 
   include_once( 'widgets/subcategories.php' );
   register_widget( 'Kidberries_Widget_Subcategories' );
+
+  include_once( 'widgets/layered-nav.php' );
+  register_widget( 'Kidberries_Widget_Layered_Nav' );
 }
 
 

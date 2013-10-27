@@ -2693,6 +2693,9 @@ padding-left:30px;
 padding-right:30px;
 }
 
+.shop_table.order_details .product-name {padding-right: 5px;}
+.shop_table.order_details .product-total {padding-left: 5px;}
+
 .corner-right-bot p.not_in_stock {
 text-align: center;
 color: red;

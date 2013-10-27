@@ -5,9 +5,7 @@
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title><?php
-    if( is_cart() || is_checkout() || is_account_page() ) {
-        _e( get_the_title(), 'woocommerce');
-    } else if( is_product() ) {
+    if( is_product() ) {
         echo "Купить за " . kidberries_get_price() . " - ";
         wp_title('-', true, 'right');
         bloginfo('name');
@@ -15,8 +13,11 @@
         bloginfo('name');
         echo " - ";
 	bloginfo('description');
+    } else if( is_cart() || is_checkout() || is_account_page() ) {
+        _e( get_the_title(), 'woocommerce');
     } else {
-        wp_title('-', true, 'right');
+	_e( get_the_title(), 'woocommerce');
+	echo ' - ';
         bloginfo('name');
     }
 ?></title>
