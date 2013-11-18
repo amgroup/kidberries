@@ -87,7 +87,6 @@
   
 wp_nav_menu( $args );   ?>
 
-
 <script type="text/javascript" src="<?php bloginfo('template_url'); ?>/skin/js/menu.js"></script>
 
 

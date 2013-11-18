@@ -30,9 +30,7 @@
         echo '<meta name="robots" content="INDEX,FOLLOW" />';
 ?>
 
-<meta name='yandex-verification' content='4da51ca4bca2da17' />
 <?php wp_head();?>
-
 <link rel="search" type="application/opensearchdescription+xml" title="<?php bloginfo('template_url'); ?>" href="//<?php bloginfo('template_url'); ?>/open_search_ru.xml" />
 <link rel="icon" href="<?php bloginfo('template_url'); ?>/skin/images/kidberries-round16x16.png" type="image/png" />
 <link rel="shortcut icon" href="<?php bloginfo('template_url'); ?>/skin/images/kidberries-round16x16.png" type="image/png" />
