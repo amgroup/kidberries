@@ -99,7 +99,7 @@ class Kidberries_Widget_Layered_Nav extends WP_Widget {
                   (tree.path || '/' || tt2.term_id::text) AS path
                 FROM
                   wp_term_taxonomy tt2,
-                  tree 
+                  tree
                 WHERE
                   tree.term_id = tt2.parent AND
                   tt2.taxonomy = 'product_cat'

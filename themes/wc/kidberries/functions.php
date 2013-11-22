@@ -322,7 +322,7 @@ if ( ! function_exists( 'woocommerce_content' ) ) {
 	<?php
 		if ( is_tax( 'product_cat' ) ) {
 			$term = get_term_by('slug', esc_attr( get_query_var('product_cat') ), 'product_cat');
-			$advertisement = html_entity_decode( get_woocommerce_term_meta( $term->term_id, 'advertisement', true ) );
+			$advertisement = html_entity_decode( get_woocommerce_term_meta_closest( $term->term_id, 'advertisement', true ) );
 			if( $advertisement )
 				echo '<div class="category advertisement">' . $advertisement . '</div>';
 		}
