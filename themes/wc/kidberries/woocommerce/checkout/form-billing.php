@@ -69,7 +69,8 @@ $checkout->checkout_fields['shipping']['shipping_phone'] = $checkout->checkout_f
 
 	<div class="create-account">
 
-		<p><?php _e( 'Create an account by entering the information below. If you are a returning customer please login at the top of the page.', 'woocommerce' ); ?></p>
+		<p>Стать постоянным покупателем.</p>
+		<p style="display: none;"><small>Вы сможете видеть историю заказов, проще делать новые и получать скидки.</small></p>
 
 		<?php foreach ($checkout->checkout_fields['account'] as $key => $field) : ?>
 
