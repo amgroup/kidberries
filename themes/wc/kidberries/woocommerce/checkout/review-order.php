@@ -48,7 +48,11 @@ $checkout_step = 1;
 				<tr class="shipping">
     			    <td class="empty border step"><span><?php echo $checkout_step++; ?></span></td>
 					<th><?php _e( 'Shipping', 'woocommerce' ); ?></th>
-					<td><?php woocommerce_get_template( 'cart/shipping-methods.php', array( 'available_methods' => $available_methods ) ); ?></td>
+					<td>
+					<form id="product_shipping_methods" enctype="multipart/form-data">
+                                    	    <div><?php woocommerce_get_template( 'shipping/methods.php' ); ?></div>
+					</form>
+					</td>
 				</tr>
 
 				<?php do_action('woocommerce_review_order_after_shipping'); ?>

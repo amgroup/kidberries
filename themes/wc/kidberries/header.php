@@ -33,7 +33,7 @@
 <?php wp_head();?>
 <link rel="search" type="application/opensearchdescription+xml" title="<?php bloginfo('template_url'); ?>" href="//<?php bloginfo('template_url'); ?>/open_search_ru.xml" />
 
-<link rel="shortcut icon" href="<?php bloginfo('template_url'); ?>/skin/images/kidberries-round16x16.ico" type="image/vnd.microsoft.icon" />
+<link rel="shortcut icon" href="<?php bloginfo('template_url'); ?>/skin/images/kidberries-round16x16.ico" type="image/x-icon" />
 <link rel="icon" href="<?php bloginfo('template_url'); ?>/skin/images/kidberries-round16x16.png" type="image/png" />
 
 <script type="text/javascript" src="<?php bloginfo('template_url'); ?>/skin/js/cufon-yui.js"></script>

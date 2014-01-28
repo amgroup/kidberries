@@ -2742,13 +2742,13 @@ font-size:10px;
 }
 
 .cart-table th {
-text-align:center;
+text-align:right;
 color:#555;
 padding:7px;
 }
 
 .cart-table td {
-text-align:center;
+text-align:left;
 vertical-align:middle;
 padding:10px;
 }
@@ -4513,3 +4513,71 @@ text-shadow: 0 1px 0 white;
 .page-title.category-title {
 padding: 5px 0px;
 }
+
+
+ul.shipping_methods.collection li.subvariant { padding-left: 20px;}
+.simple.product .product-details div.shipping { border: 1px dashed orange; border-radius: 4px; padding: 4px; margin-bottom: 10px;}
+
+.simple.product .product-details div.shipping .free.shipping{ border-bottom: 1px dashed red; color: #EC2376; }
+
+.simple.product .product-details ul.shipping_methods.collection li {margin-bottom: 10px;}
+.simple.product .product-details ul.shipping_methods.collection li.subvariant input { margin-right: 3px;}
+.simple.product .product-details ul.shipping_methods.collection ol { max-height: 100px; overflow: auto; }
+
+.product-essential h1, .product-essential h2, .product-essential h3, .product-essential h4 {
+color:#336;
+}
+
+#sku {
+color: #888;
+font-weight: bold;
+}
+
+#shipping_method {
+font-family: 'PT Sans', Arial;
+font-size: 14px;
+}
+
+.simple.product .product-details > div {
+margin-left: 20px;
+}
+
+.product-description, .product-information, .box-collateral {
+padding-top: 30px;
+font-family: 'PT Sans';
+font-size: 14px;
+font-style: normal;
+line-height: 20px;
+}
+
+.product-description p, .product-information p {
+margin-bottom: 8pt;
+margin-top: 8pt;
+}
+
+.product-description h2, .product-information h2, .box-collateral h2 {
+font-size: 18px;
+font-style: bold;
+}
+.product-description ul, .product-information ul {
+list-style: inherit;
+padding: 8px 40px;
+}
+
+.product-description td, .product-information td, .product-description th, .product-information th {
+padding: 10px 15px;
+vertical-align: middle;
+}
+
+.product-description td p, .product-information td p {
+margin: 0;
+}
+
+#upsell-product-table .price.digit, #upsell-product-table .price.currency {
+display: inline;
+}
+
+.product-details.product-shop .price-box.onsale .old-price .price {
+color: #BBB;
+}
+

@@ -1130,6 +1130,9 @@ function override_woocommerce_widgets() {
 
   include_once( 'widgets/layered-nav.php' );
   register_widget( 'Kidberries_Widget_Layered_Nav' );
+
+  include_once( 'widgets/mini-cart.php' );
+  register_widget( 'Kidberries_Widget_Cart' );
 }
 
 

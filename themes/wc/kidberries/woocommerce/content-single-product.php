@@ -22,69 +22,8 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 ?>
 <script type="text/javascript" src="<?php bloginfo('template_url'); ?>/js/corlletelab/imagezoom/cloud-zoom.1.0.2.js" ></script>
 <link rel="stylesheet" type="text/css" href="<?php bloginfo('template_url'); ?>/skin/css/corlletelab/imagezoom.css" media="all" />
-<style>
 
-.product-essential h1, .product-essential h2, .product-essential h3, .product-essential h4 {
-color:#336;
-}
-
-#sku {
-color: #888;
-font-weight: bold;
-}
-
-#shipping_method {
-font-family: 'PT Sans', Arial;
-font-size: 14px;
-}
-
-.simple.product .product-details > div {
-margin-left: 20px;
-}
-
-.product-description, .product-information, .box-collateral {
-padding-top: 30px;
-font-family: 'PT Sans';
-font-size: 14px;
-font-style: normal;
-line-height: 20px;
-}
-
-.product-description p, .product-information p {
-margin-bottom: 8pt;
-margin-top: 8pt;
-}
-
-.product-description h2, .product-information h2, .box-collateral h2 {
-font-size: 18px;
-font-style: bold;
-}
-.product-description ul, .product-information ul {
-list-style: inherit;
-padding: 8px 40px;
-}
-
-.product-description td, .product-information td, .product-description th, .product-information th {
-padding: 10px 15px;
-vertical-align: middle;
-}
-
-.product-description td p, .product-information td p {
-margin: 0;
-}
-
-#upsell-product-table .price.digit, #upsell-product-table .price.currency {
-display: inline;
-}
-
-.product-details.product-shop .price-box.onsale .old-price .price {
-color: #BBB;
-}
-
-
-</style>
-
-<?global $woocommerce, $product;
+<?global $woocommerce, $product, $post;
 
 ?>
 <div class="product-name">
@@ -105,13 +44,14 @@ color: #BBB;
             
             <td class="product-details product-shop">
 		<?php if ( $product->is_in_stock() ) : ?>
-                <div class="product delivery methods">
-                    <div class="delivery-box">
-                        <span class="title"><span class="big">Доставка:</span></span>
-                        <ul id="shipping_method"></ul>
-                        <small>* <em>стоимость доставки вашей корзины <strong>вместе с этим товаром</strong></em></small>
-                    </div>
-                </div>
+			<div class="shipping">
+                                <form id="product_shipping_methods" enctype="multipart/form-data">
+					<h3><?php _e( 'Shipping', 'woocommerce' ) ?></h3>
+                                        <input type="hidden" name="product_id" value="<?php echo $post->ID; ?>" />
+                                        <div><?php woocommerce_get_template( 'shipping/methods.php' ); ?></div>
+                                        * <em>Показана стоимость доставки товаров в вашей корзине <strong>вместе с этим товаром.</strong></em>
+                                </form>
+		    </div>
 		<?php endif; ?>
                 
                 <div class="add-to-cart">
