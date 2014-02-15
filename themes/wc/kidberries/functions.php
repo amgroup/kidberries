@@ -1198,7 +1198,157 @@ function kidberries_get_price_html_simple( $price ) {
 
 	return $price;
 }
+//add_filter( 'woocommerce_variation_price_html', 'kidberries_get_price_html_simple', 100, 2 );
 
-add_filter( 'woocommerce_variation_price_html', 'kidberries_get_price_html_simple', 100, 2 );
+
+function kidberries_synonymize ( $string = '' ) {
+	$string = preg_replace_callback('/<strong>([^<]+)<\/strong>/i', 'kidberries_get_synonym', $string );
+	return $string;
+}
+
+function kidberries_get_synonym ( $phrase ) {
+	global $wpdb, $kidberries_keywords;
+    if( !$phrase ) return;
+
+	if( is_array( $phrase ) ) $phrase = $phrase[1];
+
+	$wpdb->get_results( $wpdb->prepare("
+		INSERT INTO utils.synonym (phrase, replacement, rate)
+		SELECT n.phrase, n.replacement, n.rate FROM (
+			SELECT %s::text AS phrase, ''::text AS replacement, 0::numeric AS rate
+		) n
+		WHERE NOT EXISTS (SELECT 1 FROM utils.synonym o WHERE n.phrase = o.phrase)
+	", $phrase ) );
+
+	$phrase = $wpdb->get_var( $wpdb->prepare("
+		SELECT replacement FROM (
+		  SELECT %s AS replacement, 1 AS rate
+		  UNION 
+		  SELECT replacement, rate FROM utils.synonym WHERE type = 'generator' AND phrase = %s
+		) r
+		ORDER BY RAND() * rate DESC
+		LIMIT 1;
+	", $phrase, $phrase));
+	
+	$kidberries_keywords[ mb_strtolower($phrase) ] ++;
+
+	return '<strong>' . $phrase . '</strong>';
+}
+
+function kidberries_get_product_header_description() {
+	global $post;
+
+	if( is_product() ) {
+		$price = get_product($post)->get_price();
+		$description = $post->post_title . ' - за ' . $price . ' руб.';
+		$description .= ' ' . kidberries_generate_description();
+		$description = esc_attr( strip_tags($description) );
+		return $description;
+/*
+		$description_ = $description;
+		$description_ = mb_substr( $description_, 0, 197 );
+
+		if( !(mb_strlen($description_) == mb_strlen($description)) ) {
+			$description_ .= '...';
+		}
+		return $description_;
+		*/
+	}
+}
+
+function kidberries_get_product_category_header_keywords($name) {
+	global $kidberries_keywords;
+
+	if( is_product_category() ) {
+		kidberries_generate_description();
+		if( isset($kidberries_keywords) ) {
+			asort($kidberries_keywords);
+			$kw = array();
+			$kw[] = mb_strtolower( $name );
+
+			foreach( $kidberries_keywords as $k=>$v ) {
+				$kw[] = $k;
+			}
+			return esc_attr( implode(',', $kw) );
+		}
+	}	
+}
+
+function kidberries_get_product_header_keywords() {
+	global $kidberries_keywords, $post;
+
+	if( is_product() ) {
+		kidberries_generate_description();
+		if( isset($kidberries_keywords) ) {
+			asort($kidberries_keywords);
+			$kw = array();
+			$kw[] = mb_strtolower( $post->post_title );
+
+			foreach( $kidberries_keywords as $k=>$v ) {
+				$kw[] = $k;
+			}
+			return esc_attr( implode(',', $kw) );
+		}
+	}	
+}
+
+function kidberries_get_product_catigories () {
+	global $wpdb, $post, $product_categories;
+
+	if( is_product() ) {
+		if( ! isset( $product_categories ) ) {
+			$product_categories = $wpdb->get_results( $wpdb->prepare("
+			  SELECT
+			    t.*,
+			    tt.description
+			  FROM
+			    $wpdb->term_relationships tr,
+			    $wpdb->term_taxonomy tt,
+			    $wpdb->terms t
+			  WHERE
+			    tt.term_id = t.term_id AND
+			    tt.term_taxonomy_id = tr.term_taxonomy_id AND
+			    tt.taxonomy = 'product_cat' AND
+			    object_id = %u
+			  ORDER BY fn.category_path(t.term_id) DESC
+			", $post->ID ) );
+		}
+		return $product_categories;
+	}
+}
+
+function kidberries_get_product_breadcrumbs() {
+	if( is_product() ) {
+		$categories  = kidberries_get_product_catigories ();
+		$breadcrumbs = '';
+
+		$breadcrumbs = '<ol class="breadcrumb">';
+		    foreach( $categories as $cat ) {
+				$breadcrumbs .= '<li><a href="' . get_term_link( $cat->slug, 'product_cat' ) . '"  itemprop="url">' . esc_html($cat->name) . '</a></li>';
+		    }
+		$breadcrumbs .= '</ol>';
+
+		echo $breadcrumbs;
+	}
+}
+
+function kidberries_generate_description() {
+	global $kidberries_generated_description;
+
+	if( is_product() ) {
+		if( ! isset( $kidberries_generated_description ) ) {
+			$categories = kidberries_get_product_catigories ();
+			$kidberries_generated_description = '';
+
+			foreach( $categories as $category ) {
+				if ( $category->description != ""  ) {
+			    	$category->description = kidberries_synonymize( $category->description );
+					 $kidberries_generated_description .=  "<p>" . join("</p><p>", split( "\n", $category->description ) ) . "</p>";
+				}
+			}
+		}
+		return $kidberries_generated_description;
+	}
+}
 
 ?>

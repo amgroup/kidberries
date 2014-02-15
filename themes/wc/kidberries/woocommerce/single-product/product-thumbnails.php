@@ -37,8 +37,7 @@ if ( $attachment_ids ) {
 			$zoomed      = wp_get_attachment_image_src( $attachment_id, apply_filters( 'single_product_large_thumbnail_size', 'shop_zoomed' ) );
             $small       = wp_get_attachment_image_src( $attachment_id, apply_filters( 'single_product_large_thumbnail_size', 'shop_single' ) );
 
-			echo apply_filters( 'woocommerce_single_product_image_thumbnail_html', sprintf( '<li><a href="%s" class="cloud-zoom-gallery" rel="useZoom: ' . "'image-zoom', smallImage: '" . esc_url( $small[0] ) . "'". '">%s</a></li>', esc_url( $zoomed[0] ), $image ), $attachment_id, $post->ID, $image_class );
-
+			echo apply_filters( 'woocommerce_single_product_image_thumbnail_html', sprintf( "<li><a href=\"%s\" class=\"cloud-zoom-gallery\" rel=\"useZoom: 'image-zoom', smallImage: '%s'\" >%s</a></li>", esc_url( $zoomed[0] ), esc_url( $small[0] ), $image ), $attachment_id, $post->ID, $image_class );
 			$loop++;
 		}
 

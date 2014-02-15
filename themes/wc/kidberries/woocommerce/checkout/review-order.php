@@ -31,15 +31,6 @@ $checkout_step = 1;
 				<th><?php _e( 'Cart Subtotal', 'woocommerce' ); ?></th>
 				<td><?php echo $woocommerce->cart->get_cart_subtotal(); ?></td>
 			</tr>
-			<?php if ( $woocommerce->cart->get_discounts_before_tax() ) : ?>
-
-			<tr class="discount">
-			    <td class="empty border"></td>
-				<th><?php _e( 'Cart Discount', 'woocommerce' ); ?></th>
-				<td>-<?php echo $woocommerce->cart->get_discounts_before_tax(); ?></td>
-			</tr>
-
-			<?php endif; ?>
 
 			<?php if ( $woocommerce->cart->needs_shipping() && $woocommerce->cart->show_shipping() ) : ?>
 
@@ -49,9 +40,9 @@ $checkout_step = 1;
     			    <td class="empty border step"><span><?php echo $checkout_step++; ?></span></td>
 					<th><?php _e( 'Shipping', 'woocommerce' ); ?></th>
 					<td>
-					<form id="product_shipping_methods" enctype="multipart/form-data">
-                                    	    <div><?php woocommerce_get_template( 'shipping/methods.php' ); ?></div>
-					</form>
+					    <div id="product_shipping_methods">
+						<div><?php woocommerce_get_template( 'shipping/methods.php' ); ?></div>
+					    </div>
 					</td>
 				</tr>
 
@@ -131,17 +122,7 @@ $checkout_step = 1;
 					}
 				}
 			?>
-
-			<?php if ($woocommerce->cart->get_discounts_after_tax()) : ?>
-
-			<tr class="discount">
-			    <td class="empty border"></td>
-				<th><?php _e( 'Order Discount', 'woocommerce' ); ?></th>
-				<td>-<?php echo $woocommerce->cart->get_discounts_after_tax(); ?></td>
-			</tr>
-
-			<?php endif; ?>
-
+			
 			<?php do_action( 'woocommerce_review_order_before_order_total' ); ?>
 
 			<?php foreach ( $woocommerce->cart->discount_totals as $discount_name => $discount_value ) : ?>
@@ -152,6 +133,23 @@ $checkout_step = 1;
 				</tr>
 			<?php endforeach; ?>			
 
+			<?php if ( $woocommerce->cart->get_discounts_before_tax() ) : ?>
+				<tr class="discount">
+					<td class="empty border"></td>
+					<th>ИТОГО - Все скидки, акции и купоны</th>
+					<td><strong>-<?php echo $woocommerce->cart->get_discounts_before_tax(); ?></strong></td>
+				</tr>
+			<?php endif; ?>
+
+			<?php if ($woocommerce->cart->get_discounts_after_tax()) : ?>
+				<tr class="discount">
+					<td class="empty border"></td>
+					<th>ИТОГО - Все скидки, акции и купоны</th>
+					<td><strong>-<?php echo $woocommerce->cart->get_discounts_after_tax(); ?></strong></td>
+				</tr>
+			<?php endif; ?>
+
+			
 			<tr class="total">
 			    <td class="empty border"></td>			
 				<th><strong><?php _e( 'Order Total', 'woocommerce' ); ?></strong></th>

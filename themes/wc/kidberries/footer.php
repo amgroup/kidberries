@@ -5,11 +5,10 @@
 				<?php dynamic_sidebar( 'down-widget-area' ); ?>
 			<?php endif; ?>
           <br class="clear" />
-          <address>Детки-Ягодки™ &copy; 2013</address>
+          <address>Детки-Ягодки™ &copy; 2014</address>
         </div>
     </div>
 </div>
-<script type="text/javascript">Cufon.now();</script>
 
 <!-- Yandex.Metrika counter -->
 <script type="text/javascript">

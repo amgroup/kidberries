@@ -28,14 +28,6 @@ $available_methods = $woocommerce->shipping->get_available_shipping_methods();
 					<th style='text-align: right;'><strong><?php _e( 'Cart Subtotal', 'woocommerce' ); ?></strong></th>
 					<td style='text-align: left;'><strong><?php echo $woocommerce->cart->get_cart_subtotal(); ?></strong></td>
 				</tr>
-				<?php if ( $woocommerce->cart->get_discounts_before_tax() ) : ?>
-
-					<tr class="discount">
-						<th  style='text-align: right;'><?php _e( 'Cart Discount', 'woocommerce' ); ?> <a href="<?php echo add_query_arg( 'remove_discounts', '1', $woocommerce->cart->get_cart_url() ) ?>"><?php _e( '[Remove]', 'woocommerce' ); ?></a></th>
-						<td  style='text-align: left;'>-<?php echo $woocommerce->cart->get_discounts_before_tax(); ?></td>
-					</tr>
-
-				<?php endif; ?>
 
 				<?php if ( $woocommerce->cart->needs_shipping() && $woocommerce->cart->show_shipping() && ( $available_methods || get_option( 'woocommerce_enable_shipping_calc' ) == 'yes' ) ) : ?>
                                 <tr class="shipping">
@@ -114,17 +106,6 @@ $available_methods = $woocommerce->shipping->get_available_shipping_methods();
 					}
 				?>
 
-				<?php if ( $woocommerce->cart->get_discounts_after_tax() ) : ?>
-
-					<tr class="discount">
-						<th style="text-align: right;"><?php _e( 'Order Discount', 'woocommerce' ); ?> <a href="<?php echo add_query_arg( 'remove_discounts', '2', $woocommerce->cart->get_cart_url() ) ?>"><?php _e( '[Remove]', 'woocommerce' ); ?></a></th>
-						<td style="text-align: left;">-<?php echo $woocommerce->cart->get_discounts_after_tax(); ?></td>
-					</tr>
-
-				<?php endif; ?>
-
-				<?php do_action( 'woocommerce_cart_totals_before_order_total' ); ?>
-
 				<?php foreach ( $woocommerce->cart->discount_totals as $discount_name => $discount_value ) : ?>
 					<tr class="cart-discount-total">
 						<th  style='text-align: right;'><strong><?php  if($woocommerce->cart->discount_totals[ $discount_name ]>0) { _e( 'Total in Discount Action:', 'woocommerce'); } ?> "<?php echo $discount_name; ?>"</strong></th>
@@ -132,6 +113,21 @@ $available_methods = $woocommerce->shipping->get_available_shipping_methods();
 					</tr>
 				<?php endforeach; ?>
 
+				<?php if ( $woocommerce->cart->get_discounts_after_tax() ) : ?>
+					<tr class="discount">
+						<th style="text-align: right;">ИТОГО - Все скидки, акции и купоны</th>
+						<td style="text-align: left;">-<?php echo $woocommerce->cart->get_discounts_after_tax(); ?></td>
+					</tr>
+				<?php endif; ?>
+
+				<?php if ( $woocommerce->cart->get_discounts_before_tax() ) : ?>
+					<tr class="discount">
+						<th style="text-align: right;">ИТОГО - Все скидки, акции и купоны</th>
+						<td style="text-align: left;">-<?php echo $woocommerce->cart->get_discounts_before_tax(); ?></td>
+					</tr>
+				<?php endif; ?>
+
+				<?php do_action( 'woocommerce_cart_totals_before_order_total' ); ?>
 				<tr class="total">
 					<th style="text-align: right;"><strong><?php _e( 'Order Total', 'woocommerce' ); ?></strong></th>
 					<td style="text-align: left;">

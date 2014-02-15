@@ -17,10 +17,6 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
  */
 $tabs = apply_filters( 'woocommerce_product_tabs', array() );
 
-?><pre>
-<?print_r ($tabs);?>
-</pre><?
-
 if ( ! empty( $tabs ) ) : ?>
 
 	<div class="woocommerce-tabs">
@@ -36,9 +32,6 @@ if ( ! empty( $tabs ) ) : ?>
 		<?php foreach ( $tabs as $key => $tab ) : ?>
 
 			<div class="panel entry-content" id="tab-<?php echo $key ?>">
-			<pre>
-<?echo $key;?>
-</pre>
 			
 				<?php call_user_func( $tab['callback'], $key, $tab ) ?>
 			</div>

@@ -164,19 +164,21 @@ if ( $mode != 'list' ) {
                                     foreach( $available_variations[$variation_id]['attributes'] as $attribute_name => $slug ) {
                                         if('attribute_pa_cvet' === $attribute_name ) {
                                             $attachment = wp_get_attachment_image_src( get_post_thumbnail_id( $available_variations[ $variation_id ]['variation_id'] ), 'shop_thumbnail' );
-                                            $src = esc_url( current( $attachment ) );
-                                            $key = $taxonomy[ $attribute_name ][ $slug ]['name'];
-                                            
-                                            if( ! isset( $images[ $key ] ) ) {
-                                                if( $src && $variant_thumbnail_count++ < 6 ) {
-                                                    $images[ $key ] = true;
+                                            if( $attachment ) {
+                                                $src = esc_url( current( $attachment ) );
+                                                $key = $taxonomy[ $attribute_name ][ $slug ]['name'];
+                                                
+                                                if( ! isset( $images[ $key ] ) ) {
+                                                    if( $src && $variant_thumbnail_count++ < 6 ) {
+                                                        $images[ $key ] = true;
 
-                                                    echo '<a href="'; the_permalink(); echo '" ' . sprintf( 'title="%s"><img src="%s" alt="%s" class="%s" /></a>',
-                                                        esc_attr( $taxonomy[ $attribute_name ][ $slug ]['attribute_description'] . ' - ' . $taxonomy[ $attribute_name ][ $slug ]['name'] . ' - ' . $post->post_title ),
-                                                        $src,
-                                                        esc_attr( $taxonomy[ $attribute_name ][ $slug ]['attribute_label'] . ' - ' . $taxonomy[ $attribute_name ][ $slug ]['name'] . ' - ' . $post->post_title ),
-                                                        'variant thumbnail'
-                                                    );
+                                                        echo '<a href="'; the_permalink(); echo '" ' . sprintf( 'title="%s"><img src="%s" alt="%s" class="%s" /></a>',
+                                                            esc_attr( $taxonomy[ $attribute_name ][ $slug ]['attribute_description'] . ' - ' . $taxonomy[ $attribute_name ][ $slug ]['name'] . ' - ' . $post->post_title ),
+                                                            $src,
+                                                            esc_attr( $taxonomy[ $attribute_name ][ $slug ]['attribute_label'] . ' - ' . $taxonomy[ $attribute_name ][ $slug ]['name'] . ' - ' . $post->post_title ),
+                                                            'variant thumbnail'
+                                                        );
+                                                    }
                                                 }
                                             }
                                         }

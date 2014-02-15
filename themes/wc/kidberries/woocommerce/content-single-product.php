@@ -4,8 +4,8 @@
  *
  * Override this template by copying it to yourtheme/woocommerce/content-single-product.php
  *
- * @author 		WooThemes
- * @package 	WooCommerce/Templates
+ * @author      WooThemes
+ * @package     WooCommerce/Templates
  * @version     1.6.4
  */
 
@@ -13,104 +13,157 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 ?>
 
 <?php
-	/**
-	 * woocommerce_before_single_product hook
-	 *
-	 * @hooked woocommerce_show_messages - 10
-	 */
-	 do_action( 'woocommerce_before_single_product' );
+    /**
+     * woocommerce_before_single_product hook
+     *
+     * @hooked woocommerce_show_messages - 10
+     */
+    global $woocommerce, $product, $post, $currency_symbol;
+
+    do_action( 'woocommerce_before_single_product' );
 ?>
 <script type="text/javascript" src="<?php bloginfo('template_url'); ?>/js/corlletelab/imagezoom/cloud-zoom.1.0.2.js" ></script>
 <link rel="stylesheet" type="text/css" href="<?php bloginfo('template_url'); ?>/skin/css/corlletelab/imagezoom.css" media="all" />
 
-<?global $woocommerce, $product, $post;
+<div calss="product-view" itemtype="http://schema.org/Product" itemscope="itemscope">
+    <div class="before-product-name">
+        <span class="product-sku">
+            Артикул: <span class="sku" itemprop="productID" id="sku" data-o_sku="<?php echo $product->sku; ?>"><?php echo $product->sku; ?></span>
+        </span>
 
-?>
-<div class="product-name">
-    <?php woocommerce_template_single_title(); ?>
-    <p class="product-sku">
-	Артикул: <span class="sku" id="sku" data-o_sku="<?echo $product->sku;?>"><?echo $product->sku;?></span>
-    </p>
+        <span class="reviews" itemtype="http://schema.org/AggregateRating" itemscope="itemscope" itemprop="aggregateRating">
+	    <meta content="1" itemprop="reviewCount" />
+	    <meta content="5" itemprop="ratingValue" />
+
+            <?php woocommerce_get_template( 'single-product-reviews/add-review-button.php' ); ?>
+
+            <span class="email-friend">
+                <script type="text/javascript" src="//yandex.st/share/share.js" charset="utf-8"></script>
+                <div class="yashare-auto-init" data-yashareL10n="ru" data-yashareType="none" data-yashareQuickServices="facebook,vkontakte,twitter"></div>
+            </span>
+        </span>
+    </div>
+
+    <h1 itemprop="name" class="product-name"><?php echo esc_html( $post->post_title ); ?></h1>
+    <meta content="<?php the_permalink();?>" itemprop="url" />
+
+    <form id="add_or_buy" action="<?php echo esc_url( $product->add_to_cart_url() ); ?>" class="variations_form cart" method="post" enctype='multipart/form-data' data-product_id="<?php echo $post->ID; ?>"  >
+        <input type="hidden" name="redirect" id="redirect" value="" />
+
+
+        <div class="product-img-box">
+            <?php woocommerce_show_product_images(); ?>
+
+            <div class="availability stock_container">
+                <p class="stock in-stock">
+                    <?php if ($product->is_in_stock()) : ?>
+                       <span class="stock">Есть в наличии</span>
+                    <?php else : ?>
+                        <span class="stock">Нет в наличии</span>
+                    <?php endif; ?>
+                </p>
+            </div>
+
+            <div class="product-variations" >
+                <?php woocommerce_template_single_add_to_cart();?>
+            </div>
+        </div>
+
+        <div class="product-details product-shop">
+            <div class="actions-box">
+                <span class="price-box">
+                    <span class="price" itemtype="http://schema.org/Offer" itemscope="itemscope" itemprop="offers">
+			<meta content="RUB" itemprop="priceCurrency" />
+			<link itemprop="availability" href="http://schema.org/<?php echo $product->is_in_stock() ? 'InStock' : 'OutOfStock'; ?>" />
+
+                        <?php if ( $product->is_on_sale() ) : ?>
+                            <del><?php echo woocommerce_price( $product->regular_price ); ?></del>
+                            <ins itemprop="price"><?php echo woocommerce_price( $product->price ); ?></ins>
+                        <?php else: ?>
+                            <span itemprop="price"><?php echo woocommerce_price( $product->price ); ?></span>
+                        <?php endif; ?>
+                    </span>
+                </span>
+
+                <button type="submit" class="buy btn btn-lg btn-success"><i class="glyphicon glyphicon-shopping-cart"></i> Добавить в корзину</button>
+                <a style="display: none" rel="nofollow" class="checkout btn btn-lg btn-link" href="<?php echo $woocommerce->cart->get_checkout_url(); ?>">Оформить заказ &rarr;</a>
+            </div>
+
+            <div class="product-thumbnails">
+                <?php do_action( 'woocommerce_product_thumbnails' ); ?>
+            </div>
+
+        </div>
+
+        <br clear="all"/>
+
+
+        <?php woocommerce_get_template( 'content-single-product-ext-description.php' ); ?>
+
+
+        <div class="woocommerce-tabs">
+            <ul class="tabs">
+                <li class="info_tab"><a href="#tab-info"><h1>Характеристики</h1></a></li>
+                <li class="description_tab"><a href="#tab-description"><h1>Описание</h1></a></li>
+                <li class="delivery_tab"><a href="#tab-delivery"><h1>Доставка</h1></a></li>
+            </ul>
+            
+            <div class="panel entry-content product-information" id="tab-info" itemprop="description">
+                <?php $product->list_attributes(); ?>
+            </div>
+            
+            <div class="panel entry-content product-description" id="tab-description">
+                <h2><?php echo esc_html( apply_filters('woocommerce_product_description_heading', __( 'Product Description', 'woocommerce' ) ) ); ?></h2>
+                <div class="std">
+                    <?php the_content(); ?>
+                </div>
+
+            </div>
+
+            <div class="panel entry-content product-delivery" id="tab-delivery">
+            <?php if ( $product->is_in_stock() ) : ?>
+                <h2>Стоимость и условия доставки</h2>
+                <p><i class="glyphicon glyphicon-info-sign"></i> Наш магазин находится в Москве и отгрузка заказов производятся из Москвы. Доставка товаров осуществляется сторонними службами по всей России, а при оплате пластиковой картой или с помощью платёжной системы PayPal возможна доставка в Украину и Беларусь.</p>
+                <p>Заказы передаются в курьерскую, почтовую или в другую службу доставки каждый день, включая выходные и праздничные дни, на следующий после заказа день.</p>
+                <br />
+
+                <p><em>Ниже показаны варианты и стоимость доставки товаров в вашей корзине <strong>уже вместе с этим товаром.</strong></em></p>
+                <div class="shipping">
+                    <div id="product_shipping_methods">
+                        <input type="hidden" name="product_id" value="<?php echo $post->ID; ?>" />
+                        <div><?php woocommerce_get_template( 'shipping/methods.php' ); ?></div>
+                    </div>
+                </div>
+            <?php endif; ?>
+            </div>
+        </div>
+
+    </form>
+
+
+    <?php woocommerce_output_related_products();?>
+
+    <?php //woocommerce_get_template( 'single-product-reviews/reviews-block.php' ); ?>
 </div>
+
 
 <!-- add-to-cart form -->
-<form id="add_or_buy" action="<?php echo esc_url( $product->add_to_cart_url() ); ?>" class="variations_form cart" method="post" enctype='multipart/form-data' data-product_id="<?php echo $post->ID; ?>" data-product_variations="<?php echo esc_attr( json_encode( $available_variations ) ) ?>">
-    <input type="hidden" name="redirect" id="redirect" value="" />
-    <table class="simple product">
-        <tr>
-            <td class="product-img-box">
-                <?woocommerce_show_product_images();?>
-            </td>
-            
-            <td class="product-details product-shop">
-		<?php if ( $product->is_in_stock() ) : ?>
-			<div class="shipping">
-                                <form id="product_shipping_methods" enctype="multipart/form-data">
-					<h3><?php _e( 'Shipping', 'woocommerce' ) ?></h3>
-                                        <input type="hidden" name="product_id" value="<?php echo $post->ID; ?>" />
-                                        <div><?php woocommerce_get_template( 'shipping/methods.php' ); ?></div>
-                                        * <em>Показана стоимость доставки товаров в вашей корзине <strong>вместе с этим товаром.</strong></em>
-                                </form>
-		    </div>
-		<?php endif; ?>
-                
-                <div class="add-to-cart">
-                    <?php woocommerce_template_single_add_to_cart();?>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" class="product-img-box more-views">
-                <h2>Другие картинки:</h2>    
-                <?php do_action( 'woocommerce_product_thumbnails' ); ?>
-            </td>
-        </tr>
-    </table>
-</form>
-
-<hr/>
-<div class="add-to">
-    <p class="email-friend">
-        <script type="text/javascript" src="//yandex.st/share/share.js" charset="utf-8"></script>
-        <div class="yashare-auto-init" data-yashareL10n="ru" data-yashareType="none" data-yashareQuickServices="facebook,vkontakte,twitter"></div>
-    </p>
-    
-    
-    <?php if ( comments_open() ) : ?>
-        <p class="rating">
-            <p class="add_review">
-                <a href="#review_form" class="inline show_review_form button" title="<?php _e( 'Add Your Review', 'woocommerce' ); ?>"><?php _e( 'Add Review', 'woocommerce' ); ?></a>
-            </p>
-            <?php call_user_func( 'comments_template', 'reviews' ) ?>
-        </p>
-    <?php endif;?>
-</div>
-
-<div class="product-description">
-    <h2><?php echo esc_html( apply_filters('woocommerce_product_description_heading', __( 'Product Description', 'woocommerce' ) ) ); ?></h2>
-    <div class="std">
-        <?php the_content(); ?>
-    </div>
-</div>
-
-
-<div class="product-information">
-    <h2><?php echo esc_html( apply_filters( 'woocommerce_product_additional_information_heading', __( 'Additional Information', 'woocommerce' ) ) ); ?></h2>
-    <?php $product->list_attributes(); ?>
-</div>
-
-<?woocommerce_output_related_products();?>
 
 <script type="text/javascript">
-    jQuery(document).ready( function() {
+    jQuery(document).ready( function($) {
+        $.post( woocommerce_params.ajax_url, {action : 'get_data_product_variations', 'product_id':$("form#add_or_buy").data("product_id") }, function(data) {});
+
         var data = {
-            action:         "get_dynamic_shipping",
-            security:       woocommerce_params.update_shipping_method_nonce,
-            product_id:     jQuery("form.cart").data("product_id"),
-            variation_id:   jQuery("input[name=variation_id]").val()
+            action:     "is_product_in_cart",
+            product_id: $("form#add_or_buy").data("product_id")
         };
-        jQuery("#shipping_method").block({message: null, overlayCSS: {background: "#fff url(" + woocommerce_params.ajax_loader_url + ") no-repeat center", backgroundSize: "16px 16px", opacity: 0.6}});
-        jQuery.post( woocommerce_params.ajax_url, data, function(response) { jQuery("#shipping_method").replaceWith( response ); });
+        $.post( woocommerce_params.ajax_url, data, function(state) {
+            if( state.cart.notempty )
+                $('.checkout').show();
+            if( state.cart[ $("form#add_or_buy").data("product_id") ] )
+                //{"cart":{"notempty":true,"3616":1,"3627":1}}
+                $('form#add_or_buy button[type=submit]').html('<i class="glyphicon glyphicon-shopping-cart"></i> Купить еще <small class="extra label label-success">Уже в корзине</small>');
+        });
     });
     
     function buyitnow() { jQuery("#redirect").val( 'checkout' ); }
@@ -126,7 +179,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
             jQuery('#image-zoom').attr('href', assocIMG['big_image_'+id]);
             // Change the small image to point to the new small image.
             jQuery('#image-zoom img').attr('src', assocIMG['small_image_'+id]);
-            // Init a new zoom with the new images.				
+            // Init a new zoom with the new images.             
             jQuery('#image-zoom').CloudZoom();
             //console.log('yes');
         }
@@ -134,7 +187,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
     
     function hideSelected(id) {
         //console.log(id);
-        var add = $$('.more-views li.add');
+        var add = $$('.product-thumbnails li.add');
         if (add && add.length > 0) {
             $('show-all').show();
             add.each(function(item,i){

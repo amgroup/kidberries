@@ -3,12 +3,20 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru" lang="ru">
 <head>
 
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title><?php
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+	<title><?php
     if( is_product() ) {
-        echo "Купить за " . kidberries_get_price() . " - ";
+        echo "Купить ";
         wp_title('-', true, 'right');
+        echo " за " . kidberries_get_price() . " - ";
         bloginfo('name');
+    } else if( is_product_category() ) {
+	$category = get_queried_object();
+	echo esc_html( $category->name ) . ' - ';
+	bloginfo('name');
+	echo " - ";
+	bloginfo('description');
     } else if( is_page( woocommerce_get_page_id( 'shop' ) ) ) {
         bloginfo('name');
         echo " - ";
@@ -21,8 +29,26 @@
         bloginfo('name');
     }
 ?></title>
-<meta name="description" content="<?php bloginfo('description'); ?>" />
-<meta name="keywords" content="Детки Ягодки,качественные,импортные,дешевые,дорогие,детские товары,деткая одежда,игрушки,развивающие,велосипед,самокат,скутер,ролики,коляска,санки,Европы,Германии,Англии,Великобритании,Новой Зеландии,Дании,для детей,для ребенка" />
+
+<?php if( is_product() ) : ?>
+	<link rel="canonical" href="<?php the_permalink(); ?>" />
+
+	<meta name="Description" content="<?php echo kidberries_get_product_header_description(); ?>" />
+
+	<meta name="Keywords" content="<?php echo kidberries_get_product_header_keywords(); ?>" />
+<?php elseif( is_product_category() ) : ?>
+	<link rel="canonical" href="<?php echo get_term_link( $category->slug, 'product_cat' ) . ( get_query_var('paged') ? 'page/' .  get_query_var('paged') . '/' : '' ); ?>" />
+
+	<meta name="Description" content="<?php if ($category->description) echo strip_tags( kidberries_synonymize( $category->description ) ); else bloginfo('description');  ?>" />
+
+	<meta name="Keywords" content="<?php echo kidberries_get_product_category_header_keywords( $category->name );?>" />
+<?php else : ?>
+	<meta name="Description" content="<?php bloginfo('description'); ?>" />
+
+	<meta name="Keywords" content="Детки Ягодки,качественные,импортные,дешевые,дорогие,детские товары,деткая одежда,игрушки,развивающие,велосипед,самокат,скутер,ролики,коляска,санки,Европы,Германии,Англии,Великобритании,Новой Зеландии,Дании,для детей,для ребенка" />
+<?php endif; ?>
+
+
 <?php
     if( is_cart() || is_checkout() || is_account_page() )
         echo '<meta name="robots" content="NOINDEX,NOFOLLOW" />';
@@ -33,12 +59,15 @@
 <?php wp_head();?>
 <link rel="search" type="application/opensearchdescription+xml" title="<?php bloginfo('template_url'); ?>" href="//<?php bloginfo('template_url'); ?>/open_search_ru.xml" />
 
+<?php /*/ ?>
 <link rel="shortcut icon" href="<?php bloginfo('template_url'); ?>/skin/images/kidberries-round16x16.ico" type="image/x-icon" />
 <link rel="icon" href="<?php bloginfo('template_url'); ?>/skin/images/kidberries-round16x16.png" type="image/png" />
+<?php /*/ ?>
 
-<script type="text/javascript" src="<?php bloginfo('template_url'); ?>/skin/js/cufon-yui.js"></script>
-<script type="text/javascript" src="<?php bloginfo('template_url'); ?>/skin/js/cufon-fonts.js"></script>
-<script type="text/javascript" src="<?php bloginfo('template_url'); ?>/skin/js/cufon-replace.js"></script>
+<link rel="shortcut icon" href="<?php bloginfo('template_url'); ?>/skin/images/kidberries-cart-favicon-16x16.ico" type="image/x-icon" />
+<link rel="icon" href="<?php bloginfo('template_url'); ?>/skin/images/kidberries-cart-favicon-32x32.png" type="image/png" />
+
+
 <script type="text/javascript" src="<?php bloginfo('template_url'); ?>/skin/js/imagepreloader.js"></script>
 
 <script type="text/javascript">

@@ -90,16 +90,9 @@
   'link_after'      => '</span>',  
   'items_wrap'      => '<ul id="%1$s" class=\"%2$s\">%3$s</ul>',  
   'depth'           => 0
-);  
-  
-wp_nav_menu( $args );   ?>
+);
 
-<?php
-echo "<!-- NAVNAV\n";
-$m = wp_nav_menu( $args );
-var_dump($m);
-echo "-->";
-?>
+wp_nav_menu( $args );   ?>
 
 <script type="text/javascript" src="<?php bloginfo('template_url'); ?>/skin/js/menu.js"></script>
 

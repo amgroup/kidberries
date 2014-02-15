@@ -13,6 +13,6 @@ global $post;
 
 if ( ! $post->post_excerpt ) return;
 ?>
-<div itemprop="description">
+<div>
 	<?php echo apply_filters( 'woocommerce_short_description', $post->post_excerpt ) ?>
 </div>

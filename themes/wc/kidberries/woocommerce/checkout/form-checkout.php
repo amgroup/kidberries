@@ -29,8 +29,14 @@ if ( ! $checkout->enable_signup && ! $checkout->enable_guest_checkout && ! is_us
 $get_checkout_url = apply_filters( 'woocommerce_get_checkout_url', $woocommerce->cart->get_checkout_url() ); ?>
 
 
+<p class="to_cart"><a href="<?php echo esc_url( $woocommerce->cart->get_cart_url() ); ?>" class="btn btn-link"><i class="glyphicon glyphicon-circle-arrow-left"></i><i class="glyphicon glyphicon-shopping-cart"></i>  Вернуться в корзину и <strong>изменить заказ</strong></a></p>
 
-<p class="to_cart"><a href="<?php echo esc_url( $woocommerce->cart->get_cart_url() ); ?>">Перейти в корзину (изменить заказ)</a></p>
+<?php if ( $woocommerce->cart->get_discounts_after_tax() ) : ?>
+	<p class="to_cart"><a class="btn btn-link" href="<?php echo add_query_arg( 'remove_discounts', '2', $woocommerce->cart->get_cart_url() ) ?>">Вернуться в корзину и <strong>отменить все купоны</strong></a></p>
+<?php elseif ( $woocommerce->cart->get_discounts_before_tax() ) : ?>
+	<p class="remove_coupon"><a class="btn btn-link" href="<?php echo add_query_arg( 'remove_discounts', '1', $woocommerce->cart->get_cart_url() ) ?>">Вернуться в корзину и <strong>отменить все купоны</strong></a></p>
+<?php endif; ?>
+
 <form name="checkout" method="post" class="checkout" action="<?php echo esc_url( $get_checkout_url ); ?>?completed">
 
     <h3 id="order_review_heading"><?php _e( 'Your order', 'woocommerce' ); ?></h3>

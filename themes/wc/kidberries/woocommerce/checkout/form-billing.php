@@ -60,22 +60,20 @@ $checkout->checkout_fields['shipping']['shipping_phone'] = $checkout->checkout_f
 	<?php if ( $checkout->enable_guest_checkout ) : ?>
 
 		<p class="form-row">
-			<input class="input-checkbox" id="createaccount" <?php checked($checkout->get_value('createaccount'), true) ?> type="checkbox" name="createaccount" value="1" /> <label for="createaccount" class="checkbox"><?php _e( 'Create an account?', 'woocommerce' ); ?></label>
+			<input class="input-checkbox" id="createaccount" <?php checked($checkout->get_value('createaccount'), true) ?> type="checkbox" name="createaccount" value="1" /> <label for="createaccount" class="checkbox">Стать постоянным покупателем</label>
 		</p>
 
 	<?php endif; ?>
 
 	<?php do_action( 'woocommerce_before_checkout_registration_form', $checkout ); ?>
 
-	<div class="create-account">
+	<div class="form-horizontal create-account">
 
-		<p>Стать постоянным покупателем.</p>
 		<p style="display: none;"><small>Вы сможете видеть историю заказов, проще делать новые и получать скидки.</small></p>
 
 		<?php foreach ($checkout->checkout_fields['account'] as $key => $field) : ?>
-
-			<?php woocommerce_form_field( $key, $field, $checkout->get_value( $key ) ); ?>
-
+		<?php unset( $field['label_class'] ); unset( $field['placeholder'] ); $field['class'] = array('form-row-wide')?>
+			<?php kidberries_form_field( $key, $field, $checkout->get_value( $key ) ); ?>
 		<?php endforeach; ?>
 
 		<div class="clear"></div>

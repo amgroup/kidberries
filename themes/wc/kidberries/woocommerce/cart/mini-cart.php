@@ -23,10 +23,7 @@ global $woocommerce, $product;
 <br>
 
 <div class="summary">
-	<a href="<?php echo $woocommerce->cart->get_cart_url(); ?>"  alt="<?php _e('View your shopping cart', 'woocommerce'); ?>" title="<?php _e('View your shopping cart', 'woocommerce'); ?>">
-		<p class="amount">В корзине <strong><?php echo sprintf(_n('%d item', '%d items', $woocommerce->cart->cart_contents_count, 'woocommerce'), $woocommerce->cart->cart_contents_count);?></strong>.</p>
-		<p>Перейти в корзину</p>
-	</a>
+	<p class="amount">В корзине <strong><?php echo sprintf(_n('%d item', '%d items', $woocommerce->cart->cart_contents_count, 'woocommerce'), $woocommerce->cart->cart_contents_count);?></strong>.</p>
 	<br/>
 
 	
@@ -40,12 +37,11 @@ global $woocommerce, $product;
 	
 <div class="actions">
 	<form action="<?php echo $woocommerce->cart->get_checkout_url(); ?>">
-		<button type="submit" title="Заказать" class="button white">Заказать</button>
+		<button type="submit" title="Заказать" class="button white">Оформить заказ</button>
 	</form>
 </div>
 	
-<p class="block-subtitle">Последние товары в заказе</p>
-	
+
 <ol id="cart-sidebar" class="mini-products-list mini-cart">
 
 		<?php foreach ( $woocommerce->cart->get_cart() as $cart_item_key => $cart_item ) :

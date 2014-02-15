@@ -23,11 +23,11 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 			$average = $product->get_average_rating();
 
-			echo '<div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">';
+			echo '<div>';
 
-			echo '<div class="star-rating" title="'.sprintf(__( 'Rated %s out of 5', 'woocommerce' ), $average ).'"><span style="width:'.( ( $average / 5 ) * 100 ) . '%"><strong itemprop="ratingValue" class="rating">'.$average.'</strong> '.__( 'out of 5', 'woocommerce' ).'</span></div>';
+			echo '<div class="star-rating" title="'.sprintf(__( 'Rated %s out of 5', 'woocommerce' ), $average ).'"><span style="width:'.( ( $average / 5 ) * 100 ) . '%"><strong class="rating">'.$average.'</strong> '.__( 'out of 5', 'woocommerce' ).'</span></div>';
 
-			echo '<h2>'.sprintf( _n('%s has %s review', '%s has %s reviews', $count, 'woocommerce'), wptexturize($post->post_title), '<span itemprop="ratingCount" class="count">'.$count.'</span>' ).'</h2>';
+			echo '<h2>'.sprintf( _n('%s has %s review', '%s has %s reviews', $count, 'woocommerce'), wptexturize($post->post_title), '<span class="count">'.$count.'</span>' ).'</h2>';
 
 			echo '</div>';
 

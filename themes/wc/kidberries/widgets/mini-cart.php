@@ -64,13 +64,14 @@ class Kidberries_Widget_Cart extends WP_Widget {
 		echo $before_widget;
 
 		if ( $title )
-			echo $before_title . $title . $after_title;
+			echo '<a class="mini-cart widget title" href="' . esc_url( $woocommerce->cart->get_cart_url() ) . '">' . $before_title . '<i class="glyphicon glyphicon-shopping-cart" style="font-size: 30px; text-shadow:0px 1px 0 #333;"></i> ' . $title . $after_title . '</a>';
+
 
 		if ( $hide_if_empty )
 			echo '<div class="hide_cart_widget_if_empty">';
 
 		// Insert cart widget placeholder - code in woocommerce.js will update this on page load
-		echo '<div class="widget_shopping_cart_content"></div>';
+		echo '<div class="widget_mini_cart_content"><div class="holder"></div></div>';
 
 		if ( $hide_if_empty )
 			echo '</div>';

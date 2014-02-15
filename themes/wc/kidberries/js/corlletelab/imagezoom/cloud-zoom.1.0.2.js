@@ -149,7 +149,6 @@
         this.init2 = function (img, id) {
 
             filesLoaded++;
-            //console.log(img.src + ' ' + id + ' ' + img.width);	
             if (id === 1) {
                 zoomImage = img;
             }
@@ -334,7 +333,7 @@
         this.each(function () {
 			var	relOpts, opts;
 			// Hmm...eval...slap on wrist.
-			eval('var	a = {' + $(this).attr('rel') + '}');
+			eval('var a = {' + $(this).attr('rel') + '}');
 			relOpts = a;
             if ($(this).is('.cloud-zoom')) {
                 $(this).css({
@@ -357,7 +356,6 @@
                 opts = $.extend({}, relOpts, options);
                 $(this).data('relOpts', opts);
                 $(this).bind('click', $(this), function (event) {
-console.log( event.data.data('relOpts').smallImage );
                     var data = event.data.data('relOpts');
                     // Destroy the previous zoom
                     $('#' + data.useZoom).data('zoom').destroy();

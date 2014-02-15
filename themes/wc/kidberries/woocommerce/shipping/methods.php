@@ -14,9 +14,6 @@ global $woocommerce;
 $available_methods = $woocommerce->shipping->get_available_shipping_methods();
 $salt = '_' . rand(100000,999999);
 ?>
-<pre>
-<?php //var_dump($woocommerce->session) ?>
-</pre>
 <!-- Shipping methods -->
 <?php
 if ( $available_methods ) {
@@ -48,7 +45,7 @@ if ( $available_methods ) {
                         $method->full_label = '<span class="aslink">' . $method->full_label . '</span>';
 
                     if( $method->multicost > 1 )
-                        $method->full_label .= ' - <span class="aslink">' . woocommerce_price( $method->cost, array('class'=>array('amount','aslink')) ) . '<i class="icon-arrow"></i></span>';
+                        $method->full_label .= ' - <span>' . woocommerce_price( $method->cost, array('class'=>array('amount')) ) . '<span class="more variants">Ещё варианты</span></span>';
                     else
                         $method->full_label .= ' - ' . woocommerce_price( $method->cost );
 
@@ -118,3 +115,5 @@ if ( $available_methods ) {
 ?>
 <input type="hidden" name="shipping_method_variant" value="<?php echo $woocommerce->session->chosen_shipping_method_variant; ?>" />
 <input type="hidden" name="shipping_method_sub_variant" value="<?php echo $woocommerce->session->chosen_shipping_method_sub_variant; ?>" />
+<!-- /Shipping methods -->
+

@@ -13,25 +13,35 @@ global $woocommerce;
 
 if (is_user_logged_in()) return;
 ?>
-<form method="post" class="login" <?php if ( $hidden ) echo 'style="display:none;"'; ?>>
+<form method="post" class="form-horizontal login" <?php if ( $hidden ) echo 'style="display:none;"'; ?>>
 	<?php if ( $message ) echo wpautop( wptexturize( $message ) ); ?>
 
-	<p class="form-row form-row-first">
-		<label for="username"><?php _e( 'Username or email', 'woocommerce' ); ?> <span class="required">*</span></label>
-		<input type="text" class="input-text" name="username" id="username" />
-	</p>
-	<p class="form-row form-row-last">
-		<label for="password"><?php _e( 'Password', 'woocommerce' ); ?> <span class="required">*</span></label>
-		<input class="input-text" type="password" name="password" id="password" />
-	</p>
-	<div class="clear"></div>
+	<div class="form-row control-group validate-required" id="username_field">
+	    <label for="username" class="control-label">Логин</label>
+	    <div class="control-field">
+		<input type="text" class="input-text" name="username" id="username" placeholder="Логин" value="">
+	    </div>
+	</div>
 
-	<p class="form-row">
-		<?php $woocommerce->nonce_field('login', 'login') ?>
-		<input type="submit" class="button" name="login" value="<?php _e( 'Login', 'woocommerce' ); ?>" />
-		<input type="hidden" name="redirect" value="<?php echo esc_url( $redirect ) ?>" />
-		<a class="lost_password" href="<?php echo esc_url( wp_lostpassword_url( home_url() ) ); ?>"><?php _e( 'Lost Password?', 'woocommerce' ); ?></a>
-	</p>
+	<div class="form-row control-group validate-required" id="password_field">
+	    <label for="password" class="control-label">Пароль</label>
+	    <div class="control-field">
+		<input type="password" class="input-text" name="password" id="password" placeholder="Пароль" value="">
+	    </div>
+	</div>
+
+
+	<div class="form-row control-group validate-required" id="getpassword_field">
+	    <label for="getpassword" class="control-label">
+		
+	    </label>
+	    <div class="control-field">
+		<button type="submit" class="btn btn-success" name="login"> Войти <i class="glyphicon glyphicon-user"></i></button>
+		<a name="getpassword" id="getpassword" class="lost_password btn btn-link" href="<?php echo esc_url( wp_lostpassword_url( home_url() ) ); ?>"><?php _e( 'Lost Password?', 'woocommerce' ); ?></a>
+	    </div>
+	</div>
+	<?php $woocommerce->nonce_field('login', 'login') ?>
+	<input type="hidden" name="redirect" value="<?php echo esc_url( $redirect ) ?>" />
 
 	<div class="clear"></div>
 </form>

@@ -56,21 +56,32 @@ $woocommerce->show_messages();
 	<tfoot>
 		<tr class="first last">
 			<td colspan="50" class="a-right last">
-				<?php if ( $woocommerce->cart->coupons_enabled() ) { ?>
-					<div class="coupon left">
-
-						<label for="coupon_code"><?php _e( 'Coupon', 'woocommerce' ); ?>:</label> 
-						<input name="coupon_code" class="input-text" id="coupon_code" value="" /> 
-						<button type="submit" class="button" name="apply_coupon" value="<?php _e( 'Apply Coupon', 'woocommerce' ); ?>" /><?php _e( 'Apply Coupon', 'woocommerce' ); ?></button>
-
-						<?php do_action('woocommerce_cart_coupon'); ?>
-
+				<?php if ( $woocommerce->cart->coupons_enabled() ) : ?>
+					<div class="form-horizontal checkout_coupon">
+					    <div class="form-row control-group validate-required" id="coupon_code_field">
+					        <label for="coupon_code" class="control-label">
+								<?php if ( $woocommerce->cart->get_discounts_after_tax() ) : ?>
+									<a href="<?php echo add_query_arg( 'remove_discounts', '2', $woocommerce->cart->get_cart_url() ) ?>">Отменить все купоны</a>
+									<input type="submit" class="btn btn-info" name="apply_coupon" value="Применить ещё">
+								<?php elseif ( $woocommerce->cart->get_discounts_before_tax() ) : ?>
+									<a href="<?php echo add_query_arg( 'remove_discounts', '1', $woocommerce->cart->get_cart_url() ) ?>">Отменить все купоны</a>
+									<input type="submit" class="btn btn-info" name="apply_coupon" value="Применить ещё">
+								<?php else : ?>
+									<input type="submit" class="btn btn-info" name="apply_coupon" value="Применить">
+								<?php endif; ?>
+					        </label>
+					        <div class="control-field">
+					            <input type="text" class="input-text" name="coupon_code" id="coupon_code" placeholder="Купон" value="">
+					        </div>
+					    </div>
 					</div>
-				<?php } ?>
+				<?php endif; ?>
 				
 				
 
-				<button type="submit" class="button btn-update" name="update_cart" value="<?php _e( 'Update Cart', 'woocommerce' ); ?>" /><?php _e( 'Update Cart', 'woocommerce' ); ?></button> 
+				<!--button type="submit" class="btn btn-link btn-update" style="float: right;" name="update_cart" value="<?php _e( 'Update Cart', 'woocommerce' ); ?>">
+					<?php _e( 'Update Cart', 'woocommerce' ); ?>
+				</button-->
 				<input type="submit" class="checkout-button button" name="proceed" value="<?php _e( 'Buy it', 'woocommerce' ); ?>" style='display: none;'" />
 
 				<?php do_action('woocommerce_proceed_to_checkout'); ?>
@@ -154,7 +165,7 @@ $woocommerce->show_messages();
             </td>
 
             <td class="a-center last">
-				<table style='float: right'>
+				<table class="product-actions">
 					<tr>
 			<?php
 		
@@ -166,14 +177,14 @@ $woocommerce->show_messages();
 									$product_quantity = sprintf( '<input type="hidden" id="%s" name="cart[%s][qty] input-text qty" value="1" class="input-text qty text"/>', $cart_item_key, $cart_item_key );
 									echo apply_filters( 'woocommerce_cart_item_quantity', $product_quantity, $cart_item_key );
 									?>
-										<td><button onclick="document.getElementById('<?echo $cart_item_key;?>').value='2'" type="submit" class="btn-update plusone" name="plusone" value="+1"/>+1</button> </td>
+										<!--td><a href="#" onclick="document.getElementById('<?echo $cart_item_key;?>').value='2'" type="submit" class="plus-sign" name="plusone" ><i class="glyphicon glyphicon-plus-sign"> </i></a></td-->
 									<?
 								}
 
 
 							
 			
-								?><td><?echo apply_filters( 'woocommerce_cart_item_remove_link', sprintf('<a href="%s" class="remove btn-remove btn-remove2" title="%s">&times;</a>', esc_url( $woocommerce->cart->get_remove_url( $cart_item_key ) ), __( 'Remove this item', 'woocommerce' ) ), $cart_item_key );
+								?><td><?echo apply_filters( 'woocommerce_cart_item_remove_link', sprintf('<a href="%s" class="minus-sign" title="%s"><i class="glyphicon glyphicon-remove-circle"> </i></a>', esc_url( $woocommerce->cart->get_remove_url( $cart_item_key ) ), __( 'Remove this item', 'woocommerce' ) ), $cart_item_key );
 								?></td></tr></table><?
 						?>
 			

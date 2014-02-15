@@ -13,31 +13,17 @@ global $woocommerce, $product, $post, $currency_symbol;
 
 ?>
 <!-- variable product form content -->
+<?php do_action('woocommerce_before_add_to_cart_form');?>
 
 <input type="hidden" name="product_id" value="<?php echo esc_attr( $post->ID ); ?>" />
 <input type="hidden" name="variation_id" value="" />
 
-<?php do_action('woocommerce_before_add_to_cart_form');?>
-<table>
+<table class="variations_container" >
 	<tr class="variations">
-		<td class="variation-price-cont">
-			<div class="price-box">
-				<p class="single_price_wrap">
-					<span class="price">
-						<span class="price currency">от</span> 
-						<span class="price digit"><?php echo get_post_meta( $product->id, '_min_variation_price', true );?></span>
-						<span class="price currency"><?php echo $currency_symbol; ?></span>
-					</span>
-				</p>
-			</div>
-			<div class="single_variation_wrap">
-				<div class="single_variation"></div>
-			</div>
-		</td>
 		<td class="variation-variants-cont">
 			<?php $loop = 0; foreach ( $attributes as $name => $options ) : $loop++; ?>
 				<div>
-					<select onchange="variant_changed(this)" id="<?php echo esc_attr( sanitize_title($name) ); ?>" name="attribute_<?php echo sanitize_title($name); ?>">
+					<select id="<?php echo esc_attr( sanitize_title($name) ); ?>" name="attribute_<?php echo sanitize_title($name); ?>">
 						<option value="" class="choose"><?php echo $woocommerce->attribute_label( $name ); ?>&hellip;</option>
 
 						<?php
@@ -84,35 +70,20 @@ global $woocommerce, $product, $post, $currency_symbol;
 					</select>
 				</div>
 			<?php endforeach; ?>
+			<button class="btn btn-default btm-xs btn-link reset_variations" style="width: 100%" disabled="disabled"><i class="glyphicon glyphicon-remove-circle" ></i> Очистить выбор</button>
 		</td>
-        <td class="variation-buttons-cont" >
-            <div class="single_variation_wrap">
-                <div class="variations_button">
-                    <?php woocommerce_quantity_input(); ?>
-                    <button type="submit" title="В корзину" class="button green">В корзину</button>
-                    <div class="buttons_or">или</div>
-                    <button type="submit" title="Купить в один клик" class="button red" onclick="buyitnow()">Купить</button>
-                    <?php do_action('woocommerce_after_add_to_cart_button'); ?>
-                </div>
-            </div>
-	    </td>
 	<tr>
 </table>
 <?php do_action('woocommerce_after_add_to_cart_form'); ?>	
 			
 	
 <script type="text/javascript">
-	variant_changed = function(e) {
-		e = jQuery(e);
-		if( '' !== e.val() ) e.addClass('complete');
-		else  e.removeClass('complete');
-	}
+    jQuery(document).ready(function($){
+        $('.variations_form').block({message: null, overlayCSS: {background: 'transparent url(' + woocommerce_params.ajax_loader_url + ') no-repeat center', backgroundSize: '16px 16px', opacity: 0.6 } });
 
-    jQuery(function(){
-        jQuery('.variations_form').block({message: null, overlayCSS: {background: 'transparent url(' + woocommerce_params.ajax_loader_url + ') no-repeat center', backgroundSize: '16px 16px', opacity: 0.6 } } ).wc_variation_form();
-
-        jQuery.post( woocommerce_params.ajax_url, {action : 'get_data_product_variations', 'product_id':'<?php echo $product->id; ?>'}, function(data) {
-            jQuery('.variations_form').attr('data-product_variations',data).trigger('reset').stop(true).removeClass('updating').css('opacity', '1').unblock();
+        $.post( woocommerce_params.ajax_url, {action : 'get_data_product_variations', 'product_id':'<?php echo $product->id; ?>'}, function(data) {
+        	$('.variations_form').attr( "data-product_variations", data );
+            $('.variations_form').unblock();
         });
     });
 </script>
