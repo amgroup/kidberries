@@ -27,28 +27,21 @@ $checkout->checkout_fields['shipping']['shipping_phone'] = $checkout->checkout_f
 
 ?>
 <div class="billing_address" id="checkout_billing_address">
-<?php if ( $woocommerce->session->shipping_type == 'pickup' ) : $shiptobilling = 1; ?>
+<?php if ( $woocommerce->session->chosen_shipping_type == 'pickup' ) : $shiptobilling = 1; ?>
 	<h3>Ваши контактные данные</h3>
-	<input id="shiptobilling-checkbox" value="on" checked="checked" type="hidden" name="shiptobilling" />
 <?php elseif ( $woocommerce->cart->ship_to_billing_address_only() && $woocommerce->cart->needs_shipping() ) : ?>
 	<h3><?php _e( 'Shipping', 'woocommerce' ); ?></h3>
 <?php else : ?>
 	<h3>
 		<span><?php _e( 'My Address', 'woocommerce' ); ?></span>
-        <span></span>
-		<span id="shiptopayer" style="float: right; font-weight: normal;">
-			<input id="shiptobilling-checkbox" class="input-checkbox" checked="checked" type="checkbox" name="shiptobilling" />
-			<label for="shiptobilling-checkbox" class="checkbox"><?php _e( 'Ship to my address?', 'woocommerce' ); ?></label>
-		</span>
 	</h3>
 <?php endif; ?>
+	<input id="shiptobilling-checkbox" value="on" checked="checked" type="hidden" name="shiptobilling" />
 
 <?php do_action('woocommerce_before_checkout_billing_form', $checkout ); ?>
 <div class="form-horizontal">
 <?php foreach ($checkout->checkout_fields['billing'] as $key => $field) : ?>
-
 	<?php kidberries_form_field( $key, $field, $checkout->get_value( $key ) ); ?>
-
 <?php endforeach; ?>
 </div>
 <?php do_action('woocommerce_after_checkout_billing_form', $checkout ); ?>
@@ -67,7 +60,7 @@ $checkout->checkout_fields['shipping']['shipping_phone'] = $checkout->checkout_f
 
 	<?php do_action( 'woocommerce_before_checkout_registration_form', $checkout ); ?>
 
-	<div class="form-horizontal create-account">
+	<div class="form-horizontal create-account"<?php if( ! $checkout->get_value('createaccount') ) echo ' style="display: none;"'; ?>">
 
 		<p style="display: none;"><small>Вы сможете видеть историю заказов, проще делать новые и получать скидки.</small></p>
 

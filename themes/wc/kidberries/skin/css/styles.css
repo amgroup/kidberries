@@ -4708,3 +4708,5 @@ button.reset_variations { border: 0px solid transparent; }
 
 .product-essential .category.description.ext { margin-left: 15px; margin-top: 15px; }
 .product-essential .category.description p { text-indent: 25px; line-height: 16px; font-size: 12px; color: #777; margin-bottom: 5px; text-align: justify; }
+
+.product-essential .post_date { font-style: italic; color: #CCC; text-align: right; }
