@@ -1154,16 +1154,23 @@ function kidberries_search_form( ) {
     return $form;
 }
 
-function kidberries_variation() {
+function kidberries_enqueue_scripts() {
   wp_deregister_script( 'add-to-cart-variation' );
 
   wp_register_script( 'wc-jquery-animate-shadow', get_template_directory_uri() . '/woocommerce/assets/js/frontend/jquery.animate-shadow.js', array('jquery') );
   wp_register_script( 'wc-add-to-cart-variation', get_template_directory_uri() . '/woocommerce/assets/js/frontend/add-to-cart-variation.js', array('jquery') ); // назначть новый скрипт
-
   wp_enqueue_script( 'wc-jquery-animate-shadow' );
+
+  if( is_product() ) {
+    wp_register_script( 'wc-jquery-mousewheel', get_template_directory_uri() . '/skin/js/jquery.mousewheel.js', array('jquery') );
+    wp_register_script( 'kidberries-category-product-breadcrumb', get_template_directory_uri() . '/skin/js/category-product-breadcrumb.js', array('jquery', 'wc-jquery-mousewheel') );
+
+    wp_enqueue_script( 'wc-jquery-mousewheel' );
+    wp_enqueue_script( 'kidberries-category-product-breadcrumb' );
+  }
 }
 
-add_action( 'wp_enqueue_scripts', 'kidberries_variation' );
+add_action( 'wp_enqueue_scripts', 'kidberries_enqueue_scripts' );
 
 
 /* Именяем форматирование цены в get_price_html() для обычной цены.
@@ -1318,17 +1325,43 @@ function kidberries_get_product_catigories () {
 }
 
 function kidberries_get_product_breadcrumbs() {
+	global $product;
+
 	if( is_product() ) {
 		$categories  = kidberries_get_product_catigories ();
-		$breadcrumbs = '';
+		$breadcrumbs_tabs = '';
 
 		$breadcrumbs = '<ol class="breadcrumb">';
 		    foreach( $categories as $cat ) {
-				$breadcrumbs .= '<li><a href="' . get_term_link( $cat->slug, 'product_cat' ) . '"  itemprop="url">' . esc_html($cat->name) . '</a></li>';
+				$args = array( 'post_type' => 'product', 'posts_per_page' => -1, 'product_cat' => $cat->slug, 'orderby'=>'rand' );
+				$fast_view = get_posts( $args );
+
+				$breadcrumbs_items = '';
+				foreach( $fast_view as $preview ) {
+				    $pr = get_product($preview);
+					if( $pr->is_in_stock() && $pr->id != $product->id ) {
+					    $breadcrumbs_items .= '<li class="item"><div class="item_content">';
+					    $breadcrumbs_items .= '<a href="' . $pr->add_to_cart_url() . '" class="add_to_cart">В корзину</a>';
+					    $breadcrumbs_items .= '<a href="' . get_permalink($preview->ID) .'">';
+					    $breadcrumbs_items .= get_the_post_thumbnail( $preview->ID, 'thumbnail' );
+					    $breadcrumbs_items .= '<br/><span class="price">' . woocommerce_price( $pr->price ) . '</span><br/>';
+					    $breadcrumbs_items .= '</a></div></li>';
+				    }
+				}
+				wp_reset_query();
+				if( $breadcrumbs_items ) {
+					$breadcrumbs .= '<li class="crumb" id="dropdown_' . $cat->slug . '" data-toggle="#tab_' . $cat->slug . '"><a href="' . get_term_link( $cat->slug, 'product_cat' ) . '"  itemprop="url">' . esc_html($cat->name) . ' <b class="caret"></b></a></li>';
+					$breadcrumbs_tabs .= '<div style="display: none;" class="breadcrumb_tab" data-menu="#dropdown_' . $cat->slug . '" id="tab_' . $cat->slug . '"><ul class="product category slider">';
+					$breadcrumbs_tabs .= $breadcrumbs_items;
+					$breadcrumbs_tabs .= '</ul></div>';
+				} else {
+					$breadcrumbs .= '<li class="crumb"><a href="' . get_term_link( $cat->slug, 'product_cat' ) . '"  itemprop="url">' . esc_html($cat->name) . '</a></li>';
+				}
 		    }
 		$breadcrumbs .= '</ol>';
 
 		echo $breadcrumbs;
+		echo $breadcrumbs_tabs;
 	}
 }
 

@@ -187,10 +187,12 @@ $checkout_step = 1;
 				if (sizeof($woocommerce->cart->get_cart())>0) :
 					foreach ($woocommerce->cart->get_cart() as $cart_item_key => $values) :
 						$_product = $values['data'];
-						if ($_product->exists() && $values['quantity']>0) :
+						if ( $_product->exists() && $values['quantity'] > 0 ) :
 							echo '
 								<tr class="' . esc_attr( apply_filters('woocommerce_checkout_table_item_class', 'checkout_table_item', $values, $cart_item_key ) ) . '">
-                    			    <td class="empty border"></td>
+                    			    <td class="empty border product-actions">' .
+										apply_filters( 'woocommerce_cart_item_remove_link', sprintf('<a href="%s" class="minus-sign" title="%s"><i class="glyphicon glyphicon-remove-circle"> </i></a>', esc_url( $woocommerce->cart->get_remove_url( $cart_item_key ) ), __( 'Remove this item', 'woocommerce' ) ), $cart_item_key ) .
+									'</td>
 									<td class="product-name">';
 										echo apply_filters( 'woocommerce_in_cart_product_thumbnail', $_product->get_image(), $values, $cart_item_key );
 										echo apply_filters( 'woocommerce_checkout_product_title', $_product->get_title(), $_product );

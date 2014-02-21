@@ -59,7 +59,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
                     <?php if ($product->is_in_stock()) : ?>
                        <span class="stock">Есть в наличии</span>
                     <?php else : ?>
-                        <span class="stock">Нет в наличии</span>
+                        <span class="stock out-of-stock">Нет в наличии</span>
                     <?php endif; ?>
                 </p>
             </div>
@@ -85,7 +85,11 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
                     </span>
                 </span>
 
-                <button type="submit" class="buy btn btn-lg btn-success"><i class="glyphicon glyphicon-shopping-cart"></i> Добавить в корзину</button>
+                <?php if ($product->is_in_stock()) : ?>
+                    <button type="submit" class="buy btn btn-lg btn-success"><i class="glyphicon glyphicon-shopping-cart"></i> Добавить в корзину</button>
+                <?php else : ?>
+                    <button type="submit" disabled="disabled" class="buy btn btn-lg disabled">Нет в наличии</button>
+                <?php endif; ?>
                 <a style="display: none" rel="nofollow" class="checkout btn btn-lg btn-link" href="<?php echo $woocommerce->cart->get_checkout_url(); ?>">Оформить заказ &rarr;</a>
             </div>
 
