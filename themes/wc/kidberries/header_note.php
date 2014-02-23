@@ -8,9 +8,7 @@
         url: "/wp-admin/admin-ajax.php?action=get_geoip_location",
         success: function(data) {
             if( data.cc == 'RU' && data.city != '' && data.city != 'Москва' ) {
-                jQuery("#delivery_note").empty().append(
-		    "<span style=\"color: #6CFF6C;\"><strong>" + data.city + "</span> &mdash; доставка от 3 до 6 дней</strong>. </span><span>Просим Вас обратить внимание на то, что <strong>в предновогоднее время</strong> из-за транспортного коллапса время доставки может <strong>увеличится ещё на 2 - 8 дней</strong>.</span><br/><span style=\"text-decoration: underline;\"><span style=\"font-weight: bold; color: #FF6C6C;\">П</span>ожалуйста, учтитывайте</span> это обстоятельство при оформлении заказов во избежание недоразумений с новогодними подарками!"
-		);
+                jQuery("#delivery_note").empty().append("<span style=\"color: #6CFF6C;\"><strong>" + data.city + "</span> &mdash; доставка от 3 до 6 дней</strong>. </span>");
             }
         }
     });

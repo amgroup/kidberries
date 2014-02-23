@@ -4740,3 +4740,5 @@ button.reset_variations { border: 0px solid transparent; }
 .product-essential  .product.category.slider .item a:hover { text-decoration: none; }
 .product-essential  .product.category.slider .item a .price { text-decoration: none; color: #EC2376; font-weight: bold; display: inline-block; margin-top: 6px; margin-bottom: 3px; font-size: 14px; }
 .product-essential  .product.category.slider .item a .price .price.currency { font-size: 12px; }
+
+.sale_arrow_down { color: #6A2; }

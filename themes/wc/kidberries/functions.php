@@ -1344,7 +1344,7 @@ function kidberries_get_product_breadcrumbs() {
 					    $breadcrumbs_items .= '<a href="' . $pr->add_to_cart_url() . '" class="add_to_cart">В корзину</a>';
 					    $breadcrumbs_items .= '<a href="' . get_permalink($preview->ID) .'">';
 					    $breadcrumbs_items .= get_the_post_thumbnail( $preview->ID, 'thumbnail' );
-					    $breadcrumbs_items .= '<br/><span class="price">' . woocommerce_price( $pr->price ) . '</span><br/>';
+					    $breadcrumbs_items .= '<br/><span class="price">' . ($pr->is_on_sale()?'<i class="sale_arrow_down" title="Цена снижена!">&darr;</i> ':'') . woocommerce_price( $pr->price ) . '</span><br/>';
 					    $breadcrumbs_items .= '</a></div></li>';
 				    }
 				}
