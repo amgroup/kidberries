@@ -23,7 +23,6 @@ foreach ( array('billing','shipping') as $section ) {
 		unset( $checkout->checkout_fields[ $section ][ join('_', array( $section, $field ) ) ] );
 	}
 }
-$checkout->checkout_fields['shipping']['shipping_phone'] = $checkout->checkout_fields['billing']['billing_phone'];
 
 ?>
 <div class="billing_address" id="checkout_billing_address">
