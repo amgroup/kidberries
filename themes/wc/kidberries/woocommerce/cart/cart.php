@@ -105,12 +105,16 @@ $woocommerce->show_messages();
 			<td>
 			
 			<?php
-								$thumbnail = apply_filters( 'woocommerce_in_cart_product_thumbnail', $_product->get_image(), $values, $cart_item_key );
+				$thumbnail = apply_filters( 'woocommerce_in_cart_product_thumbnail', $_product->get_image(), $values, $cart_item_key );
 
-								if ( ! $_product->is_visible() || ( ! empty( $_product->variation_id ) && ! $_product->parent_is_visible() ) )
-									echo $thumbnail;
-								else
-									printf('<div class="product_in_cart"><a href="%s">%s</a></div>', esc_url( get_permalink( apply_filters('woocommerce_in_cart_product_id', $values['product_id'] ) ) ), $thumbnail );
+				if ( ! $_product->is_visible() || ( ! empty( $_product->variation_id ) && ! $_product->parent_is_visible() ) )
+					echo $thumbnail;
+				else
+					printf(
+						'<div class="product_in_cart"><a href="%s">%s</a></div>',
+						esc_url( get_permalink( apply_filters('woocommerce_in_cart_product_id', $values['product_id'] ) ) ),
+						$thumbnail
+					);
 			?>
 			
 			</td>

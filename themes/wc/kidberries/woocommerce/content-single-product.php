@@ -47,6 +47,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
     <h1 itemprop="name" class="product-name"><?php echo esc_html( $post->post_title ); ?></h1>
     <meta content="<?php the_permalink();?>" itemprop="url" />
 
+    <!-- add-to-cart form -->
     <form id="add_or_buy" action="<?php echo esc_url( $product->add_to_cart_url() ); ?>" class="variations_form cart" method="post" enctype='multipart/form-data' data-product_id="<?php echo $post->ID; ?>"  >
         <input type="hidden" name="redirect" id="redirect" value="" />
 
@@ -104,6 +105,8 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
         <?php woocommerce_get_template( 'content-single-product-ext-description.php' ); ?>
 
+        <?php if ( ! $product->is_in_stock() ) woocommerce_output_related_products(); ?>
+
 
         <div class="woocommerce-tabs">
             <ul class="tabs">
@@ -143,15 +146,15 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
         </div>
 
     </form>
+    <!-- /add-to-cart form -->
 
-
-    <?php woocommerce_output_related_products();?>
+    <?php if ( $product->is_in_stock() ) woocommerce_output_related_products(); ?>
 
     <?php //woocommerce_get_template( 'single-product-reviews/reviews-block.php' ); ?>
 </div>
 
 
-<!-- add-to-cart form -->
+
 
 <script type="text/javascript">
     jQuery(document).ready( function($) {
@@ -206,4 +209,4 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
     }
 
 </script>
-<!-- /add-to-cart form -->
+

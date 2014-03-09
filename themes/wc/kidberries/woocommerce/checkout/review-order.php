@@ -195,10 +195,15 @@ $checkout_step = 1;
 									'</td>
 									<td class="product-name">';
 										echo apply_filters( 'woocommerce_in_cart_product_thumbnail', $_product->get_image(), $values, $cart_item_key );
-										echo apply_filters( 'woocommerce_checkout_product_title', $_product->get_title(), $_product );
+										printf(
+											'<a href="%s">%s</a>',
+											esc_url( get_permalink( apply_filters('woocommerce_in_cart_product_id', $_product->id ) ) ),
+											apply_filters( 'woocommerce_checkout_product_title', $_product->get_title(), $_product )
+										);
 										echo ' ';
 										if( $values['quantity'] > 1 )
 										    echo '&nbsp;' . apply_filters( 'woocommerce_checkout_item_quantity', '<strong class="product-quantity">&times; ' . $values['quantity'] . '</strong>', $values, $cart_item_key );
+
 										echo '<div class="item data">' . $woocommerce->cart->get_item_data( $values, true ) . '</div>';
 									echo '</td>';
 									echo '<td class="product-total">';
