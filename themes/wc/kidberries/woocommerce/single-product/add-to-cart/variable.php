@@ -29,10 +29,11 @@ global $woocommerce, $product, $post, $currency_symbol;
 						<?php
 							if ( is_array( $options ) ) {
 
-								if ( empty( $_POST ) )
-									$selected_value = ( isset( $selected_attributes[ sanitize_title( $name ) ] ) ) ? $selected_attributes[ sanitize_title( $name ) ] : '';
-								else
-									$selected_value = isset( $_POST[ 'attribute_' . sanitize_title( $name ) ] ) ? $_POST[ 'attribute_' . sanitize_title( $name ) ] : '';
+								if ( ! empty( $_POST ) )
+									$selected_value = isset( $_POST[ sanitize_title( $name ) ] ) ? $_POST[ sanitize_title( $name ) ] : '';
+								if ( !( empty( $_GET ) || $selected_value ) )
+									$selected_value = isset( $_GET[ sanitize_title( $name ) ] ) ? $_GET[ sanitize_title( $name ) ] : '';
+
 
 								// Get terms if this is a taxonomy - ordered
 								if ( taxonomy_exists( sanitize_title( $name ) ) ) {
@@ -56,7 +57,6 @@ global $woocommerce, $product, $post, $currency_symbol;
 									foreach ( $terms as $term ) {
 										if ( ! in_array( $term->slug, $options ) )
 											continue;
-
 										echo '<option value="' . esc_attr( $term->slug ) . '" ' . selected( $selected_value, $term->slug, false ) . '>' . apply_filters( 'woocommerce_variation_option_name', $term->name ) . '</option>';
 									}
 								} else {
@@ -74,16 +74,33 @@ global $woocommerce, $product, $post, $currency_symbol;
 		</td>
 	<tr>
 </table>
+
 <?php do_action('woocommerce_after_add_to_cart_form'); ?>	
 			
 	
 <script type="text/javascript">
     jQuery(document).ready(function($){
-        $('.variations_form').block({message: null, overlayCSS: {background: 'transparent url(' + woocommerce_params.ajax_loader_url + ') no-repeat center', backgroundSize: '16px 16px', opacity: 0.6 } });
+		$.extend({
+		getUrlVars: function(){
+		  var vars = [], hash;
+		  var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+		  for(var i = 0; i < hashes.length; i++) {
+			hash = hashes[i].split('=');
+			vars.push(hash[0]);
+			vars[hash[0]] = hash[1];
+		  }
+		  return vars;
+		},
+		getUrlVar: function(name){
+		  return $.getUrlVars()[name];
+		}
+		});
+	
+        $('.variations_container').block({message: null, overlayCSS: {background: 'transparent url(' + woocommerce_params.ajax_loader_url + ') no-repeat center', backgroundSize: '16px 16px', opacity: 0.6 } });
 
         $.post( woocommerce_params.ajax_url, {action : 'get_data_product_variations', 'product_id':'<?php echo $product->id; ?>'}, function(data) {
         	$('.variations_form').attr( "data-product_variations", data );
-            $('.variations_form').unblock();
+            $('.variations_container').unblock();
         });
     });
 </script>

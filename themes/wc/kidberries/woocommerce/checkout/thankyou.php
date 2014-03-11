@@ -37,13 +37,14 @@ if ( $order ) : ?>
 
 		<ul class="order_details">
 			<li class="order">
-				<?php _e( 'Order:', 'woocommerce' ); ?>
+				Заказ 
 				<strong><?php echo $order->get_order_number(); ?></strong>
+				от
+				<?php echo date_i18n( get_option( 'date_format' ), strtotime( $order->order_date ) ); ?>
+				<?php echo $order->expected_in_stock( ' <mark class="mark expected">будет отгружен %s</mark>' ); ?>
 			</li>
-			<li class="date">
-				<?php _e( 'Date:', 'woocommerce' ); ?>
-				<strong><?php echo date_i18n( get_option( 'date_format' ), strtotime( $order->order_date ) ); ?></strong>
-			</li>
+			<br clear="all"/>
+
 			<li class="total">
 				<?php _e( 'Total:', 'woocommerce' ); ?>
 				<strong><?php echo $order->get_formatted_order_total(); ?></strong>

@@ -14,7 +14,7 @@
 		return l;
 	}
 
-	ArrayhasArray = function(a, b) {
+	ArrayHasArray = function(a, b) {
 		var c = $.extend(true, {}, b);
 		for( var key in a )
 			if( typeof a[key] == 'string' && a[key] == c[key] )
@@ -53,10 +53,15 @@
 				"data-default_title"  : $box.find("a").attr("title")
 			})
 		}
-		$box.find("img").attr("src", variant.image_src );
-		$box.find("a").attr("href",  variant.image_zoomed );
-		$box.find("a").attr("title", variant.image_title );
-
+		if( variant.image_src ) {
+			$box.find("img").attr("src", variant.image_src );
+			$box.find("a").attr("href",  variant.image_zoomed );
+			$box.find("a").attr("title", variant.image_title );
+		} else {
+			$box.find("img").attr("src", $box.data("default_src") );
+			$box.find("a").attr("href",  $box.data("default_zoomed") );
+			$box.find("a").attr("title", $box.data("default_title") );
+		}
 		if( jQuery.fn.CloudZoom ) $('#image-zoom').CloudZoom();
 	}
 
@@ -96,6 +101,7 @@
 		var $form = $("form.variations_form");
 		var $select = $form.find("select");
 		
+		
 		function set_variant(variant) {
 			// "Autocomplete" when only one choice
 			for( var name in variant.attributes ) {
@@ -109,7 +115,7 @@
 			set_field( "#sku", variant.sku );
 			set_field( ".product_weight", variant.weight );
 			set_field( ".product_dimensions", variant.dimensions );
-			set_field( ".actions-box .price-box ", wpap( '<span>' + variant.price_html + '</span>' ) );
+			set_field( ".actions-box .price-box ", '<span>' + variant.price_html + '</span>' );
 
 			set_images( ".product-img-box .product-image", variant );
 			set_changeables( variant );
@@ -119,18 +125,23 @@
 			event.preventDefault();
 			reset_images( ".product-img-box .product-image" );
 			$select.removeClass("complete").val("");
+			set_field( "input[name='variation_id']", "" );
+
 			$("*[data-default]").each(function() {
 				var $this = $(this);
 				$this.html( $this.attr("data-default") );
 			});
 			reset_changeables();
+			
+			reset_field( "button.btn.buy[type='submit']" );
+			$("button.btn.buy[type='submit']").attr({disabled:"disabled"}).removeClass("btn-success").addClass("disabled");
 		}
 
 		$("button.reset_variations").on('click', function(e){reset_selects(e); $(this).attr("disabled","disabled");});
 		
 		$select.focus(function(){
 			var $this   = $(this);
-			var name  = $this.attr("name");	
+			var name    = $this.attr("name");	
 			var variant = eval( $("form.variations_form").attr("data-product_variations") );
 			var vector  = new Array();
 
@@ -148,7 +159,7 @@
 				if( ArrayLength(vector) > 0  ) {
 					$this.addClass("disabled").attr("disabled", "disabled");
 					for( var i = variant.length-1; i >= 0; i-- ) {
-						if( ArrayhasArray( variant[i].attributes, $.extend(true, s, vector) ) && variant[i].is_in_stock ) {
+						if( ArrayHasArray( variant[i].attributes, $.extend(true, s, vector) ) && variant[i].is_in_stock ) {
 							$this.removeClass("disabled").removeAttr("disabled");
 							break;
 						}
@@ -161,6 +172,8 @@
 
 		$select.change(function(e){
 			var variant = eval( $("form.variations_form").attr("data-product_variations") );
+
+			var img = new Array();
 
 			$select.each( function(){
 				var $this = $(this);
@@ -177,17 +190,98 @@
 						}
 					}
 				}
+
+				if( $this.hasClass("complete") ) {
+				    for( var i=0; i<variant.length; i++ ) {
+					if( variant[i].taxonomy ){
+					    if( variant[i].taxonomy[ $this.attr("name") ] ) {
+						if( variant[i].taxonomy[ $this.attr("name") ].slug == $(this).val() ) {
+						    if( variant[i].image_src )
+							img["#"+ variant[i].image_src ] = variant[i];
+						}
+					    }
+					}
+				    }
+				}
 			});
+			var length = 0;
+			var key    = '';
+			for( var k in img ) {
+			    if( /^#/.test(k) ) { length++; key = k; }
+			}
+			if( length == 1 ) set_images( ".product-img-box .product-image", img[key] );
+
 			if( $select.hasClass('complete') )
 				$("button.reset_variations").removeAttr("disabled");
 
 			if(variant.length == 1) {
 				set_variant( variant[0] );
-				//$("button[type='submit']").removeAttr("disabled");
+				if( variant[0].is_in_stock ) {
+					reset_field( "button.btn.buy[type='submit']" );
+					$("button.btn.buy[type='submit']").removeAttr("disabled").removeClass("disabled").addClass("btn-success");
+				} else {
+					set_field( "button.btn.buy[type='submit']", '<i class="glyphicon glyphicon glyphicon-ban-circle"></i> Нет в наличии' );
+					$("button.btn.buy[type='submit']").attr({disabled:"disabled"}).removeClass("btn-success").addClass("disabled");
+				}
 			} else {
-				//$("button[type='submit']").attr({disabled:"disabled"});
+				set_field( "button.btn.buy[type='submit']", '<i class="glyphicon glyphicon glyphicon-ban-circle"></i> Нет в наличии' );
+				$("button.btn.buy[type='submit']").attr({disabled:"disabled"}).addClass("disabled").removeClass("btn-success");
 			}
 		});
+
+	});
+
+	$(".product-thumbnails .attachment-shop_thumbnail").closest("a").click(function(e) {
+	    e.preventDefault();
+	    var variant   = eval( $("form.variations_form").attr("data-product_variations") );
+	    var img       = $(this).attr("href");
+	    var selectors = new Array();
+
+	    for( var i=0; i<variant.length; i++ ) {
+			if( variant[i].image_zoomed == img ) {
+				if( variant[i].taxonomy ) {
+					for( var name in variant[i].taxonomy ) {
+						if( ! variant[i].taxonomy[name] ) continue;
+						var tax = variant[i].taxonomy[name];
+						
+						var val = $( '#pa_' + tax.attribute_name + ' option[value=' + tax.slug + ']' ).attr("value");
+						var $sel = $( '#pa_' + tax.attribute_name );
+						
+						var select = "#pa_" + tax.attribute_name;
+						var option = select + " option[value=" + tax.slug + "]";
+
+						if( ! selectors[ select ] )
+						selectors[ select ] = new Array();
+
+						if( ! selectors[ select ][ option ] )
+						selectors[ select ][ option ] = 1;
+						else
+						selectors[ select ][ option ]++;
+					}
+				}
+			}
+	    }
+	    
+	    for( var select in selectors ) {
+			if( !(/^#/.test(select) ) ) continue;
+
+			var length = 0;
+			var value  = '';
+
+			for( var option in selectors[select] ) {
+				if( !(/^#/.test(option) ) ) continue;
+				value = option;
+				length++;
+			}
+
+			if( length == 1 ) {
+				var val = $(value).attr("value");
+				if( val )
+				$(select).val( val );
+				if( $(select).val() )
+				$(select).trigger("click").trigger("change");
+			}
+	    }
 	});
 
 })( jQuery, window, document );

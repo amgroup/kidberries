@@ -58,9 +58,15 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
             <div class="availability stock_container">
                 <p class="stock in-stock">
                     <?php if ($product->is_in_stock()) : ?>
-                       <span class="stock">Есть в наличии</span>
+			<?php if ($product->is_expected() ) : ?>
+                    	    <span class="stock expected">
+				<?php echo kidberries_hr_date_interval( $product->expected(), 'Отгрузим через <span class="interval">%s</span>' ) . ' <span class="date">('. $product->expected() . ')</span>'; ?>
+			    </span>
+			<?php else : ?>
+			    <span class="stock">Есть в наличии</span>
+			<?php endif; ?>
                     <?php else : ?>
-                        <span class="stock out-of-stock">Нет в наличии</span>
+                        <span class="stock out-of-stock">Нет в наличии<?php echo $product->stock_status_date( ' <span class="date">(с %s)</span>' );?></span>
                     <?php endif; ?>
                 </p>
             </div>
@@ -74,14 +80,18 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
             <div class="actions-box">
                 <span class="price-box">
                     <span class="price" itemtype="http://schema.org/Offer" itemscope="itemscope" itemprop="offers">
-			<meta content="RUB" itemprop="priceCurrency" />
-			<link itemprop="availability" href="http://schema.org/<?php echo $product->is_in_stock() ? 'InStock' : 'OutOfStock'; ?>" />
+			         <meta content="RUB" itemprop="priceCurrency" />
+			         <link itemprop="availability" href="http://schema.org/<?php echo $product->is_in_stock() ? 'InStock' : 'OutOfStock'; ?>" />
 
                         <?php if ( $product->is_on_sale() ) : ?>
                             <del><?php echo woocommerce_price( $product->regular_price ); ?></del>
                             <ins itemprop="price"><?php echo woocommerce_price( $product->price ); ?></ins>
                         <?php else: ?>
-                            <span itemprop="price"><?php echo woocommerce_price( $product->price ); ?></span>
+                            <?php if ( $product->product_type == 'variable' && $product->min_variation_price !== $product->max_variation_price) : ?>
+                                <span itemprop="price variable">от <?php echo woocommerce_price( $product->min_variation_price ); ?></span>
+                            <?php else: ?>
+                                <span itemprop="price"><?php echo woocommerce_price( $product->price ); ?></span>
+                            <?php endif;?>
                         <?php endif; ?>
                     </span>
                 </span>
@@ -89,7 +99,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
                 <?php if ($product->is_in_stock()) : ?>
                     <button type="submit" class="buy btn btn-lg btn-success"><i class="glyphicon glyphicon-shopping-cart"></i> Добавить в корзину</button>
                 <?php else : ?>
-                    <button type="submit" disabled="disabled" class="buy btn btn-lg disabled">Нет в наличии</button>
+                    <button type="submit" disabled="disabled" class="buy btn btn-lg disabled"><i class="glyphicon glyphicon-ban-circle"></i> Нет в наличии</button>
                 <?php endif; ?>
                 <a style="display: none" rel="nofollow" class="checkout btn btn-lg btn-link" href="<?php echo $woocommerce->cart->get_checkout_url(); ?>">Оформить заказ &rarr;</a>
             </div>

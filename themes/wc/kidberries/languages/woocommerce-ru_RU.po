@@ -27,6 +27,21 @@ msgstr[1] "%d вещь"
 msgstr[2] "%d вещи"
 msgstr[3] "%d вещей"
 
+
+#@ woocommerce
+msgid "month"
+msgid_plural "monthes"
+msgstr[0] " "
+msgstr[1] "месяц"
+msgstr[2] "месяца"
+msgstr[3] "месяцев"
+
+
+#@ woocommerce
+msgid "Please choose product options&hellip;"
+msgstr "Пожалуйста, выберите вариант товара&hellip;"
+
+
 #@ woocommerce
 msgid "View your shopping cart"
 msgstr "Перейти в корзину"

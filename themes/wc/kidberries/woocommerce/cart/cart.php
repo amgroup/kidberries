@@ -134,7 +134,8 @@ $woocommerce->show_messages();
                    				if ( $_product->backorders_require_notification() && $_product->is_on_backorder( $values['quantity'] ) )
                    					echo '<p class="backorder_notification">' . __( 'Available on backorder', 'woocommerce' ) . '</p>';
 							?>
-                </h2>
+            			</h2>
+				<?php echo $_product->expected('<mark class="mark expected"> Будет отгружен %s </mark>'); ?>
 			</td>
 			
 			

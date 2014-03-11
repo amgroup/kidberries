@@ -163,7 +163,11 @@ if ( $mode != 'list' ) {
                                 foreach ( $available_variations as $variation_id => $variation ) {
                                     foreach( $available_variations[$variation_id]['attributes'] as $attribute_name => $slug ) {
                                         if('attribute_pa_cvet' === $attribute_name ) {
-                                            $attachment = wp_get_attachment_image_src( get_post_thumbnail_id( $available_variations[ $variation_id ]['variation_id'] ), 'shop_thumbnail' );
+					    $attachment_id = get_post_meta( $available_variations[ $variation_id ]['variation_id'], '_thumbnail_icon_id', true );
+					    if( !$attachment_id )
+						$attachment_id = get_post_thumbnail_id( $available_variations[ $variation_id ]['variation_id'] );
+
+                                            $attachment = wp_get_attachment_image_src( $attachment_id, 'shop_thumbnail' );
                                             if( $attachment ) {
                                                 $src = esc_url( current( $attachment ) );
                                                 $key = $taxonomy[ $attribute_name ][ $slug ]['name'];
@@ -172,7 +176,7 @@ if ( $mode != 'list' ) {
                                                     if( $src && $variant_thumbnail_count++ < 6 ) {
                                                         $images[ $key ] = true;
 
-                                                        echo '<a href="'; the_permalink(); echo '" ' . sprintf( 'title="%s"><img src="%s" alt="%s" class="%s" /></a>',
+                                                        echo '<a href="' . get_permalink() . '?' . esc_attr($attribute_name) . '=' . esc_attr($slug) . '" ' . sprintf( 'title="%s"><img src="%s" alt="%s" class="%s" /></a>',
                                                             esc_attr( $taxonomy[ $attribute_name ][ $slug ]['attribute_description'] . ' - ' . $taxonomy[ $attribute_name ][ $slug ]['name'] . ' - ' . $post->post_title ),
                                                             $src,
                                                             esc_attr( $taxonomy[ $attribute_name ][ $slug ]['attribute_label'] . ' - ' . $taxonomy[ $attribute_name ][ $slug ]['name'] . ' - ' . $post->post_title ),

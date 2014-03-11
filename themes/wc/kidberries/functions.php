@@ -1,8 +1,12 @@
 <?
-define( 'THEME_DIR', get_template_directory() );
 
-load_textdomain( 'woocommerce', THEME_DIR . "/languages/woocommerce-ru_RU.mo" );
-load_plugin_textdomain( 'woocommerce', false, THEME_DIR . "/languages/" );
+function load_kidberries_textdomain() {
+    define( 'THEME_DIR', get_template_directory() );
+
+    load_textdomain( 'woocommerce', THEME_DIR . "/languages/woocommerce-ru_RU.mo" );
+    load_plugin_textdomain( 'woocommerce', false, THEME_DIR . "/languages" );
+}
+add_action( 'woocommerce_init', 'load_kidberries_textdomain' );
 
 function kidberries_get_price() {
     global $post;
@@ -1382,6 +1386,53 @@ function kidberries_generate_description() {
 		}
 		return $kidberries_generated_description;
 	}
+}
+/**
+ * $acr = 'years,monthes,weeks,days,hours,minutes'
+ */
+
+function kidberries_hr_date_interval( $date, $wrap = '%s' ) {
+	$date = strtotime( $date );
+
+	if( $date ) {
+		$result   = null;
+		$interval = abs( strtotime( date_i18n( 'Y-m-d H:i:s' ) ) - $date );
+
+		$period = array(
+			'year'   => 31557600,
+			'month'  =>  2629800,
+			'week'	 =>   604800,
+			'day'    =>    86400,
+			'hour'   =>     3600,
+			'min'    =>       60,
+		);
+
+		$i = $interval / $period['week'];
+		if( $i < 1 ) {
+			$d = (int)( $interval / $period['day'] );
+			$result = $d . ' ' . _n( 'day', 'days', $d, 'woocommerce' );
+		} elseif( $i < 4 ) {
+			$w = (int)( $i );
+			$h = (($i-$w) > 0.2 ) ? ' с половиной' : '';
+
+			if( $w == 1 ) {
+				$result = "одну$h неделю";
+			} elseif( $w == 2 ) {
+				$result = "две$h недели";
+			} else {
+				$result = "три$h недели";
+			}
+		} elseif( $interval / $period['year'] <= 1 ) {
+			$m = (int)( $interval / $period['month'] );
+			$h = (($interval / $period['month'] - $m) > 0.35 ) ? ' с половиной' : '';
+			$result = $m . "$h " . _n( 'month', 'monthes', $m, 'woocommerce' );
+		} else {
+			$y = (int)( $interval / $period['year'] );
+			$result = $y . ' ' . _n( 'year', 'years', $y, 'woocommerce' );
+		}
+		return sprintf( $wrap, $result );
+	}
+	return null;
 }
 
 ?>
