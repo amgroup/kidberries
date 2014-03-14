@@ -65,7 +65,7 @@
 <?php /*/ ?>
 
 <link rel="shortcut icon" href="<?php bloginfo('template_url'); ?>/skin/images/kidberries-cart-favicon-16x16.ico" type="image/x-icon" />
-<link rel="icon" href="<?php bloginfo('template_url'); ?>/skin/images/kidberries-cart-favicon-32x32.png" type="image/png" />
+<link rel="icon" href="<?php bloginfo('template_url'); ?>/skin/images/kidberries-cart-favicon-16x16.png" type="image/png" />
 
 
 <script type="text/javascript" src="<?php bloginfo('template_url'); ?>/skin/js/imagepreloader.js"></script>

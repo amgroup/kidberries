@@ -224,8 +224,8 @@
 					$("button.btn.buy[type='submit']").attr({disabled:"disabled"}).removeClass("btn-success").addClass("disabled");
 				}
 			} else {
-				set_field( "button.btn.buy[type='submit']", '<i class="glyphicon glyphicon glyphicon-ban-circle"></i> Нет в наличии' );
-				$("button.btn.buy[type='submit']").attr({disabled:"disabled"}).addClass("disabled").removeClass("btn-success");
+				//set_field( "button.btn.buy[type='submit']", '<i class="glyphicon glyphicon glyphicon-ban-circle"></i> Нет в наличии' );
+				//$("button.btn.buy[type='submit']").attr({disabled:"disabled"}).addClass("disabled").removeClass("btn-success");
 			}
 		});
 
@@ -284,4 +284,28 @@
 	    }
 	});
 
+	$( "button.btn.buy[type='submit']" ).click(function(e){
+		var notchecked = 0;
+		$(".variations_container .variations select").each(function(){ if( ! ($(this).hasClass("complete")) ) notchecked++; });
+
+		if( notchecked > 0) {
+			e.preventDefault();
+
+			$('html, body').animate({scrollTop: $(".variations_container").offset().top - $(window).height()/2 + $(".variations_container").height()/2 }, 1500, function(){
+				$(".variations_container .variations select").each( function(){
+					var $this = $(this);
+					if(!($this.hasClass("complete"))){
+						var color = $this.css('border-color');
+						$this.css({ boxShadow: "0 0 0px " + color });
+						$this.animate({ boxShadow : "0 0 500px " + color, }, "fast", function(){
+							$(this).css({ boxShadow: "0 0 0px " + color });
+						});
+					}
+				});
+			});			
+		} else {
+			$(".product-view")
+				.block({ message: null, overlayCSS: {background: '#fff url(' + woocommerce_params.ajax_loader_url + ') no-repeat center', backgroundSize: '16px 16px', opacity: 0.6 }});
+		}
+	});
 })( jQuery, window, document );
