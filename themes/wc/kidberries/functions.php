@@ -1,5 +1,11 @@
 <?
 
+function kidberries_sub_domains() {
+
+}
+add_action('init', 'kidberries_sub_domains' );
+
+
 function load_kidberries_textdomain() {
     define( 'THEME_DIR', get_template_directory() );
 
@@ -326,9 +332,13 @@ if ( ! function_exists( 'woocommerce_content' ) ) {
 	<?php
 		if ( is_tax( 'product_cat' ) ) {
 			$term = get_term_by('slug', esc_attr( get_query_var('product_cat') ), 'product_cat');
-			$advertisement = html_entity_decode( get_woocommerce_term_meta_closest( $term->term_id, 'advertisement', true ) );
-			if( $advertisement )
-				echo '<div class="category advertisement">' . $advertisement . '</div>';
+            $advertisement = get_woocommerce_term_meta_closest( $term->term_id, 'advertisement', true );
+			if( $advertisement ) {
+				if( is_numeric( $advertisement ) ) {
+					$advertisement = get_post( $advertisement )->post_content;
+				}
+				echo '<div class="category advertisement">' . html_entity_decode( $advertisement ) . '</div>';
+			}
 		}
 	?>
 </div>
@@ -1334,6 +1344,7 @@ function kidberries_get_product_breadcrumbs() {
 	if( is_product() ) {
 		$categories  = kidberries_get_product_catigories ();
 		$breadcrumbs_tabs = '';
+		$toggle_num       = 1;
 
 		$breadcrumbs = '<ol class="breadcrumb">';
 		    foreach( $categories as $cat ) {
@@ -1354,8 +1365,9 @@ function kidberries_get_product_breadcrumbs() {
 				}
 				wp_reset_query();
 				if( $breadcrumbs_items ) {
-					$breadcrumbs .= '<li class="crumb" id="dropdown_' . $cat->slug . '" data-toggle="#tab_' . $cat->slug . '"><a href="' . get_term_link( $cat->slug, 'product_cat' ) . '"  itemprop="url">' . esc_html($cat->name) . ' <b class="caret"></b></a></li>';
-					$breadcrumbs_tabs .= '<div style="display: none;" class="breadcrumb_tab" data-menu="#dropdown_' . $cat->slug . '" id="tab_' . $cat->slug . '"><ul class="product category slider">';
+					$toggle = "breadcrumbs_" . $toggle_num++ ;
+					$breadcrumbs .= '<li class="crumb" id="dropdown_' . $toggle . '" data-toggle="#tab_' . $toggle . '"><a href="' . get_term_link( $cat->slug, 'product_cat' ) . '"  itemprop="url">' . esc_html($cat->name) . ' <b class="caret"></b></a></li>';
+					$breadcrumbs_tabs .= '<div style="display: none;" class="breadcrumb_tab" data-menu="#dropdown_' . $toggle . '" id="tab_' . $toggle . '"><ul class="product category slider">';
 					$breadcrumbs_tabs .= $breadcrumbs_items;
 					$breadcrumbs_tabs .= '</ul></div>';
 				} else {

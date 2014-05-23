@@ -24,14 +24,14 @@ if( $product->product_type == 'variable' ) {
         elseif( $icon_id && ! $image_id ) $image_id = $icon_id;
 
 	if( $image_id ) {
-        $is_in_stock = $variations_images[ $image_id ]['is_in_stock'] ? $variations_images[ $image_id ]['is_in_stock'] : $variation['is_in_stock'];
+
     	    //$variations_images[ $icon_id ]  = false;
 		$variations_images[ $image_id ] = array(
 		    'image'  => wp_get_attachment_image_src( $image_id, apply_filters( 'single_product_large_thumbnail_size', 'shop_single' ) ),
 		    'zommed' => wp_get_attachment_image_src( $image_id, apply_filters( 'single_product_zoomed_thumbnail_size', 'shop_zoomed' ) ),
 		    'small'  => wp_get_attachment_image( $icon_id, apply_filters( 'single_product_small_thumbnail_size', 'shop_thumbnail' ) ),
 		    'title'  => esc_attr( get_the_title( $image_id ) ),
-		    'is_in_stock' => $is_in_stock,
+		    'is_in_stock' => $variation['is_in_stock'],
 		);
 	}
     }

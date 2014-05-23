@@ -20,12 +20,13 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
      */
     global $woocommerce, $product, $post, $currency_symbol;
 
+    if( $post->post_status != 'not_available' ) :
     do_action( 'woocommerce_before_single_product' );
 ?>
 <script type="text/javascript" src="<?php bloginfo('template_url'); ?>/js/corlletelab/imagezoom/cloud-zoom.1.0.2.js" ></script>
 <link rel="stylesheet" type="text/css" href="<?php bloginfo('template_url'); ?>/skin/css/corlletelab/imagezoom.css" media="all" />
 
-<div calss="product-view" itemtype="http://schema.org/Product" itemscope="itemscope">
+<div class="product-view" itemtype="http://schema.org/Product" itemscope="itemscope">
     <div class="before-product-name">
         <span class="product-sku">
             Артикул: <span class="sku" itemprop="productID" id="sku" data-o_sku="<?php echo $product->sku; ?>"><?php echo $product->sku; ?></span>
@@ -178,45 +179,70 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
             if( state.cart.notempty )
                 $('.checkout').show();
             if( state.cart[ $("form#add_or_buy").data("product_id") ] )
-                //{"cart":{"notempty":true,"3616":1,"3627":1}}
                 $('form#add_or_buy button[type=submit]').html('<i class="glyphicon glyphicon-shopping-cart"></i> Купить еще <small class="extra label label-success">Уже в корзине</small>');
         });
     });
-    
+
+
     function buyitnow() { jQuery("#redirect").val( 'checkout' ); }
-    
+
     var assocIMG = {};
     function jSelectImage(id) {
         hideSelected(id);
-        
+
         if (assocIMG['big_image_'+id] && assocIMG['small_image_'+id]) {
             // Destroy the previous zoom
             jQuery('#image-zoom').data('zoom').destroy();
+
             // Change the biglink to point to the new big image.
             jQuery('#image-zoom').attr('href', assocIMG['big_image_'+id]);
+
             // Change the small image to point to the new small image.
             jQuery('#image-zoom img').attr('src', assocIMG['small_image_'+id]);
-            // Init a new zoom with the new images.             
+
+            // Init a new zoom with the new images.
             jQuery('#image-zoom').CloudZoom();
             //console.log('yes');
         }
     }
-    
-    function hideSelected(id) {
-        //console.log(id);
-        var add = $$('.product-thumbnails li.add');
-        if (add && add.length > 0) {
-            $('show-all').show();
-            add.each(function(item,i){
-                item.hide();
-                var className = 'item-'+id;
-                
-                if (item.hasClassName(className)){
-                    item.show();
-                }
-            })
-        }
-    }
 
 </script>
+<?php else :
+    $s = $_GET['s'];
 
+    if( !$s ) {
+        $l = split("-", $post->post_title );
+        if( $l[0] ) $s = esc_attr( $l[0] );
+
+	$attributes = $product->get_attributes();
+	$name = 'pa_brand';
+	if ( isset( $attributes[$name]['is_taxonomy']) ) {
+		$values = woocommerce_get_product_terms( $product->id, $attributes[$name]['name'], 'names' );
+		$s .= esc_attr( implode( ', ', $values ) );
+	}
+    }
+
+
+?>
+
+    <h1>К сожалению <?php the_title();?> <ins>устарел и больше не будет продаваться</ins>.</h1>
+    <br/>
+    <br/>
+    <?php
+        echo kidberries_get_product_breadcrumbs();
+        woocommerce_output_related_products();
+    ?>
+
+
+    <div class="box-collateral">
+        <h2>Или воспользуйтесь формой для поиска:</h2>
+    </div>
+    <form role="search" method="get" id="searchform" action="/">
+	<div class="form-search">
+	    <input style="margin-top: 1px; font-size: 18px; width: 780px; padding: 4px; border: 4px solid #F6BD2E; border-radius: 5px;" id="search" type="text" results="5" autosave="/" class="input-text" placeholder="Поиск товаров" value="<?php echo $s;?>" name="s" />
+	    <input type="hidden" name="post_type" value="product" />
+	    <button style="border: 4px solid #85C72C;" type="submit" class="btn">Найти</button>
+	</div>
+    </form>
+
+<?php endif; ?>

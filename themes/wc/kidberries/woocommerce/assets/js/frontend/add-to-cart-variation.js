@@ -224,8 +224,8 @@
 					$("button.btn.buy[type='submit']").attr({disabled:"disabled"}).removeClass("btn-success").addClass("disabled");
 				}
 			} else {
-				//set_field( "button.btn.buy[type='submit']", '<i class="glyphicon glyphicon glyphicon-ban-circle"></i> Нет в наличии' );
-				//$("button.btn.buy[type='submit']").attr({disabled:"disabled"}).addClass("disabled").removeClass("btn-success");
+				set_field( "button.btn.buy[type='submit']", '<i class="glyphicon glyphicon glyphicon-ban-circle"></i> Нет в наличии' );
+				$("button.btn.buy[type='submit']").attr({disabled:"disabled"}).addClass("disabled").removeClass("btn-success");
 			}
 		});
 

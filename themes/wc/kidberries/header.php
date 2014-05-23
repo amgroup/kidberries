@@ -1,8 +1,6 @@
-<?php ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru" lang="ru">
 <head>
-
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
 	<title><?php
@@ -30,7 +28,14 @@
     }
 ?></title>
 
-<?php if( is_product() ) : ?>
+<?php
+    remove_action( "wp_head", "rel_canonical" );
+
+    if( is_product() ) :
+	if( $post->post_status == 'not_available' )
+	    header("HTTP/1.0 404 Not Found");
+?>
+
 	<link rel="canonical" href="<?php the_permalink(); ?>" />
 
 	<meta name="Description" content="<?php echo kidberries_get_product_header_description(); ?>" />
@@ -65,7 +70,7 @@
 <?php /*/ ?>
 
 <link rel="shortcut icon" href="<?php bloginfo('template_url'); ?>/skin/images/kidberries-cart-favicon-16x16.ico" type="image/x-icon" />
-<link rel="icon" href="<?php bloginfo('template_url'); ?>/skin/images/kidberries-cart-favicon-16x16.png" type="image/png" />
+<link rel="icon" href="<?php bloginfo('template_url'); ?>/skin/images/kidberries-cart-favicon-32x32.png" type="image/png" />
 
 
 <script type="text/javascript" src="<?php bloginfo('template_url'); ?>/skin/js/imagepreloader.js"></script>
