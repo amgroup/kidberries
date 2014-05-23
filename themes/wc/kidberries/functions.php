@@ -1313,7 +1313,7 @@ function kidberries_get_product_header_keywords() {
 	}	
 }
 
-function kidberries_get_product_catigories () {
+function kidberries_get_product_categories () {
 	global $wpdb, $post, $product_categories;
 
 	if( is_product() ) {
@@ -1342,7 +1342,7 @@ function kidberries_get_product_breadcrumbs() {
 	global $product;
 
 	if( is_product() ) {
-		$categories  = kidberries_get_product_catigories ();
+		$categories  = kidberries_get_product_categories ();
 		$breadcrumbs_tabs = '';
 		$toggle_num       = 1;
 
@@ -1386,7 +1386,7 @@ function kidberries_generate_description() {
 
 	if( is_product() ) {
 		if( ! isset( $kidberries_generated_description ) ) {
-			$categories = kidberries_get_product_catigories ();
+			$categories = kidberries_get_product_categories ();
 			$kidberries_generated_description = '';
 
 			foreach( $categories as $category ) {
