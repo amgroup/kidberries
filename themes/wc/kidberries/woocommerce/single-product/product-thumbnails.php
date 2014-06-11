@@ -37,7 +37,7 @@ if( $product->product_type == 'variable' ) {
     }
 }
 ?>
-<div style="display: inline-block;">
+<div class="thumbnail_selectors_container" style="display: inline-block;">
 <ul class="thumbnail_selectors">
 <?php
 foreach ( $variations_images as $attachment_id => $variations_image ) {
@@ -45,8 +45,10 @@ foreach ( $variations_images as $attachment_id => $variations_image ) {
         $zoomed = $variations_image['zommed'];
         $image  = $variations_image['image'];
         $small  = $variations_image['small'];
-		
-        echo apply_filters( 'woocommerce_single_product_image_thumbnail_html', sprintf( "<li class=\"thumbnail_selector" . ($variations_image['is_in_stock']?'':' not_in_stock') . "\"><a href=\"%s\" class=\"cloud-zoom-gallery\" rel=\"useZoom: 'image-zoom', smallImage: '%s'\" >%s</a></li>", esc_url( $zoomed[0] ), esc_url( $image[0] ), $small ), $attachment_id, $post->ID, 'variations_image' );
+        $link   = wp_get_attachment_url( $attachment_id );
+
+//        echo apply_filters( 'woocommerce_single_product_image_thumbnail_html', sprintf( "<li class=\"thumbnail_selector" . ($variations_image['is_in_stock']?'':' not_in_stock') . "\"><a href=\"%s\" class=\"cloud-zoom-gallery\" rel=\"useZoom: 'image-zoom', smallImage: '%s'\" >%s</a></li>", esc_url( $zoomed[0] ), esc_url( $image[0] ), $small ), $attachment_id, $post->ID, 'variations_image' );
+        echo apply_filters( 'woocommerce_single_product_image_thumbnail_html', sprintf( "<li class=\"thumbnail_selector" . ($variations_image['is_in_stock']?'':' not_in_stock') . "\"><a href=\"%s\" class=\"product-thumbnail selector\" data-image=\"%s\" data-link=\"%s\">%s</a></li>", esc_url( $zoomed[0] ), esc_url( $image[0] ), esc_url( $link ), $small ), $attachment_id, $post->ID, 'variations_image' );
     }
 }
 ?>
@@ -73,10 +75,12 @@ if ( $attachment_ids ) {
 		$zoomed      = wp_get_attachment_image_src( $attachment_id, apply_filters( 'single_product_zommed_thumbnail_size', 'shop_zoomed' ) );
                 $image       = wp_get_attachment_image_src( $attachment_id, apply_filters( 'single_product_large_thumbnail_size', 'shop_single' ) );
 		$small       = wp_get_attachment_image( $attachment_id, apply_filters( 'single_product_small_thumbnail_size', 'shop_thumbnail' ) );
+		$link        = wp_get_attachment_url( $attachment_id );
 		$image_class = esc_attr( implode( ' ', $classes ) );
 		$image_title = esc_attr( get_the_title( $attachment_id ) );
 
-		echo apply_filters( 'woocommerce_single_product_image_thumbnail_html', sprintf( "<li><a href=\"%s\" class=\"cloud-zoom-gallery\" rel=\"useZoom: 'image-zoom', smallImage: '%s'\" >%s</a></li>", esc_url( $zoomed[0] ), esc_url( $image[0] ), $small ), $attachment_id, $post->ID, $image_class );
+//		echo apply_filters( 'woocommerce_single_product_image_thumbnail_html', sprintf( "<li><a href=\"%s\" class=\"cloud-zoom-gallery\" rel=\"useZoom: 'image-zoom', smallImage: '%s'\" >%s</a></li>", esc_url( $zoomed[0] ), esc_url( $image[0] ), $small ), $attachment_id, $post->ID, $image_class );
+		echo apply_filters( 'woocommerce_single_product_image_thumbnail_html', sprintf( "<li><a href=\"%s\" class=\"product-thumbnail preview\" data-image=\"%s\" data-link=\"%s\">%s</a></li>", esc_url( $zoomed[0] ),  esc_url( $image[0] ), esc_url( $link ), $small ), $attachment_id, $post->ID, $image_class );
 		$loop++;
 	}
 	echo '</ul>';

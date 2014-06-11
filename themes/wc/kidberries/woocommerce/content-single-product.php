@@ -23,8 +23,13 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
     if( $post->post_status != 'not_available' ) :
     do_action( 'woocommerce_before_single_product' );
 ?>
+
+<?php /*/ ?>
 <script type="text/javascript" src="<?php bloginfo('template_url'); ?>/js/corlletelab/imagezoom/cloud-zoom.1.0.2.js" ></script>
 <link rel="stylesheet" type="text/css" href="<?php bloginfo('template_url'); ?>/skin/css/corlletelab/imagezoom.css" media="all" />
+<?php /*/ ?>
+
+<script type="text/javascript" src="<?php bloginfo('template_url'); ?>/skin/js/woocommerce-product-thumbnails.js" ></script>
 
 <div class="product-view" itemtype="http://schema.org/Product" itemscope="itemscope">
     <div class="before-product-name">
@@ -71,10 +76,6 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
                     <?php endif; ?>
                 </p>
             </div>
-
-            <div class="product-variations" >
-                <?php woocommerce_template_single_add_to_cart();?>
-            </div>
         </div>
 
         <div class="product-details product-shop">
@@ -104,6 +105,11 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
                 <?php endif; ?>
                 <a style="display: none" rel="nofollow" class="checkout btn btn-lg btn-link" href="<?php echo $woocommerce->cart->get_checkout_url(); ?>">Оформить заказ &rarr;</a>
             </div>
+
+            <div class="product-variations">
+                <?php woocommerce_template_single_add_to_cart();?>
+            </div>
+
 
             <div class="product-thumbnails">
                 <?php do_action( 'woocommerce_product_thumbnails' ); ?>

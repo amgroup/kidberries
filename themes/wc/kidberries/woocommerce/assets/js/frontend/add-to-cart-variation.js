@@ -62,7 +62,9 @@
 			$box.find("a").attr("href",  $box.data("default_zoomed") );
 			$box.find("a").attr("title", $box.data("default_title") );
 		}
-		if( jQuery.fn.CloudZoom ) $('#image-zoom').CloudZoom();
+
+		$box.trigger('changed');
+//		if( jQuery.fn.CloudZoom ) $('#image-zoom').CloudZoom();
 	}
 
 	function reset_images( selector ) {
@@ -72,7 +74,8 @@
 		$box.find("a").attr("href",  $box.attr("data-default_zoomed") );
 		$box.find("a").attr("title", $box.attr("data-default_title") );
 
-		if( jQuery.fn.CloudZoom ) $('#image-zoom').CloudZoom();
+		$box.trigger('changed');
+//		if( jQuery.fn.CloudZoom ) $('#image-zoom').CloudZoom();
 	}
 
 
@@ -236,6 +239,9 @@
 	    var variant   = eval( $("form.variations_form").attr("data-product_variations") );
 	    var img       = $(this).attr("href");
 	    var selectors = new Array();
+
+	    $(".product-thumbnails .attachment-shop_thumbnail").closest("a").removeClass("selected");
+	    $(this).addClass("selected");
 
 	    for( var i=0; i<variant.length; i++ ) {
 			if( variant[i].image_zoomed == img ) {
