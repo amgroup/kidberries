@@ -4556,7 +4556,7 @@ color: #BBB;
 .product-view .availability.stock_container .stock.in-stock .stock .date { font-weight: normal; font-style: italic; }
 .mark.expected { background-color: #FEB; font-size: 14px; font-style: italic; font-weight: normal; }
 
-.product-view .actions-box { display: initial; line-height: 1px; margin-bottom: 18px; box-shadow: 0 5px 7px -7px; padding-bottom: 20px; }
+.product-view .actions-box { display: initial; line-height: 1px; margin-bottom: 18px; padding-bottom: 20px; }
 
 .product-view button.buy { margin-bottom: 15px; background-color: #8C2; border-radius: 3px; border-color: #4e8d24;}
 .product-view button.buy:hover { background-color: #6a2; }
@@ -4593,6 +4593,8 @@ form#add_or_buy button.buy .extra { font-size: 10px; margin-left: -88px; top: -1
 
 
 .product-view .price-box { text-align: left; margin-left: 10px; display: inline-block; font-family: 'PT Sans', sans-serif; }
+.product-view .price-box.alingcenter { text-align: center; }
+
 .product-view .price-box .price { text-decoration: none; }
 .product-view .price-box .price .price { font-size: 30px; color: #EC2376; }
 .product-view .price-box .price .price.currency { margin-left: -3px; font-size: 16px; }
@@ -4608,7 +4610,9 @@ form#add_or_buy button.buy .extra { font-size: 10px; margin-left: -88px; top: -1
 
 .product-view .variations select option.disabled { color: #ddd; }
 
+.product-view .btn.delivery { margin-top: -10px; color: #FFA500; }
 .product-view .btn.checkout { margin-top: -15px; }
+.delivery-icon-orange { background: url('../images/eicons.png') 0px 0px; width: 23px; height: 22px; display: inline-block; text-decoration: none; margin-left: 5px; margin-bottom: -8px; }
 
 .product_list_widget .summary { font-size: 14px; font-family: 'Open Sans Condensed', sans-serif; }
 .product_list_widget .summary .subtotal .label { font-weight: normal; font-size: 100%; margin: 0; padding: 0; }

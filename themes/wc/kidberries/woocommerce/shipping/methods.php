@@ -19,8 +19,8 @@ $salt = '_' . rand(100000,999999);
 if ( $available_methods ) {
 	// Prepare text labels with price for each shipping method
 	foreach ( $available_methods as $method ) {
-        $changeable = 0;
-        if( $method->label_extra ) $changeable = 1;
+            $changeable = 0;
+            if( $method->label_extra ) $changeable = 1;
 
 		if( $woocommerce->session->chosen_shipping_method == $method->id ) {
             

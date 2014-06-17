@@ -104,6 +104,7 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
                     <button type="submit" disabled="disabled" class="buy btn btn-lg disabled"><i class="glyphicon glyphicon-ban-circle"></i> Нет в наличии</button>
                 <?php endif; ?>
                 <a style="display: none" rel="nofollow" class="checkout btn btn-lg btn-link" href="<?php echo $woocommerce->cart->get_checkout_url(); ?>">Оформить заказ &rarr;</a>
+                <a rel="nofollow" class="delivery btn btn-lg btn-link" href="#tab-delivery">Узнать стоимость доставки <i class="delivery-icon-orange"></i></a>
             </div>
 
             <div class="product-variations">
@@ -171,8 +172,6 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 </div>
 
 
-
-
 <script type="text/javascript">
     jQuery(document).ready( function($) {
         $.post( woocommerce_params.ajax_url, {action : 'get_data_product_variations', 'product_id':$("form#add_or_buy").data("product_id") }, function(data) {});
@@ -192,25 +191,15 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
     function buyitnow() { jQuery("#redirect").val( 'checkout' ); }
 
-    var assocIMG = {};
-    function jSelectImage(id) {
-        hideSelected(id);
+    jQuery('.btn.delivery').click( function(e){
+        e.preventDefault();
+        jQuery('.woocommerce-tabs .tabs li').removeClass('active');
+        jQuery('.woocommerce-tabs .tabs li.delivery_tab').addClass('active');
+        jQuery('.panel.entry-content').hide();
+        jQuery('.panel.entry-content.product-delivery').show();
 
-        if (assocIMG['big_image_'+id] && assocIMG['small_image_'+id]) {
-            // Destroy the previous zoom
-            jQuery('#image-zoom').data('zoom').destroy();
-
-            // Change the biglink to point to the new big image.
-            jQuery('#image-zoom').attr('href', assocIMG['big_image_'+id]);
-
-            // Change the small image to point to the new small image.
-            jQuery('#image-zoom img').attr('src', assocIMG['small_image_'+id]);
-
-            // Init a new zoom with the new images.
-            jQuery('#image-zoom').CloudZoom();
-            //console.log('yes');
-        }
-    }
+        jQuery('html, body').animate({scrollTop: jQuery(".woocommerce-tabs").offset().top - jQuery(window).height()/2 + jQuery(".woocommerce-tabs").height()/2 }, 300);
+    });
 
 </script>
 <?php else :

@@ -46,7 +46,7 @@ global $post, $woocommerce, $product;
                         $image  = wp_get_attachment_image( $attachment_id, apply_filters( 'single_product_large_thumbnail_size', 'shop_single' ) );
                         $title  = $variations_image['title'];
 
-                        echo apply_filters( 'woocommerce_single_product_image_html', sprintf( '<a href="%s" itemprop="image" class="woocommerce-main-image" title="%s">%s</a>', esc_url( $zoomed[0] ), $title, $image ), $post->ID );
+                        echo apply_filters( 'woocommerce_single_product_image_html', sprintf( '<a href="%s" target="_blank" itemprop="image" class="woocommerce-main-image" title="%s">%s</a>', esc_url( $zoomed[0] ), $title, $image ), $post->ID );
                     }
                 }
             }
@@ -58,7 +58,7 @@ global $post, $woocommerce, $product;
                             $image_title        = esc_attr( get_the_title( $attachment_id ) );
                             $image_link         = wp_get_attachment_url( $attachment_id );
 
-                            echo apply_filters( 'woocommerce_single_product_image_html', sprintf( '<a href="%s" itemprop="image" class="woocommerce-main-image" title="%s">%s</a>', $image_link, $image_title, $image ), $post->ID );
+                            echo apply_filters( 'woocommerce_single_product_image_html', sprintf( '<a href="%s" target="_blank" itemprop="image" class="woocommerce-main-image" title="%s">%s</a>', $image_link, $image_title, $image ), $post->ID );
                     }
             }
 
